@@ -82,6 +82,7 @@ hr {
     display: flex;
     height: 100%;
     align-items: center;
+    background-color: #fcfcfc;
 }
 
 #login .container,
@@ -90,7 +91,18 @@ hr {
 #data .container,
 #creditos .container,
 #historico .container {
-    border: 1px solid #d82482;
+    border: 1px solid #d4000e;
+    width: 970px !important;
+}
+
+.header-logo {
+    display: inline-block;
+    font-weight: 700;
+    margin-top: 34px;
+    padding: 0;
+    border: none;
+    width: 300px;
+    position: relative;
 }
 
 #login input {
@@ -112,21 +124,21 @@ hr {
 
 .btn-login {
     background: #fff;
-    border: 1px solid #d82482;
-    color: #d82482;
+    border: 1px solid #d4000e;
+    color: #d4000e;
     font-size: 1.3125em;
     width: 300px;
     height: 3.50em;
 }
 
 .btn-login:hover {
-    background: #d82482;
+    background: #d4000e;
     color: #fff;
 }
 
 .span-login {
-    border: 1px solid #d82482;
-    color: #d82482;
+    border: 1px solid #d4000e;
+    color: #d4000e;
     transition: background-color 610ms cubic-bezier(0.190, 1.000, 0.220, 1.000);
     font-size: 1.3125em;
 }
