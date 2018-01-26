@@ -10,7 +10,7 @@ function login() {
         senha: $('#password').val()
     };
     $.ajax({
-        type: "GET",
+        type: "POST",
         url: "https://tvgaspar-server.herokuapp.com/login",
         data: data,
         success: function (response) {
