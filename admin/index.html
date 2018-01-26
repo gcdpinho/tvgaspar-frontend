@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+
+<head>
+  <title>Login</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <link href="css/responsive.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <section id="login">
+    <div class="container text-center">
+      <div class="oi-login">
+        <img class="logo" src="img\image_220x171.jpg">
+        <form id="login-form" action="javascript:login();" method="post">
+          <div class="form-group">
+            <input type="text" name="nome" id="name" class="form-control" placeholder="Usuário" required>
+          </div>
+          <div class="form-group">
+            <input type="password" name="senha" id="password" class="form-control" placeholder="Senha" required>
+          </div>
+          <button type="submit" class="btn btn-login">
+            Entrar
+          </button>
+        </form>
+        <div class="alert alert-danger">
+          <strong>Atenção:</strong> senha inválida, tente novamente!
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="js/jquery-3.1.1.min.js"></script> 
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/login.js"></script>
+</body>
+
+</html>
