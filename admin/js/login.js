@@ -7,7 +7,8 @@ $(function ($) {
 function login() {
     var data = {
         nome: $('#name').val(),
-        senha: $('#password').val()
+        senha: $('#password').val(),
+        //token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbiI6dHJ1ZSwiaWF0IjoxNTE3MDEwNTk0LCJleHAiOjE1MTcwOTY5OTR9.dE1VfFKA0ME72xSx-U_COH-DIyf7vX56u7sh47huQnc"
     };
     $.ajax({
         type: "POST",
