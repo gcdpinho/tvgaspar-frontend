@@ -20,3 +20,7 @@
 .cad span{
     margin: 7px 0 1px 0px !important;
 }
+
+.save-button {
+    padding-left: 0px;
+}
