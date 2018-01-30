@@ -16,3 +16,7 @@
     position: absolute;
     right: 17px;
 }
+
+.cad span{
+    margin: 7px 0 1px 0px !important;
+}
