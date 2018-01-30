@@ -11,16 +11,27 @@
         success: function (response) {
             console.log(response);
             if (!response.success && response.success != undefined) {
-                localStorage.setItem('msgError','Sessão inválida. Faça o login novamente.');
+                localStorage.setItem('msgError', 'Sessão inválida. Faça o login novamente.');
                 location.href = "pages/examples/sign-in.html";
-            } else
+            } else {
+                $('.name').html(response[0].nome);
+                $('.email').html(response[0].email);
                 $('.page-loader-wrapper').fadeOut();
+            }
         },
         error: function (error) {
-            console.log(error);
+            console.log(error.message);
+            localStorage.setItem('msgError', 'Sessão inválida. Faça o login novamente.');
+            location.href = "pages/examples/sign-in.html";
         }
     });
 
+    //Logout
+    $('#logout').click(function () {
+        localStorage.setItem('token', "");
+        localStorage.setItem('msgError', "");
+        location.href = "pages/examples/sign-in.html";
+    });
 
     //Widgets count
     $('.count-to').countTo();

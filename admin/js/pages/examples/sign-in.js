@@ -1,7 +1,7 @@
 $(function () {
     if (performance.navigation.type == 1 && localStorage.getItem('msgError') != "")
         localStorage.setItem('msgError', "");
-        
+
 
     $('#sign_in').validate({
         highlight: function (input) {
@@ -23,7 +23,7 @@ $(function () {
                 type: "POST",
                 url: "https://tvgaspar-server.herokuapp.com/login",
                 data: {
-                    nome: $('input[name="username"]').val(),
+                    login: $('input[name="username"]').val(),
                     senha: $('input[name="password"]').val() // TO DO: mandar a senha encriptada?
                 },
                 success: function (response) {
@@ -33,8 +33,11 @@ $(function () {
                         localStorage.setItem('msgError', "");
                         $('.page-loader-wrapper').fadeOut();
                         location.href = "../../index.html";
-                    } else
+                    } else {
+                        localStorage.setItem('msgError', "Usuário ou senha inválido, tente novamente.");
+                        $(".msgError").html(localStorage.getItem('msgError'));
                         $('.page-loader-wrapper').fadeOut();
+                    }
                 },
                 error: function (error) {
                     console.log(error);

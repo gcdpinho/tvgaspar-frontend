@@ -2,3 +2,17 @@
     text-align: center;
     color: #F44336;
 }
+
+.vulpis{
+    color: black;
+}
+
+.vulpis:hover, .vulpis:focus{
+    color: black;
+}
+
+.badge{
+    color: white !important;
+    position: absolute;
+    right: 17px;
+}
