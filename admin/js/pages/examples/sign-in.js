@@ -1,4 +1,5 @@
 $(function () {
+    $('.page-loader-wrapper').fadeOut();
     if (performance.navigation.type == 1 && localStorage.getItem('msgError') != "")
         localStorage.setItem('msgError', "");
 
@@ -24,7 +25,7 @@ $(function () {
                 url: "https://tvgaspar-server.herokuapp.com/login",
                 data: {
                     login: $('input[name="username"]').val(),
-                    senha: $('input[name="password"]').val() // TO DO: mandar a senha encriptada?
+                    senha: $('input[name="password"]').val()
                 },
                 success: function (response) {
                     console.log(response.message);

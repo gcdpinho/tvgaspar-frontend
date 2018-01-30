@@ -6252,7 +6252,7 @@ fieldset[disabled] .form-control {
 
 /* Page Loader ================================= */
 .page-loader-wrapper {
-  display:none;
+  display:block;
   z-index: 99999999;
   position: fixed;
   top: 0;

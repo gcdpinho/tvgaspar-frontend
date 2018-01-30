@@ -1,37 +1,39 @@
 ﻿$(function () {
     //Autenticatoin
 
-    $('.page-loader-wrapper').fadeIn();
-    $.ajax({
-        type: "POST",
-        url: "https://tvgaspar-server.herokuapp.com/findByToken",
-        data: {
-            token: localStorage.getItem('token')
-        },
-        success: function (response) {
-            console.log(response);
-            if (!response.success && response.success != undefined) {
+    //$('.page-loader-wrapper').fadeIn();
+    if (localStorage.getItem('usuario') != null && localStorage.getItem("usuario") != "") {
+        console.log("Logado");
+        var usuario = localStorage.getItem('usuario').replace(/\"|\{|\}/g, '').replace(/,/g, ':').split(":");
+        $('.name').html(findAttribute("nome", usuario));
+        $('.email').html(findAttribute("email", usuario));
+       
+        $('.page-loader-wrapper').fadeOut();
+    } else
+        $.ajax({
+            type: "POST",
+            url: "https://tvgaspar-server.herokuapp.com/findByToken",
+            data: {
+                token: localStorage.getItem('token')
+            },
+            success: function (response) {
+                console.log(response);
+                if (!response.success && response.success != undefined) {
+                    localStorage.setItem('msgError', 'Sessão inválida. Faça o login novamente.');
+                    location.href = "pages/examples/sign-in.html";
+                } else {
+                    $('.name').html(response[0].nome);
+                    $('.email').html(response[0].email);
+                    localStorage.setItem("usuario", JSON.stringify(response[0]));
+                    $('.page-loader-wrapper').fadeOut();
+                }
+            },
+            error: function (error) {
+                console.log(error.message);
                 localStorage.setItem('msgError', 'Sessão inválida. Faça o login novamente.');
                 location.href = "pages/examples/sign-in.html";
-            } else {
-                $('.name').html(response[0].nome);
-                $('.email').html(response[0].email);
-                $('.page-loader-wrapper').fadeOut();
             }
-        },
-        error: function (error) {
-            console.log(error.message);
-            localStorage.setItem('msgError', 'Sessão inválida. Faça o login novamente.');
-            location.href = "pages/examples/sign-in.html";
-        }
-    });
-
-    //Logout
-    $('#logout').click(function () {
-        localStorage.setItem('token', "");
-        localStorage.setItem('msgError', "");
-        location.href = "pages/examples/sign-in.html";
-    });
+        });
 
     //Widgets count
     $('.count-to').countTo();
