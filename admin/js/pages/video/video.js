@@ -1,23 +1,6 @@
 $(function () {
-    //$('.page-loader-wrapper').fadeIn();
 
-    //Textare auto growth
-    autosize($('textarea.auto-growth'));
-    //Datetimepicker plugin
-    $('.datetimepicker').bootstrapMaterialDatePicker({
-        format: 'DD/MM/YYYY - HH:mm',
-        lang: "pt-br",
-        clearButton: true,
-        weekStart: 1,
-        cancelText: "Cancelar",
-        clearText: "Apagar"
-    });
-
-    $('.datetimepicker').on('change', function (e) {
-        $('.datetimepicker').parents('.form-line').removeClass('error');
-        $('#data-error').css('display', 'none');
-    });
-    $('#noticia').validate({
+    $('#video').validate({
         highlight: function (input) {
             $(input).parents('.form-line').addClass('error');
         },
@@ -38,13 +21,4 @@ $(function () {
         location.href = "../../pages/examples/sign-in.html";
     }
     $('.page-loader-wrapper').fadeOut();
-
-    $('#noticia').submit(function (e) {
-        if ($("#noticia").valid()) {
-            console.log("ok");
-            e.preventDefault();
-
-        }
-    });
-
 });

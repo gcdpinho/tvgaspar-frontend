@@ -23,8 +23,13 @@
 
 .save-button {
     padding-left: 0px;
+    margin-top: 20px;
 }
 
-#tag{
-    margin-top: 20px;
+#tag, #noticia, #video, #publicidade, #imagem{
+    margin-top: 25px;
+}
+
+.col-sm-12, .col-sm-6{
+    margin-bottom: 0px !important;
 }

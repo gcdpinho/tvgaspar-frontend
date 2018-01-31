@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>Notícia | Área administrativa TV Gaspar</title>
+    <title>Vídeo | Área administrativa TV Gaspar</title>
     <!-- Favicon-->
     <link rel="icon" href="../../favicon.ico" type="image/x-icon">
 
@@ -21,9 +21,6 @@
 
     <!-- Animation Css -->
     <link href="../../plugins/animate-css/animate.css" rel="stylesheet" />
-
-    <!-- Bootstrap Material Datetime Picker Css -->
-    <link href="../../plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />
 
     <!-- Custom Css -->
     <link href="../../css/style.css" rel="stylesheet">
@@ -333,14 +330,14 @@
                             <span>Home</span>
                         </a>
                     </li>
-                    <li class="active">
+                    <li>
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">description</i>
                             <span>Notícia</span>
                         </a>
                         <ul class="ml-menu">
-                            <li class="active">
-                                <a href="cadastrar.html" class="toggled waves-effect waves-block">Cadastrar</a>
+                            <li>
+                                <a href="../noticia/cadastrar.html">Cadastrar</a>
                             </li>
                             <li>
                                 <a href="javascript:void(0);">Listar</a>
@@ -375,14 +372,14 @@
                             </li>
                         </ul>
                     </li>
-                    <li>
+                    <li class="active">
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">video_library</i>
                             <span>Vídeo</span>
                         </a>
                         <ul class="ml-menu">
-                            <li>
-                                <a href="../video/cadastrar.html">Cadastrar</a>
+                            <li class="active">
+                                <a href="cadastrar.html">Cadastrar</a>
                             </li>
                             <li>
                                 <a href="javascript:void(0);">Listar</a>
@@ -599,7 +596,7 @@
     <section class="content">
         <div class="container-fluid">
             <div class="block-header">
-                <h2>CADASTRAR NOTÍCIA</h2>
+                <h2>CADASTRAR VÍDEO</h2>
             </div>
             <!-- Input -->
             <div class="row clearfix">
@@ -607,51 +604,27 @@
                     <div class="card">
                         <div class="body">
                             <h2 class="card-inside-title">Preencha os campos a seguir</h2>
-                            <form id="noticia" method="POST">
+                            <form id="video" method="POST">
                                 <div class="row clearfix">
                                     <div class="col-sm-12">
                                         <div class="form-group form-float">
                                             <div class="form-line">
-                                                <input type="text" class="form-control" name="manchete" required aria-required="true">
-                                                <label class="form-label">Manchete</label>
+                                                <input type="text" class="form-control" name="titulo">
+                                                <label class="form-label">Título</label>
                                             </div>
                                         </div>
                                         <div class="form-group form-float">
                                             <div class="form-line">
-                                                <input type="text" class="form-control" name="submanchete">
-                                                <label class="form-label">Submanchete</label>
+                                                <input type="text" class="form-control" name="texto">
+                                                <label class="form-label">Texto</label>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="row clearfix">
-                                    <div class="col-sm-6">
                                         <div class="form-group form-float">
                                             <div class="form-line">
-                                                <input type="text" class="form-control" name="autor" required aria-required="true">
-                                                <label class="form-label">Autor</label>
+                                                <input type="text" class="form-control" name="link" required aria-required="true">
+                                                <label class="form-label">Link</label>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group form-float">
-                                            <div class="form-line">
-                                                <input type="text" class="datetimepicker form-control" name="data" placeholder="Data" required aria-required="true">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row clearfix">
-                                    <div class="col-sm-12">
-                                        <div class="form-group form-float">
-                                            <div class="form-line">
-                                                <textarea rows="1" class="form-control no-resize auto-growth" name="texto" placeholder="Texto" required aria-required="true"></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row clearfix">
-                                    <div class="col-sm-12">
                                         <div class="save-button col-lg-2">
                                             <button type="submit" class="btn btn-block btn-lg btn-primary waves-effect">SALVAR</button>
                                         </div>
@@ -662,7 +635,6 @@
                     </div>
                 </div>
             </div>
-        </div>
         </div>
     </section>
 
@@ -680,15 +652,6 @@
 
     <!-- Waves Effect Plugin Js -->
     <script src="../../plugins/node-waves/waves.js"></script>
-
-    <!-- Autosize Plugin Js -->
-    <script src="../../plugins/autosize/autosize.js"></script>
-
-    <!-- Moment Plugin Js -->
-    <script src="../../plugins/momentjs/moment.js"></script>
-
-    <!-- Bootstrap Material Datetime Picker Plugin Js -->
-    <script src="../../plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
 
     <!-- Jquery CountTo Plugin Js -->
     <script src="../../plugins/jquery-countto/jquery.countTo.js"></script>
@@ -715,7 +678,7 @@
 
     <!-- Custom Js -->
     <script src="../../js/admin.js"></script>
-    <script src="../../js/pages/noticia/noticia.js"></script>
+    <script src="../../js/pages/video/video.js"></script>
 
     <!-- Demo Js -->
     <script src="../../js/demo.js"></script>
