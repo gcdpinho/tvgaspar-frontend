@@ -18,7 +18,7 @@
             },
             success: function (response) {
                 console.log(response);
-                if (!response.success && response.success != undefined) {
+                if ((!response.success && response.success != undefined) || response.length <= 0) {
                     localStorage.setItem('msgError', 'Sessão inválida. Faça o login novamente.');
                     location.href = "pages/examples/sign-in.html";
                 } else {
