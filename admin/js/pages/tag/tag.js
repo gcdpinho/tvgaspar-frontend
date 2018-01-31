@@ -8,6 +8,7 @@ $(function () {
             $(input).parents('.form-line').removeClass('error');
         },
         errorPlacement: function (error, element) {
+            console.log('oi');
             $(element).parents('.form-group').append(error);
         }
     });
@@ -26,26 +27,25 @@ $(function () {
     $('#tag').submit(function (e) {
         if ($("#tag").valid()) {
             $('.page-loader-wrapper').fadeIn();
-            var titulo = $('.body input').val();
             $.ajax({
                 type: "POST",
                 url: "https://tvgaspar-server.herokuapp.com/createTag",
                 data: {
-                    titulo: titulo[0].toUpperCase() + titulo.substring(1, titulo.length),
+                    titulo: $('input[name="tag"]').val(),
                     token: localStorage.getItem('token')
                 },
                 success: function (response) {
                     console.log(response);
-                    $(titulo).val("");
-                    $('.page-loader-wrapper').fadeOut();
+                    sucessMessage(response);
                 },
                 error: function (error) {
                     console.log(error.message);
                     $('.page-loader-wrapper').fadeOut();
+                    showNotification("Erro ao cadastrar TAG, tente novamente", "error");
                 }
             });
             e.preventDefault();
-            
+
         }
     });
 

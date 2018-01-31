@@ -21,4 +21,33 @@ $(function () {
         location.href = "../../pages/examples/sign-in.html";
     }
     $('.page-loader-wrapper').fadeOut();
+
+    $('#video').submit(function (e) {
+        if ($("#video").valid()) {
+            $('.page-loader-wrapper').fadeIn();
+            $.ajax({
+                type: "POST",
+                url: "https://tvgaspar-server.herokuapp.com/createVideo",
+                data: {
+                    titulo: $('input[name="titulo"]').val(),
+                    texto: $('input[name="texto"]').val(),
+                    link: $('input[name="link"]').val(),
+                    token: localStorage.getItem('token')
+                },
+                success: function (response) {
+                    console.log(response);
+                    $('input').each(function (index) {
+                        $(this).val("");
+                        $(this).parents('.form-line').removeClass("focused");
+                    });
+                    $('.page-loader-wrapper').fadeOut();
+                },
+                error: function (error) {
+                    console.log(error.message);
+                    $('.page-loader-wrapper').fadeOut();
+                }
+            });
+            e.preventDefault();
+        }
+    });
 });
