@@ -34,8 +34,7 @@ $(function () {
         $('.email').html(findAttribute("email", usuario));
 
     } else {
-        localStorage.setItem('msgError', 'Sessão inválida. Faça o login novamente.');
-        location.href = "../../pages/examples/sign-in.html";
+        logout('Sessão inválida. Faça o login novamente.');
     }
     $('.page-loader-wrapper').fadeOut();
 

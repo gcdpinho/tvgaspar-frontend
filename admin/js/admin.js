@@ -477,50 +477,56 @@ $(function () {
     $.AdminBSB.search.activate();
 });
 
-//Logout
-$('#logout').click(function () {
+
+var logout = function (msgError) {
+    console.log(msgError);
     localStorage.setItem('token', "");
-    localStorage.setItem('msgError', "");
+    if (typeof msgError == "object")
+        localStorage.setItem('msgError', "");
+    else
+        localStorage.setItem('msgError', msgError);
     localStorage.setItem('usuario', "");
     var path = location.pathname;
     if (path.indexOf('pages') >= 0)
         location.href = "../examples/sign-in.html";
     else
         location.href = "pages/examples/sign-in.html"
-});
+}
+
+//Logout
+$('#logout').click(logout);
 
 //Preencher com as informações do usuário
-var findAttribute = function(attribute, data){
-    for (var i=0; i<data.length; i++){
+var findAttribute = function (attribute, data) {
+    for (var i = 0; i < data.length; i++) {
         if (data[i] == attribute)
-            return data[i+1];
+            return data[i + 1];
     }
 
     return -1;
 }
 
-var showNotification = function(text, state) {
+var showNotification = function (text, state) {
     var color = "bg-green";
     if (state == "error")
         color = "bg-red";
 
     $.notify({
         message: text
-    },
-        {
-            type: color,
-            allow_dismiss: true,
-            newest_on_top: true,
-            timer: 1000,
-            placement: {
-                from: "top",
-                align: "center"
-            },
-            animate: {
-                enter: "animated fadeInDown",
-                exit: "animated fadeOutUp"
-            },
-            template: '<div data-notify="container" class="bootstrap-notify-container alert alert-dismissible {0} ' + (true ? "p-r-35" : "") + '" role="alert">' +
+    }, {
+        type: color,
+        allow_dismiss: true,
+        newest_on_top: true,
+        timer: 1000,
+        placement: {
+            from: "top",
+            align: "center"
+        },
+        animate: {
+            enter: "animated fadeInDown",
+            exit: "animated fadeOutUp"
+        },
+        template: '<div data-notify="container" class="bootstrap-notify-container alert alert-dismissible {0} ' + (true ? "p-r-35" : "") + '" role="alert">' +
             '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
             '<span data-notify="icon"></span> ' +
             '<span data-notify="title">{1}</span> ' +
@@ -530,23 +536,29 @@ var showNotification = function(text, state) {
             '</div>' +
             '<a href="{3}" target="{4}" data-notify="url"></a>' +
             '</div>'
-        });
+    });
 }
 
-var sucessMessage = function(response){
+var registerMessage = function (response, form, text) {
     if (response.sqlMessage && response.sqlMessage.indexOf("Duplicate") >= 0) {
         var entry = response.sqlMessage.split('\'')[1].replace('\'', '');
-        $('.form-control').each(function(index){
-            if ($(this).val() == entry)
-                $(this).parents('.form-line').addClass('error');
-                
+        var name;
+        $('.form-control').each(function (index) {
+            if ($(this).val() == entry) {
+                name = $(this).attr("name");
+                return;
+            }
+        });
+        var error = {};
+        error[name] = name.toUpperCase() + " já cadastrada.";
+        $(form).validate().showErrors(error);
+        $('.page-loader-wrapper').fadeOut();
+    } else {
+        $('.form-control').each(function (index) {
+            $(this).val("");
+            $(this).parents('.form-line').removeClass("focused");
         });
         $('.page-loader-wrapper').fadeOut();
-        showNotification(entry + " já cadastrada!", "error");
-    } else {
-        $('input[name="tag"]').val("");
-        $('.page-loader-wrapper').fadeOut();
-        showNotification("TAG cadastrada com sucesso!", "success");
+        showNotification(text + " cadastrada com sucesso!", "success");
     }
 }
-

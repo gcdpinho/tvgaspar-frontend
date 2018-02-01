@@ -7,7 +7,7 @@
         var usuario = localStorage.getItem('usuario').replace(/\"|\{|\}/g, '').replace(/,/g, ':').split(":");
         $('.name').html(findAttribute("nome", usuario));
         $('.email').html(findAttribute("email", usuario));
-       
+
         $('.page-loader-wrapper').fadeOut();
     } else
         $.ajax({
@@ -18,20 +18,15 @@
             },
             success: function (response) {
                 console.log(response);
-                if ((!response.success && response.success != undefined) || response.length <= 0) {
-                    localStorage.setItem('msgError', 'Sessão inválida. Faça o login novamente.');
-                    location.href = "pages/examples/sign-in.html";
-                } else {
-                    $('.name').html(response[0].nome);
-                    $('.email').html(response[0].email);
-                    localStorage.setItem("usuario", JSON.stringify(response[0]));
-                    $('.page-loader-wrapper').fadeOut();
-                }
+                $('.name').html(response[0].nome);
+                $('.email').html(response[0].email);
+                localStorage.setItem("usuario", JSON.stringify(response[0]));
+                $('.page-loader-wrapper').fadeOut();
+
             },
             error: function (error) {
                 console.log(error.message);
-                localStorage.setItem('msgError', 'Sessão inválida. Faça o login novamente.');
-                location.href = "pages/examples/sign-in.html";
+                logout('Sessão inválida. Faça o login novamente.');
             }
         });
 

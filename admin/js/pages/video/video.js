@@ -17,8 +17,7 @@ $(function () {
         $('.email').html(findAttribute("email", usuario));
 
     } else {
-        localStorage.setItem('msgError', 'Sessão inválida. Faça o login novamente.');
-        location.href = "../../pages/examples/sign-in.html";
+        logout('Sessão inválida. Faça o login novamente.');
     }
     $('.page-loader-wrapper').fadeOut();
 
@@ -36,15 +35,12 @@ $(function () {
                 },
                 success: function (response) {
                     console.log(response);
-                    $('input').each(function (index) {
-                        $(this).val("");
-                        $(this).parents('.form-line').removeClass("focused");
-                    });
-                    $('.page-loader-wrapper').fadeOut();
+                    registerMessage(response, $('#video'), "VIDEO");
                 },
                 error: function (error) {
                     console.log(error.message);
                     $('.page-loader-wrapper').fadeOut();
+                    showNotification("Erro ao cadastrar VIDEO, tente novamente", "error");
                 }
             });
             e.preventDefault();

@@ -8,7 +8,6 @@ $(function () {
             $(input).parents('.form-line').removeClass('error');
         },
         errorPlacement: function (error, element) {
-            console.log('oi');
             $(element).parents('.form-group').append(error);
         }
     });
@@ -19,8 +18,7 @@ $(function () {
         $('.email').html(findAttribute("email", usuario));
 
     } else {
-        localStorage.setItem('msgError', 'Sessão inválida. Faça o login novamente.');
-        location.href = "../../pages/examples/sign-in.html";
+        logout('Sessão inválida. Faça o login novamente.');
     }
     $('.page-loader-wrapper').fadeOut();
 
@@ -36,7 +34,7 @@ $(function () {
                 },
                 success: function (response) {
                     console.log(response);
-                    sucessMessage(response);
+                    registerMessage(response, $('#tag'), "TAG");
                 },
                 error: function (error) {
                     console.log(error.message);
