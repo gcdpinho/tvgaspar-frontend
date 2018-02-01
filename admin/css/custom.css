@@ -52,3 +52,12 @@
     width: auto !important;
     display: inline;
 }
+
+.div-search-button{
+    text-align: right;
+}
+
+.row-tag{
+    display: flex;
+    align-items: center;
+}
