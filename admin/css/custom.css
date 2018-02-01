@@ -30,6 +30,25 @@
     margin-top: 25px;
 }
 
-.col-sm-12, .col-sm-6{
+.col-sm-12, .col-sm-6, .col-sm-8, .col-sm-4{
     margin-bottom: 0px !important;
+}
+
+.bootstrap-tagsinput{
+    width: 100%;
+    padding: 6px 0 !important;
+}
+
+.label-info.success{
+    background-color: #4CAF50;
+}
+
+.label-info.error{
+    background-color: #F44336;
+}
+
+.bootstrap-tagsinput input{
+    height: auto !important;
+    width: auto !important;
+    display: inline;
 }

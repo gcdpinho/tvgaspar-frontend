@@ -481,11 +481,13 @@ $(function () {
 var logout = function (msgError) {
     console.log(msgError);
     localStorage.setItem('token', "");
+    localStorage.setItem('usuario', "");
+    localStorage.setItem('tag', "");
     if (typeof msgError == "object")
         localStorage.setItem('msgError', "");
     else
         localStorage.setItem('msgError', msgError);
-    localStorage.setItem('usuario', "");
+    
     var path = location.pathname;
     if (path.indexOf('pages') >= 0)
         location.href = "../examples/sign-in.html";
@@ -557,8 +559,60 @@ var registerMessage = function (response, form, text) {
         $('.form-control').each(function (index) {
             $(this).val("");
             $(this).parents('.form-line').removeClass("focused");
+            $(this).parents('.bootstrap-tagsinput').find('span').each(function(index){
+                $(this).find('span[data-role="remove"]').click();
+            });
         });
         $('.page-loader-wrapper').fadeOut();
         showNotification(text + " cadastrada com sucesso!", "success");
     }
+}
+
+var getAllTags = function(){
+    var tags = localStorage.getItem("tag");
+    if (tags == null || tags == ""){
+        $.ajax({
+            type: "POST",
+            url: "https://tvgaspar-server.herokuapp.com/getAllTags",
+            data: {
+                token: localStorage.getItem('token')
+            },
+            success: function (response) {
+                console.log(response);
+                var tags = [];
+                $(response).each(function(index){
+                    tags.push($(this)[0]);
+                });
+                localStorage.setItem("tag", JSON.stringify(tags));
+                $('.page-loader-wrapper').fadeOut();
+            },
+            error: function (error) {
+                console.log(error.message);
+                logout('Sessão inválida. Faça o login novamente.');
+            }
+        });
+    }
+    else{
+        //var tags = getTags();
+        //console.log(getTagId(tags[0]));
+        $('.page-loader-wrapper').fadeOut();
+    }
+}
+
+var getTags = function(){
+    var tags = localStorage.getItem('tag');
+    tags = tags.replace(/\"|\}|\]/g, "").replace(/,/g, ":").split(":");
+    var arrTag = []
+    for (var i=3; i<tags.length; i+=4)
+        arrTag.push(tags[i]);
+
+    return arrTag;
+}
+
+var getTagId = function(tag){
+    var tags = localStorage.getItem('tag');
+    tags = tags.replace(/\"|\}|\]/g, "").replace(/,/g, ":").split(":");
+    for (var i=0; i<tags.length; i++)
+        if (tag == tags[i])
+            return parseInt(tags[i-2]);
 }

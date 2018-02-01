@@ -1,6 +1,34 @@
 $(function () {
 
+    $.validator.addMethod("invalidTag", function(value, element, config){
+        return $('.label-info.error').length > 0 ? false : true;
+    }, "Existem TAGS já cadastradas.");
+    
+    $.validator.addMethod("requiredTag", function(value, element, config){
+        return $('.label-info').length > 0 ? true : false;
+    }, "Preencha esse campo.");
+
+    $(".bootstrap-tagsinput").find('input').focus(function () {
+        $(this).parents(".form-line").addClass("focused");
+    });
+
+    $(".bootstrap-tagsinput").find('input').focusout(function () {
+        if ($(this).parents(".bootstrap-tagsinput").find('span').length <= 0)
+            $(this).parents(".form-line").removeClass("focused");
+        $(this).parents(".form-line").removeClass("error");
+    });
+
+    $('.bootstrap-tagsinput').find('input').addClass('form-control');
+    $('.bootstrap-tagsinput').find('input').attr('name', 'tag');
+
     $('#imagem').validate({
+        rules: {
+            tag: {
+                invalidTag: true,
+                requiredTag: true
+            }
+        },
+
         highlight: function (input) {
             $(input).parents('.form-line').addClass('error');
         },
@@ -11,17 +39,19 @@ $(function () {
             $(element).parents('.form-group').append(error);
         }
     });
-    var usuario = localStorage.getItem('usuario').replace(/\"|\{|\}/g, '').replace(/,/g, ':').split(":");
+    var usuario = localStorage.getItem('usuario');
     if (usuario != null && usuario != "") {
+        usuario = usuario.replace(/\"|\{|\}/g, '').replace(/,/g, ':').split(":");
         $('.name').html(findAttribute("nome", usuario));
         $('.email').html(findAttribute("email", usuario));
 
     } else {
         logout('Sessão inválida. Faça o login novamente.');
     }
-    $('.page-loader-wrapper').fadeOut();
 
-    $('#imagem').submit(function(e){
+    getAllTags();
+
+    $('#imagem').submit(function (e) {
         if ($("#imagem").valid()) {
             $('.page-loader-wrapper').fadeIn();
             $.ajax({
@@ -34,15 +64,38 @@ $(function () {
                 },
                 success: function (response) {
                     console.log(response);
-                    registerMessage(response, $('#imagem'), "IMAGEM");
+                    var data = [];
+                    var entry;
+                    $('.label-info.success').each(function(){
+                        entry = {}
+                        entry['idImagem'] = response.insertId;
+                        entry['idTag'] = getTagId($(this).text());
+                        data.push(entry);
+                    });
+                    console.log(data);
+                    $.ajax({
+                        type: "POST",
+                        url: "https://tvgaspar-server.herokuapp.com/createImagemTag",
+                        data: {
+                            data: data,
+                            token: localStorage.getItem('token')
+                        },
+                        success: function (response) {
+                            console.log(response);                            
+                            registerMessage(response, $('#imagem'), "IMAGEM");
+                        },
+                        error: function (error) {
+                            console.log(error.message);
+                            logout('Sessão inválida. Faça o login novamente.');
+                        }
+                    });
                 },
                 error: function (error) {
                     console.log(error.message);
-                    $('.page-loader-wrapper').fadeOut();
-                    showNotification("Erro ao cadastrar IMAGEM, tente novamente", "error");
+                    logout('Sessão inválida. Faça o login novamente.');
                 }
             });
-            e.preventDefault(); 
+            e.preventDefault();
         }
     });
 });

@@ -39,8 +39,7 @@ $(function () {
                 },
                 error: function (error) {
                     console.log(error.message);
-                    $('.page-loader-wrapper').fadeOut();
-                    showNotification("Erro ao cadastrar VIDEO, tente novamente", "error");
+                    logout('Sessão inválida. Faça o login novamente.');
                 }
             });
             e.preventDefault();
