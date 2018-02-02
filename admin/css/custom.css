@@ -85,6 +85,7 @@
 }
 
 .table-responsive{
+    min-width: 50%;
     display: none;
     position: absolute;
     top: calc(50% - 280px);
@@ -92,4 +93,8 @@
     background: white;
     left: calc(50% - 220px);
     padding: 20px;
+}
+
+.js-basic-example{
+    min-width: 80%;
 }

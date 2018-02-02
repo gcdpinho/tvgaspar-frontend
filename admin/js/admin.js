@@ -660,7 +660,6 @@ var search = function (params) {
         if (row.length > 0)
             data.push(row);
     }
-    console.log(data);
     $('.js-basic-example').DataTable({
         data: data,
         columns: colunas,
