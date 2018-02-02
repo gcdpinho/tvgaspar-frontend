@@ -1,26 +1,5 @@
 $(function () {
 
-    $.validator.addMethod("invalidTag", function(value, element, config){
-        return $('.label-info.error').length > 0 ? false : true;
-    }, "Existem TAGS já cadastradas.");
-    
-    $.validator.addMethod("requiredTag", function(value, element, config){
-        return $('.label-info').length > 0 ? true : false;
-    }, "Preencha esse campo.");
-
-    $(".bootstrap-tagsinput").find('input').focus(function () {
-        $(this).parents(".form-line").addClass("focused");
-    });
-
-    $(".bootstrap-tagsinput").find('input').focusout(function () {
-        if ($(this).parents(".bootstrap-tagsinput").find('span').length <= 0)
-            $(this).parents(".form-line").removeClass("focused");
-        $(this).parents(".form-line").removeClass("error");
-    });
-
-    $('.bootstrap-tagsinput').find('input').addClass('form-control');
-    $('.bootstrap-tagsinput').find('input').attr('name', 'tag');
-
     $('#imagem').validate({
         rules: {
             tag: {
@@ -49,7 +28,18 @@ $(function () {
         logout('Sessão inválida. Faça o login novamente.');
     }
 
+    
+
     getAllTags();
+
+    $('.div-search-button button').click(function () {
+        search("tag");
+    });
+
+    $('.background-table').click(function () {
+        $('.background-table').css('display', 'none');
+        $('.table-responsive').css('display', 'none');
+    });
 
     $('#imagem').submit(function (e) {
         if ($("#imagem").valid()) {
@@ -66,7 +56,7 @@ $(function () {
                     console.log(response);
                     var data = [];
                     var entry;
-                    $('.label-info.success').each(function(){
+                    $('.label-info.success').each(function () {
                         entry = {}
                         entry['idImagem'] = response.insertId;
                         entry['idTag'] = getTagId($(this).text());
@@ -81,7 +71,7 @@ $(function () {
                             token: localStorage.getItem('token')
                         },
                         success: function (response) {
-                            console.log(response);                            
+                            console.log(response);
                             registerMessage(response, $('#imagem'), "IMAGEM");
                         },
                         error: function (error) {

@@ -487,7 +487,7 @@ var logout = function (msgError) {
         localStorage.setItem('msgError', "");
     else
         localStorage.setItem('msgError', msgError);
-    
+
     var path = location.pathname;
     if (path.indexOf('pages') >= 0)
         location.href = "../examples/sign-in.html";
@@ -559,7 +559,7 @@ var registerMessage = function (response, form, text) {
         $('.form-control').each(function (index) {
             $(this).val("");
             $(this).parents('.form-line').removeClass("focused");
-            $(this).parents('.bootstrap-tagsinput').find('span').each(function(index){
+            $(this).parents('.bootstrap-tagsinput').find('span').each(function (index) {
                 $(this).find('span[data-role="remove"]').click();
             });
         });
@@ -568,9 +568,30 @@ var registerMessage = function (response, form, text) {
     }
 }
 
-var getAllTags = function(){
+var getAllTags = function () {
+    $.validator.addMethod("invalidTag", function (value, element, config) {
+        return $('.label-info.error').length > 0 ? false : true;
+    }, "Existem TAGS não cadastradas.");
+
+    $.validator.addMethod("requiredTag", function (value, element, config) {
+        return $('.label-info').length > 0 ? true : false;
+    }, "Preencha esse campo.");
+
+    $(".bootstrap-tagsinput").find('input').focus(function () {
+        $(this).parents(".form-line").addClass("focused");
+    });
+
+    $(".bootstrap-tagsinput").find('input').focusout(function () {
+        if ($(this).parents(".bootstrap-tagsinput").find('span').length <= 0)
+            $(this).parents(".form-line").removeClass("focused");
+        $(this).parents(".form-line").removeClass("error");
+    });
+
+    $('.bootstrap-tagsinput').find('input').addClass('form-control');
+    $('.bootstrap-tagsinput').find('input').attr('name', 'tag');
+
     var tags = localStorage.getItem("tag");
-    if (tags == null || tags == ""){
+    if (tags == null || tags == "") {
         $.ajax({
             type: "POST",
             url: "https://tvgaspar-server.herokuapp.com/getAllTags",
@@ -580,7 +601,7 @@ var getAllTags = function(){
             success: function (response) {
                 console.log(response);
                 var tags = [];
-                $(response).each(function(index){
+                $(response).each(function (index) {
                     tags.push($(this)[0]);
                 });
                 localStorage.setItem("tag", JSON.stringify(tags));
@@ -591,28 +612,75 @@ var getAllTags = function(){
                 logout('Sessão inválida. Faça o login novamente.');
             }
         });
-    }
-    else{
+    } else {
         //var tags = getTags();
         //console.log(getTagId(tags[0]));
         $('.page-loader-wrapper').fadeOut();
     }
 }
 
-var getTags = function(){
+var getTags = function () {
     var tags = localStorage.getItem('tag');
     tags = tags.replace(/\"|\}|\]/g, "").replace(/,/g, ":").split(":");
     var arrTag = []
-    for (var i=3; i<tags.length; i+=4)
+    for (var i = 3; i < tags.length; i += 4)
         arrTag.push(tags[i]);
 
     return arrTag;
 }
 
-var getTagId = function(tag){
+var getTagId = function (tag) {
     var tags = localStorage.getItem('tag');
     tags = tags.replace(/\"|\}|\]/g, "").replace(/,/g, ":").split(":");
-    for (var i=0; i<tags.length; i++)
+    for (var i = 0; i < tags.length; i++)
         if (tag == tags[i])
-            return parseInt(tags[i-2]);
+            return parseInt(tags[i - 2]);
+}
+
+var search = function (params) {
+    var list = localStorage.getItem(params).replace(/\[|\{|\"|\]/g, "").split("}");
+    for (var i = 0; i < list.length; i++) {
+        if (list[i][0] == ",")
+            list[i] = list[i].replace(",", "");
+    }
+    var colunas = [];
+    var coluna = {}; 
+    var data = [];
+    for (var j = 0; j < list.length; j++) {
+        var row = [];
+        var linha = list[j].replace(/\,/g, ":").split(":");
+        if (j == 0)
+            for (var i = 0; i < linha.length; i += 2){
+                coluna = {}; 
+                coluna["title"] = linha[i];
+                colunas.push(coluna);
+            }
+        for (var i = 1; i < linha.length; i+=2)
+            row.push(linha[i]);
+        if (row.length > 0)
+            data.push(row);
+    }
+    console.log(data);
+    $('.js-basic-example').DataTable({
+        data: data,
+        columns: colunas,
+        responsive: true,
+        bLengthChange: false,
+        pageLength: 10,
+        language: {
+            zeroRecords: "Nenhum registro encontrado",
+            info: "Exibindo _START_ a _END_ de _TOTAL_ registros",
+            infoEmpty: "Exibindo 0 a 0 de 0 registros",
+            infoFiltered: "",
+            search: "Pesquisar:",
+            paginate: {
+                "next": "Próximo",
+                "previous": "Anterior"
+            },
+        }
+    });
+
+    $('.background-table').css('display', 'block');
+    $('.table-responsive').css('display', 'block');
+
 }
