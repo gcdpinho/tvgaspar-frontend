@@ -1,5 +1,4 @@
 $(function () {
-
     $('#imagem').validate({
         rules: {
             tag: {
@@ -28,17 +27,10 @@ $(function () {
         logout('Sessão inválida. Faça o login novamente.');
     }
 
-    
-
     getAllTags();
 
     $('.div-search-button button').click(function () {
         search("tag");
-    });
-
-    $('.background-table').click(function () {
-        $('.background-table').css('display', 'none');
-        $('.table-responsive').css('display', 'none');
     });
 
     $('#imagem').submit(function (e) {
@@ -56,29 +48,31 @@ $(function () {
                     console.log(response);
                     var data = [];
                     var entry;
-                    $('.label-info.success').each(function () {
-                        entry = {}
-                        entry['idImagem'] = response.insertId;
-                        entry['idTag'] = getTagId($(this).text());
-                        data.push(entry);
-                    });
-                    console.log(data);
-                    $.ajax({
-                        type: "POST",
-                        url: "https://tvgaspar-server.herokuapp.com/createImagemTag",
-                        data: {
-                            data: data,
-                            token: localStorage.getItem('token')
-                        },
-                        success: function (response) {
-                            console.log(response);
-                            registerMessage(response, $('#imagem'), "IMAGEM");
-                        },
-                        error: function (error) {
-                            console.log(error.message);
-                            logout('Sessão inválida. Faça o login novamente.');
-                        }
-                    });
+                    if (registerMessage(response, $('#imagem'), "IMAGEM", false)) {
+                        $('.label-info.success').each(function () {
+                            entry = {}
+                            entry['idImagem'] = response.insertId;
+                            entry['idTag'] = getDataId("tag", $(this).text(), 2);
+                            data.push(entry);
+                        });
+                        console.log(data);
+                        $.ajax({
+                            type: "POST",
+                            url: "https://tvgaspar-server.herokuapp.com/createImagemTag",
+                            data: {
+                                data: data,
+                                token: localStorage.getItem('token')
+                            },
+                            success: function (response) {
+                                console.log(response);
+                                registerMessage(response, $('#imagem'), "IMAGEM", true);
+                            },
+                            error: function (error) {
+                                console.log(error.message);
+                                logout('Sessão inválida. Faça o login novamente.');
+                            }
+                        });
+                    }
                 },
                 error: function (error) {
                     console.log(error.message);

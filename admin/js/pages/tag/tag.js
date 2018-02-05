@@ -17,9 +17,9 @@ $(function () {
         $('.name').html(findAttribute("nome", usuario));
         $('.email').html(findAttribute("email", usuario));
 
-    } else {
+    } else
         logout('Sessão inválida. Faça o login novamente.');
-    }
+
     $('.page-loader-wrapper').fadeOut();
 
     $('#tag').submit(function (e) {
@@ -34,7 +34,7 @@ $(function () {
                 },
                 success: function (response) {
                     console.log(response);
-                    registerMessage(response, $('#tag'), "TAG");
+                    registerMessage(response, $('#tag'), "TAG", true);
                 },
                 error: function (error) {
                     console.log(error.message);

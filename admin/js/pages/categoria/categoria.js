@@ -37,7 +37,7 @@ $(function () {
                 },
                 success: function (response) {
                     console.log(response);
-                    registerMessage(response, $('#categoria'), "CATEGORIA");
+                    registerMessage(response, $('#categoria'), "CATEGORIA", true);
                 },
                 error: function (error) {
                     console.log(error.message);

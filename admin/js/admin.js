@@ -483,6 +483,7 @@ var logout = function (msgError) {
     localStorage.setItem('token', "");
     localStorage.setItem('usuario', "");
     localStorage.setItem('tag', "");
+    localStorage.setItem('imagem', "");
     if (typeof msgError == "object")
         localStorage.setItem('msgError', "");
     else
@@ -541,7 +542,7 @@ var showNotification = function (text, state) {
     });
 }
 
-var registerMessage = function (response, form, text) {
+var registerMessage = function (response, form, text, notification) {
     if (response.sqlMessage && response.sqlMessage.indexOf("Duplicate") >= 0) {
         var entry = response.sqlMessage.split('\'')[1].replace('\'', '');
         var name;
@@ -552,10 +553,13 @@ var registerMessage = function (response, form, text) {
             }
         });
         var error = {};
-        error[name] = name.toUpperCase() + " já cadastrada.";
+        error[name] = name.toUpperCase() + " já cadastrado";
         $(form).validate().showErrors(error);
         $('.page-loader-wrapper').fadeOut();
-    } else {
+
+        return false;
+    } else
+    if (notification) {
         $('.form-control').each(function (index) {
             $(this).val("");
             $(this).parents('.form-line').removeClass("focused");
@@ -564,8 +568,11 @@ var registerMessage = function (response, form, text) {
             });
         });
         $('.page-loader-wrapper').fadeOut();
+
         showNotification(text + " cadastrada com sucesso!", "success");
     }
+
+    return true;
 }
 
 var getAllTags = function () {
@@ -612,74 +619,126 @@ var getAllTags = function () {
                 logout('Sessão inválida. Faça o login novamente.');
             }
         });
-    } else {
-        //var tags = getTags();
-        //console.log(getTagId(tags[0]));
+    } else
         $('.page-loader-wrapper').fadeOut();
-    }
 }
 
-var getTags = function () {
-    var tags = localStorage.getItem('tag');
-    tags = tags.replace(/\"|\}|\]/g, "").replace(/,/g, ":").split(":");
-    var arrTag = []
-    for (var i = 3; i < tags.length; i += 4)
-        arrTag.push(tags[i]);
+var getAllImagens = function () {
+    $.validator.addMethod("invalidImagem", function (value, element, config) {
+        return getDataId("imagem", value, 4) != undefined;
+    }, "Existem IMAGENS não cadastradas.");
 
-    return arrTag;
+    var imagens = localStorage.getItem("imagem");
+    if (imagens == null || imagens == "") {
+        $.ajax({
+            type: "POST",
+            url: "https://tvgaspar-server.herokuapp.com/getAllImagens",
+            data: {
+                token: localStorage.getItem('token')
+            },
+            success: function (response) {
+                console.log(response);
+                var imagens = [];
+                $(response).each(function (index) {
+                    imagens.push($(this)[0]);
+                });
+                localStorage.setItem("imagem", JSON.stringify(imagens));
+                $('.page-loader-wrapper').fadeOut();
+            },
+            error: function (error) {
+                console.log(error.message);
+                logout('Sessão inválida. Faça o login novamente.');
+            }
+        });
+    } else
+        $('.page-loader-wrapper').fadeOut();
 }
 
-var getTagId = function (tag) {
-    var tags = localStorage.getItem('tag');
-    tags = tags.replace(/\"|\}|\]/g, "").replace(/,/g, ":").split(":");
-    for (var i = 0; i < tags.length; i++)
-        if (tag == tags[i])
-            return parseInt(tags[i - 2]);
+var getData = function (data) {
+    var datas = localStorage.getItem(data);
+    datas = datas.replace(/\"|\}|\]/g, "").replace(/,/g, ":").split(":");
+    var arrData = []
+    for (var i = 3; i < datas.length; i += 4)
+        arrData.push(datas[i]);
+
+    return arrData;
+}
+
+var getDataId = function (data, element, diff) {
+    var datas = localStorage.getItem(data);
+    datas = datas.replace(/\"|\}|\]/g, "").replace(/,/g, ":").split(":");
+    for (var i = 0; i < datas.length; i++)
+        if (element == datas[i])
+            return parseInt(datas[i - diff]);
 }
 
 var search = function (params) {
-    var list = localStorage.getItem(params).replace(/\[|\{|\"|\]/g, "").split("}");
-    for (var i = 0; i < list.length; i++) {
-        if (list[i][0] == ",")
-            list[i] = list[i].replace(",", "");
-    }
-    var colunas = [];
-    var coluna = {}; 
-    var data = [];
-    for (var j = 0; j < list.length; j++) {
-        var row = [];
-        var linha = list[j].replace(/\,/g, ":").split(":");
-        if (j == 0)
-            for (var i = 0; i < linha.length; i += 2){
-                coluna = {}; 
-                coluna["title"] = linha[i];
-                colunas.push(coluna);
-            }
-        for (var i = 1; i < linha.length; i+=2)
-            row.push(linha[i]);
-        if (row.length > 0)
-            data.push(row);
-    }
-    $('.js-basic-example').DataTable({
-        data: data,
-        columns: colunas,
-        responsive: true,
-        bLengthChange: false,
-        pageLength: 10,
-        language: {
-            zeroRecords: "Nenhum registro encontrado",
-            info: "Exibindo _START_ a _END_ de _TOTAL_ registros",
-            infoEmpty: "Exibindo 0 a 0 de 0 registros",
-            infoFiltered: "",
-            search: "Pesquisar:",
-            paginate: {
-                "next": "Próximo",
-                "previous": "Anterior"
-            },
+    if ($('td').length <= 0) {
+        var list = localStorage.getItem(params).replace(/\[|\{|\"|\]/g, "").split("}");
+        for (var i = 0; i < list.length; i++) {
+            if (list[i][0] == ",")
+                list[i] = list[i].replace(",", "");
         }
-    });
+        var colunas = [];
+        var coluna = {};
+        var data = [];
+        for (var j = 0; j < list.length; j++) {
+            var row = [];
+            var linha = list[j].replace(/\,/g, ":").split(":");
+            if (j == 0)
+                for (var i = 0; i < linha.length; i += 2) {
+                    coluna = {};
+                    coluna["title"] = linha[i];
+                    colunas.push(coluna);
+                }
+            for (var i = 1; i < linha.length; i += 2)
+                row.push(linha[i]);
+            if (row.length > 0)
+                data.push(row);
+        }
+
+        var table = $('.js-basic-example').DataTable({
+            data: data,
+            columns: colunas,
+            responsive: true,
+            bLengthChange: false,
+            pageLength: 10,
+            language: {
+                zeroRecords: "Nenhum registro encontrado",
+                info: "Exibindo _START_ a _END_ de _TOTAL_ registros",
+                infoEmpty: "Exibindo 0 a 0 de 0 registros",
+                infoFiltered: "",
+                search: "Pesquisar:",
+                paginate: {
+                    "next": "Próximo",
+                    "previous": "Anterior"
+                },
+            }
+        });
+
+        $('.table-responsive').css('top', $(window).height() / 2 - $('.table-responsive').height() / 2 - 50);
+        $('.table-responsive').css('left', ($(window).width() + $('#leftsidebar').width()) / 2 - $('.table-responsive').width() / 2);
+
+
+        $('.table-responsive tbody').on('click', 'tr', function (e, dt, type, indexes) {
+            if (params == "tag") {
+                $('.bootstrap-tagsinput input').focus();
+                $('input[data-role="tagsinput"]').tagsinput('add', table.row(this).data()[1]);
+            } else {
+                $('input[name="imagem"]').focus();
+                $('input[name="imagem"]').val(table.row(this).data()[2]);
+                $('.background-table').click();
+                $('input[name="imagem"]').focusout();
+            }
+        });
+    }
 
     $('.background-table').css('display', 'block');
     $('.table-responsive').css('display', 'block');
-
 }
+
+
+$('.background-table').click(function () {
+    $('.background-table').css('display', 'none');
+    $('.table-responsive').css('display', 'none');
+});

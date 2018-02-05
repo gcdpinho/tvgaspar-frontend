@@ -1,6 +1,13 @@
 $(function () {
 
     $('#video').validate({
+        rules: {
+            tag: {
+                invalidTag: true,
+                requiredTag: true
+            }
+        },
+
         highlight: function (input) {
             $(input).parents('.form-line').addClass('error');
         },
@@ -16,10 +23,14 @@ $(function () {
         $('.name').html(findAttribute("nome", usuario));
         $('.email').html(findAttribute("email", usuario));
 
-    } else {
+    } else
         logout('Sessão inválida. Faça o login novamente.');
-    }
-    $('.page-loader-wrapper').fadeOut();
+
+    getAllTags();
+
+    $('.div-search-button button').click(function () {
+        search("tag");
+    });
 
     $('#video').submit(function (e) {
         if ($("#video").valid()) {
@@ -35,7 +46,33 @@ $(function () {
                 },
                 success: function (response) {
                     console.log(response);
-                    registerMessage(response, $('#video'), "VIDEO");
+                    var data = [];
+                    var entry;
+                    if (registerMessage(response, $('#video'), "VÍDEO", false)) {
+                        $('.label-info.success').each(function () {
+                            entry = {}
+                            entry['idVideo'] = response.insertId;
+                            entry['idTag'] = getDataId("tag", $(this).text(), 2);
+                            data.push(entry);
+                        });
+                        console.log(data);
+                        $.ajax({
+                            type: "POST",
+                            url: "https://tvgaspar-server.herokuapp.com/createVideoTag",
+                            data: {
+                                data: data,
+                                token: localStorage.getItem('token')
+                            },
+                            success: function (response) {
+                                console.log(response);
+                                registerMessage(response, $('#video'), "VÍDEO", true);
+                            },
+                            error: function (error) {
+                                console.log(error.message);
+                                logout('Sessão inválida. Faça o login novamente.');
+                            }
+                        });
+                    }
                 },
                 error: function (error) {
                     console.log(error.message);
