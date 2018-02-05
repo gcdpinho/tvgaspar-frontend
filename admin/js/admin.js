@@ -543,21 +543,26 @@ var showNotification = function (text, state) {
 }
 
 var registerMessage = function (response, form, text, notification) {
-    if (response.sqlMessage && response.sqlMessage.indexOf("Duplicate") >= 0) {
-        var entry = response.sqlMessage.split('\'')[1].replace('\'', '');
-        var name;
-        $('.form-control').each(function (index) {
-            if ($(this).val() == entry) {
-                name = $(this).attr("name");
-                return;
-            }
-        });
-        var error = {};
-        error[name] = name.toUpperCase() + " já cadastrado";
-        $(form).validate().showErrors(error);
-        $('.page-loader-wrapper').fadeOut();
+    if (response.sqlMessage) {
+        if (response.sqlMessage.indexOf("Duplicate") >= 0) {
+            var entry = response.sqlMessage.split('\'')[1].replace('\'', '');
+            var name;
+            $('.form-control').each(function (index) {
+                if ($(this).val() == entry) {
+                    name = $(this).attr("name");
+                    return;
+                }
+            });
+            var error = {};
+            error[name] = name.toUpperCase() + " já cadastrado";
+            $(form).validate().showErrors(error);
+            $('.page-loader-wrapper').fadeOut();
 
-        return false;
+            return false;
+        } else {
+            showNotification("Erro ao cadastrar " + text + ", tente novamente.", "error");
+            $('.page-loader-wrapper').fadeOut();
+        }
     } else
     if (notification) {
         $('.form-control').each(function (index) {
