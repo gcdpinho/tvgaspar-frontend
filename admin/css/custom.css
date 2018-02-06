@@ -3,21 +3,22 @@
     color: #F44336;
 }
 
-.vulpis{
+.vulpis {
     color: black;
 }
 
-.vulpis:hover, .vulpis:focus{
+.vulpis:hover,
+.vulpis:focus {
     color: black;
 }
 
-.badge{
+.badge {
     color: white !important;
     position: absolute;
     right: 17px;
 }
 
-.cad span{
+.cad span {
     margin: 7px 0 1px 0px !important;
 }
 
@@ -26,65 +27,71 @@
     margin-top: 20px;
 }
 
-#tag, #noticia, #video, #publicidade, #imagem, #categoria{
+#tag,
+#noticia,
+#video,
+#publicidade,
+#imagem,
+#categoria {
     margin-top: 25px;
 }
 
-.col-sm-12, .col-sm-6, .col-sm-10, .col-sm-2{
+.col-sm-12,
+.col-sm-6,
+.col-sm-10,
+.col-sm-2 {
     margin-bottom: 0px !important;
 }
 
-.bootstrap-tagsinput{
+.bootstrap-tagsinput {
     width: 100%;
     padding: 6px 0 !important;
 }
 
-.label-info.success{
+.label-info.success {
     background-color: #4CAF50;
 }
 
-.label-info.error{
+.label-info.error {
     background-color: #F44336;
 }
 
-.bootstrap-tagsinput input{
+.bootstrap-tagsinput input {
     height: auto !important;
     width: auto !important;
     display: inline;
 }
 
-.div-search-button{
+.div-search-button {
     text-align: right;
 }
 
-.row-tag{
+.row-tag {
     display: flex;
     align-items: center;
 }
 
-@media (max-width: 1023px){
-    
-    .row-tag{
+@media (max-width: 1023px) {
+    .row-tag {
         display: block;
     }
-
-    @media (min-width: 768px){
-        .row-tag{
+    @media (min-width: 768px) {
+        .row-tag {
             max-width: 100% !important;
         }
     }
 }
 
-.background-table{
+.background-table {
     display: none;
     position: absolute;
     background: rgba(0, 0, 0, 0.5);
-    top:0;
+    top: 0;
     height: 100%;
     width: 100%;
 }
 
-.table-responsive{
+.table-responsive {
     min-width: 50%;
     display: none;
     position: absolute;
@@ -93,10 +100,22 @@
     padding: 20px;
 }
 
-.js-basic-example{
+.js-basic-example {
     min-width: 100%;
 }
 
-tr{
+tr {
     cursor: pointer;
+}
+
+.form-group .form-line .form-label.img{
+    top: -20px;
+}
+
+.form-group.form-float.img{
+    margin-top: 25px;
+}
+
+.dropify-wrapper .dropify-message p{
+    text-align: center;
 }

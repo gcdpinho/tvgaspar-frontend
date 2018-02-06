@@ -1,9 +1,36 @@
 $(function () {
+    var dropify = $('.dropify').dropify({
+        messages: {
+            'default': 'Arraste ou clique para selecionar um arquivo',
+            'replace': 'Arraste ou clique para substituir o arquivo',
+            'remove': 'Remover',
+            'error': 'Erro, tente novamente'
+        }
+    });
+
+    dropify.on('dropify.afterClear', function(event, element){
+        $(this).parents(".form-line").removeClass("focused");
+        
+    });
+
+    $('.dropify-wrapper').on('change', function(){
+        $(this).parents(".form-line").addClass("focused");
+        $(this).parents('.form-line').removeClass('error');
+        $(this).parents('.form-line').find('label').css('display', 'none');
+    });
+
+    $.validator.addMethod("requiredImage", function (value, element, config) {
+        return $('.dropify-wrapper').hasClass('has-preview');
+    }, "Preencha esse campo.");
+
     $('#imagem').validate({
         rules: {
             tag: {
                 invalidTag: true,
                 requiredTag: true
+            },
+            link:{
+                requiredImage: true
             }
         },
 

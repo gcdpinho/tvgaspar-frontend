@@ -1,6 +1,6 @@
 $(function () {
     $('.colorpicker').colorpicker();
-
+    //testeImagem();
     //Dropzone
     Dropzone.options.frmFileUpload = {
         paramName: "file",
