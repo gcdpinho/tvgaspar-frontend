@@ -17,14 +17,7 @@ $(function () {
         }
     });
 
-    firebase.initializeApp({
-        apiKey: "AIzaSyAN8z_RHWKICWDl-QQ5cAQ8b1LvIWfrvOw",
-        authDomain: "tvgaspar-backend.firebaseapp.com",
-        databaseURL: "https://tvgaspar-backend.firebaseio.com",
-        projectId: "tvgaspar-backend",
-        storageBucket: "tvgaspar-backend.appspot.com",
-        messagingSenderId: "702505431041"
-    });
+    initFirebase();
 
     var usuario = localStorage.getItem('usuario').replace(/\"|\{|\}/g, '').replace(/,/g, ':').split(":");
     if (usuario != null && usuario != "") {

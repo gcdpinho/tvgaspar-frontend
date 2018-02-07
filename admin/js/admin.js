@@ -701,70 +701,83 @@ var search = function (params) {
                 }
             for (var i = 1; i < linha.length; i += 2)
                 row.push(linha[i]);
-            if (row.length > 0)
+            if (row.length > 0){
                 data.push(row);
+                if (params == "imagem")
+                    data[data.length-1][data[data.length-1].length-1] = getImgFireBase( data[data.length-1][data[data.length-1].length-1]);
+            }
         }
-
-        if (params == "imagem") {
-            for (var element in data) {                
-                var storageRef = firebase.storage().ref().child('imagens/' + data[element][data[element].length-1]);
-
-                storageRef.getDownloadURL().then(function (url) {
-                    console.log(url);
-                }).catch(function (error) {
-                    console.log(error);
-                });
-            }
-
-        }
-
-        var table = $('.js-basic-example').DataTable({
-            data: data,
-            columns: colunas,
-            responsive: true,
-            bLengthChange: false,
-            pageLength: 10,
-            language: {
-                zeroRecords: "Nenhum registro encontrado",
-                info: "Exibindo _START_ a _END_ de _TOTAL_ registros",
-                infoEmpty: "Exibindo 0 a 0 de 0 registros",
-                infoFiltered: "",
-                search: "Pesquisar:",
-                paginate: {
-                    "next": "Próximo",
-                    "previous": "Anterior"
-                },
-            }
-        });
-
-        $('.table-responsive').css('top', $(window).height() / 2 - $('.table-responsive').height() / 2 - 50);
-        $('.table-responsive').css('left', ($(window).width() + $('#leftsidebar').width()) / 2 - $('.table-responsive').width() / 2);
+        
+        console.log(data);
+        tableFunction(data, colunas, params);
 
 
-        $('.table-responsive tbody').on('click', 'tr', function (e, dt, type, indexes) {
-            if (params == "tag") {
-                $('.bootstrap-tagsinput input').focus();
-                $('input[data-role="tagsinput"]').tagsinput('add', table.row(this).data()[1]);
-            } else {
-                $('input[name="imagem"]').focus();
-                $('input[name="imagem"]').val(table.row(this).data()[2]);
-                $('.background-table').click();
-                $('input[name="imagem"]').focusout();
-            }
-        });
+    } else {
+        $('.background-table').fadeIn();
+        $('.table-responsive').fadeIn();
     }
+}
+var getImgFireBase = function (element){
+    var storageRef = firebase.storage().ref().child('imagens/' + element);
 
-    $('.background-table').css('display', 'block');
-    $('.table-responsive').css('display', 'block');
+    storageRef.getDownloadURL().then(function (url) {
+        return url;
+    }).catch(function (error) {
+        return "";
+    });
+}
+var tableFunction = function (data, colunas, params) {
+    var table = $('.js-basic-example').DataTable({
+        data: data,
+        columns: colunas,
+        responsive: true,
+        bLengthChange: false,
+        pageLength: 10,
+        language: {
+            zeroRecords: "Nenhum registro encontrado",
+            info: "Exibindo _START_ a _END_ de _TOTAL_ registros",
+            infoEmpty: "Exibindo 0 a 0 de 0 registros",
+            infoFiltered: "",
+            search: "Pesquisar:",
+            paginate: {
+                "next": "Próximo",
+                "previous": "Anterior"
+            },
+        }
+    });
+
+    $('.table-responsive').css('top', $(window).height() / 2 - $('.table-responsive').height() / 2 - 50);
+    $('.table-responsive').css('left', ($(window).width() + $('#leftsidebar').width()) / 2 - $('.table-responsive').width() / 2);
+
+
+    $('.table-responsive tbody').on('click', 'tr', function (e, dt, type, indexes) {
+        if (params == "tag") {
+            $('.bootstrap-tagsinput input').focus();
+            $('input[data-role="tagsinput"]').tagsinput('add', table.row(this).data()[1]);
+        } else {
+            $('input[name="imagem"]').focus();
+            $('input[name="imagem"]').val(table.row(this).data()[2]);
+            $('.background-table').click();
+            $('input[name="imagem"]').focusout();
+        }
+    });
+
+    $('.background-table').fadeIn();
+    $('.table-responsive').fadeIn();
 }
 
-
 $('.background-table').click(function () {
-    $('.background-table').css('display', 'none');
-    $('.table-responsive').css('display', 'none');
+    $('.background-table').fadeOut();
+    $('.table-responsive').fadeOut();
 });
 
-var testeUpload = function () {
-    var file = $('#fileInput').prop('files')[0];
-
+var initFirebase = function () {
+    firebase.initializeApp({
+        apiKey: "AIzaSyAN8z_RHWKICWDl-QQ5cAQ8b1LvIWfrvOw",
+        authDomain: "tvgaspar-backend.firebaseapp.com",
+        databaseURL: "https://tvgaspar-backend.firebaseio.com",
+        projectId: "tvgaspar-backend",
+        storageBucket: "tvgaspar-backend.appspot.com",
+        messagingSenderId: "702505431041"
+    });
 }
