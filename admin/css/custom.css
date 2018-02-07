@@ -120,3 +120,8 @@ tr {
 .dropify-wrapper .dropify-message p{
     text-align: center;
 }
+
+.img-preview{
+    width: 100px;
+    margin-right: 10px;
+}

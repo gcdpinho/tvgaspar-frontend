@@ -282,7 +282,7 @@ $.AdminBSB.input = {
         $('.form-control').focusout(function () {
             var $this = $(this);
             if ($this.parents('.form-group').hasClass('form-float')) {
-                if (($this.val() == '' && $this.prop('files') == null) || $this.prop('files').length <= 0) {
+                if (($this.val() == '' && $this.prop('files') == null) || ($this.prop('files') != null && $this.prop('files').length <= 0)) {
                     $this.parents('.form-line').removeClass('focused');
                 }
             } else {
@@ -676,12 +676,14 @@ var getDataId = function (data, element, diff) {
     var datas = localStorage.getItem(data);
     datas = datas.replace(/\"|\}|\]/g, "").replace(/,/g, ":").split(":");
     for (var i = 0; i < datas.length; i++)
-        if (element == datas[i])
-            return parseInt(datas[i - diff]);
+        if (element == datas[i]) {
+            return parseInt(datas[i - diff]) || undefined;
+        }
 }
 
-var search = function (params) {
+var search = async function (params) {
     if ($('td').length <= 0) {
+        $('.page-loader-wrapper').fadeIn();
         var list = localStorage.getItem(params).replace(/\[|\{|\"|\]/g, "").split("}");
         for (var i = 0; i < list.length; i++) {
             if (list[i][0] == ",")
@@ -690,6 +692,7 @@ var search = function (params) {
         var colunas = [];
         var coluna = {};
         var data = [];
+        var imagens = []
         for (var j = 0; j < list.length; j++) {
             var row = [];
             var linha = list[j].replace(/\,/g, ":").split(":");
@@ -701,31 +704,30 @@ var search = function (params) {
                 }
             for (var i = 1; i < linha.length; i += 2)
                 row.push(linha[i]);
-            if (row.length > 0){
+            if (row.length > 0) {
                 data.push(row);
                 if (params == "imagem")
-                    data[data.length-1][data[data.length-1].length-1] = getImgFireBase( data[data.length-1][data[data.length-1].length-1]);
+                    imagens.push(row[row.length - 1]);
+
             }
         }
-        
-        console.log(data);
+        var urls = await getUrls(imagens);
+        for (url in urls)
+            data[url][data[url].length - 1] = "<img class='img-preview' src='" + urls[url] + "'>" + data[url][data[url].length - 1];
         tableFunction(data, colunas, params);
-
 
     } else {
         $('.background-table').fadeIn();
         $('.table-responsive').fadeIn();
     }
 }
-var getImgFireBase = function (element){
-    var storageRef = firebase.storage().ref().child('imagens/' + element);
 
-    storageRef.getDownloadURL().then(function (url) {
-        return url;
-    }).catch(function (error) {
-        return "";
-    });
+async function getUrls(arrayDeImagens) {
+    return Promise.all(arrayDeImagens.map(async nome =>
+        await firebase.storage().ref().child('imagens/' + nome).getDownloadURL()
+    )).then();
 }
+
 var tableFunction = function (data, colunas, params) {
     var table = $('.js-basic-example').DataTable({
         data: data,
@@ -746,7 +748,7 @@ var tableFunction = function (data, colunas, params) {
         }
     });
 
-    $('.table-responsive').css('top', $(window).height() / 2 - $('.table-responsive').height() / 2 - 50);
+    $('.table-responsive').css('top', $(window).height() / 2 - $('.table-responsive').height() / 2 - 100);
     $('.table-responsive').css('left', ($(window).width() + $('#leftsidebar').width()) / 2 - $('.table-responsive').width() / 2);
 
 
@@ -756,7 +758,7 @@ var tableFunction = function (data, colunas, params) {
             $('input[data-role="tagsinput"]').tagsinput('add', table.row(this).data()[1]);
         } else {
             $('input[name="imagem"]').focus();
-            $('input[name="imagem"]').val(table.row(this).data()[2]);
+            $('input[name="imagem"]').val(table.row(this).data()[2].split('>')[1]);
             $('.background-table').click();
             $('input[name="imagem"]').focusout();
         }
@@ -764,6 +766,13 @@ var tableFunction = function (data, colunas, params) {
 
     $('.background-table').fadeIn();
     $('.table-responsive').fadeIn();
+    if (params == "imagem")
+        $('.img-preview').on('load', function () {
+            $('.page-loader-wrapper').fadeOut();
+        });
+    else
+        $('.page-loader-wrapper').fadeOut();
+
 }
 
 $('.background-table').click(function () {
