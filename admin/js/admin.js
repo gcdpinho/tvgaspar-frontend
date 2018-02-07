@@ -484,6 +484,8 @@ var logout = function (msgError) {
     localStorage.setItem('usuario', "");
     localStorage.setItem('tag', "");
     localStorage.setItem('imagem', "");
+    localStorage.setItem('video', "");
+    localStorage.setItem('categoria', "");
     if (typeof msgError == "object")
         localStorage.setItem('msgError', "");
     else
@@ -583,7 +585,7 @@ var registerMessage = function (response, form, text, notification) {
     return true;
 }
 
-var getAllTags = function (close) {
+var getAllTags = async function (close) {
     $.validator.addMethod("invalidTag", function (value, element, config) {
         return $('.label-info.error').length > 0 ? false : true;
     }, "Existem TAGS não cadastradas.");
@@ -633,8 +635,10 @@ var getAllTags = function (close) {
         $('.page-loader-wrapper').fadeOut();
 }
 
-var getAllImagens = function () {
+var getAllImagens = async function () {
     $.validator.addMethod("invalidImagem", function (value, element, config) {
+        if (value == "")
+            return true;
         return getDataId("imagem", value, 4) != undefined;
     }, "Existem IMAGENS não cadastradas.");
 
@@ -664,6 +668,76 @@ var getAllImagens = function () {
         $('.page-loader-wrapper').fadeOut();
 }
 
+var getAllVideos = async function (close) {
+    $.validator.addMethod("invalidVideo", function (value, element, config) {
+        if (value == "")
+            return true;
+        return getDataId("video", value, 6) != undefined;
+    }, "Existem VÍDEOS não cadastradas.");
+
+    var videos = localStorage.getItem("video");
+    if (videos == null || videos == "") {
+        $.ajax({
+            type: "POST",
+            url: "https://tvgaspar-server.herokuapp.com/getAllVideos",
+            data: {
+                token: localStorage.getItem('token')
+            },
+            success: function (response) {
+                console.log(response);
+                var videos = [];
+                $(response).each(function (index) {
+                    videos.push($(this)[0]);
+                });
+                localStorage.setItem("video", JSON.stringify(videos));
+                if (close)
+                    $('.page-loader-wrapper').fadeOut();
+            },
+            error: function (error) {
+                console.log(error.message);
+                logout('Sessão inválida. Faça o login novamente.');
+            }
+        });
+    } else
+    if (close)
+        $('.page-loader-wrapper').fadeOut();
+}
+
+var getAllCategorias = async function (close) {
+    $.validator.addMethod("invalidCategoria", function (value, element, config) {
+        if (value == "")
+            return true;
+        return getDataId("categoria", value, 2) != undefined;
+    }, "Existem CATEGORIAS não cadastradas.");
+
+    var categorias = localStorage.getItem("categoria");
+    if (categorias == null || categorias == "") {
+        $.ajax({
+            type: "POST",
+            url: "https://tvgaspar-server.herokuapp.com/getAllCategorias",
+            data: {
+                token: localStorage.getItem('token')
+            },
+            success: function (response) {
+                console.log(response);
+                var categorias = [];
+                $(response).each(function (index) {
+                    categorias.push($(this)[0]);
+                });
+                localStorage.setItem("categoria", JSON.stringify(categorias));
+                if (close)
+                    $('.page-loader-wrapper').fadeOut();
+            },
+            error: function (error) {
+                console.log(error.message);
+                logout('Sessão inválida. Faça o login novamente.');
+            }
+        });
+    } else
+    if (close)
+        $('.page-loader-wrapper').fadeOut();
+}
+
 var getData = function (data) {
     var datas = localStorage.getItem(data);
     datas = datas.replace(/\"|\}|\]/g, "").replace(/,/g, ":").split(":");
@@ -684,7 +758,7 @@ var getDataId = function (data, element, diff) {
 }
 
 var search = async function (params) {
-    if ($('td').length <= 0) {
+    if ($('.js-basic-example.' + params).find('td').length <= 0) {
         $('.page-loader-wrapper').fadeIn();
         var list = localStorage.getItem(params).replace(/\[|\{|\"|\]/g, "").split("}");
         for (var i = 0; i < list.length; i++) {
@@ -720,7 +794,7 @@ var search = async function (params) {
 
     } else {
         $('.background-table').fadeIn();
-        $('.table-responsive').fadeIn();
+        $('.js-basic-example.' + params).parents('.table-responsive').fadeIn();
     }
 }
 
@@ -731,7 +805,7 @@ async function getUrls(arrayDeImagens) {
 }
 
 var tableFunction = function (data, colunas, params) {
-    var table = $('.js-basic-example').DataTable({
+    var table = $('.js-basic-example.' + params).DataTable({
         data: data,
         columns: colunas,
         responsive: true,
@@ -750,24 +824,40 @@ var tableFunction = function (data, colunas, params) {
         }
     });
 
-    $('.table-responsive').css('top', $(window).height() / 2 - $('.table-responsive').height() / 2 - 100);
-    $('.table-responsive').css('left', ($(window).width() + $('#leftsidebar').width()) / 2 - $('.table-responsive').width() / 2);
+    $('.js-basic-example.' + params).parents('.table-responsive').css('top', $(window).height() / 2 - $('.js-basic-example.' + params).parents('.table-responsive').height() / 2 - 100);
+    $('.js-basic-example.' + params).parents('.table-responsive').css('left', ($(window).width() + $('#leftsidebar').width()) / 2 - $('.js-basic-example.' + params).parents('.table-responsive').width() / 2);
 
 
-    $('.table-responsive tbody').on('click', 'tr', function (e, dt, type, indexes) {
-        if (params == "tag") {
-            $('.bootstrap-tagsinput input').focus();
-            $('input[data-role="tagsinput"]').tagsinput('add', table.row(this).data()[1]);
-        } else {
-            $('input[name="imagem"]').focus();
-            $('input[name="imagem"]').val(table.row(this).data()[2].split('>')[1]);
-            $('.background-table').click();
-            $('input[name="imagem"]').focusout();
+    $('.js-basic-example.' + params).find("tbody").on('click', 'tr', function (e, dt, type, indexes) {
+        switch (params) {
+            case "tag":
+                $('.bootstrap-tagsinput input').focus();
+                $('input[data-role="tagsinput"]').tagsinput('add', table.row(this).data()[1]);
+                break;
+            case "imagem":
+                $('input[name="imagem"]').focus();
+                $('input[name="imagem"]').val(table.row(this).data()[2].split('>')[1]);
+                $('.background-table').click();
+                $('input[name="imagem"]').focusout();
+                break;
+            case "video":
+                $('input[name="video"]').focus();
+                $('input[name="video"]').val(table.row(this).data()[3]);
+                $('.background-table').click();
+                $('input[name="video"]').focusout();
+                break;
+            case "categoria":
+                $('input[name="categoria"]').focus();
+                $('input[name="categoria"]').val(table.row(this).data()[1]);
+                $('.background-table').click();
+                $('input[name="categoria"]').focusout();
         }
+
     });
 
     $('.background-table').fadeIn();
-    $('.table-responsive').fadeIn();
+    $('.js-basic-example.' + params).parents('.table-responsive').fadeIn();
+
     if (params == "imagem")
         $('.img-preview').on('load', function () {
             $('.page-loader-wrapper').fadeOut();
@@ -778,9 +868,10 @@ var tableFunction = function (data, colunas, params) {
 }
 
 $('.background-table').click(function () {
-    $('.background-table').fadeOut();
-    $('.table-responsive').fadeOut();
+    $(this).fadeOut();
+    $(".table-responsive").fadeOut();
 });
+
 
 var initFirebase = function () {
     firebase.initializeApp({

@@ -665,7 +665,7 @@
                                     <div class="col-sm-10">
                                         <div class="form-group form-float">
                                             <div class="form-line">
-                                                <input type="text" class="form-control" name="imagem" required aria-required="true">
+                                                <input type="text" class="form-control" name="imagem">
                                                 <label class="form-label">Imagem</label>
                                             </div>
                                         </div>
@@ -673,6 +673,42 @@
                                     <div class="col-sm-2">
                                         <div class="div-search-button">
                                             <button type="button" class="btn btn-default waves-effect search-button" value="imagem">
+                                                <i class="material-icons">search</i>
+                                                <span>PESQUISAR</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix row-tag">
+                                    <div class="col-sm-10">
+                                        <div class="form-group form-float">
+                                            <div class="form-line">
+                                                <input type="text" class="form-control" name="video">
+                                                <label class="form-label">Vídeo</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="div-search-button">
+                                            <button type="button" class="btn btn-default waves-effect search-button" value="video">
+                                                <i class="material-icons">search</i>
+                                                <span>PESQUISAR</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix row-tag">
+                                    <div class="col-sm-10">
+                                        <div class="form-group form-float">
+                                            <div class="form-line">
+                                                <input type="text" class="form-control" name="categoria" required aria-required="true">
+                                                <label class="form-label">Categoria</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="div-search-button">
+                                            <button type="button" class="btn btn-default waves-effect search-button" value="categoria">
                                                 <i class="material-icons">search</i>
                                                 <span>PESQUISAR</span>
                                             </button>
@@ -723,7 +759,19 @@
     </section>
     <div class="background-table"></div>
     <div class="table-responsive">
-        <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+        <table class="table table-bordered table-striped table-hover js-basic-example dataTable tag">
+        </table>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover js-basic-example dataTable imagem">
+        </table>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover js-basic-example dataTable video">
+        </table>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover js-basic-example dataTable categoria">
         </table>
     </div>
 
@@ -790,6 +838,9 @@
 
     <!-- Sparkline Chart Plugin Js -->
     <script src="../../plugins/jquery-sparkline/jquery.sparkline.js"></script>
+
+    <!-- Firebase Plugin Js -->
+    <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase.js"></script>
 
     <!-- Custom Js -->
     <script src="../../js/admin.js"></script>

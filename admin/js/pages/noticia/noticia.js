@@ -25,6 +25,12 @@ $(function () {
             },
             imagem: {
                 invalidImagem: true
+            },
+            video:{
+                invalidVideo: true
+            },
+            categoria:{
+                invalidCategoria: true
             }
         },
         highlight: function (input) {
@@ -37,19 +43,20 @@ $(function () {
             $(element).parents('.form-group').append(error);
         }
     });
+
+    initFirebase();
+
     var usuario = localStorage.getItem('usuario').replace(/\"|\{|\}/g, '').replace(/,/g, ':').split(":");
     if (usuario != null && usuario != "") {
         $('.name').html(findAttribute("nome", usuario));
         $('.email').html(findAttribute("email", usuario));
 
-    } else {
+    } else 
         logout('Sessão inválida. Faça o login novamente.');
-    }
+    
     
 
-    getAllTags(false);
-
-    getAllImagens();
+    getAllTags(false).then(res=>getAllVideos(false).then(res=>getAllCategorias(false).then(res=>getAllImagens())));
 
     $('.div-search-button button').click(function () {
         search($(this).val());
