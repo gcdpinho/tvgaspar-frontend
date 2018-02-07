@@ -583,7 +583,7 @@ var registerMessage = function (response, form, text, notification) {
     return true;
 }
 
-var getAllTags = function () {
+var getAllTags = function (close) {
     $.validator.addMethod("invalidTag", function (value, element, config) {
         return $('.label-info.error').length > 0 ? false : true;
     }, "Existem TAGS não cadastradas.");
@@ -620,7 +620,8 @@ var getAllTags = function () {
                     tags.push($(this)[0]);
                 });
                 localStorage.setItem("tag", JSON.stringify(tags));
-                $('.page-loader-wrapper').fadeOut();
+                if (close)
+                    $('.page-loader-wrapper').fadeOut();
             },
             error: function (error) {
                 console.log(error.message);
@@ -628,6 +629,7 @@ var getAllTags = function () {
             }
         });
     } else
+    if (close)
         $('.page-loader-wrapper').fadeOut();
 }
 

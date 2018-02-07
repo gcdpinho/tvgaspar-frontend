@@ -56,7 +56,7 @@ $(function () {
         logout('Sessão inválida. Faça o login novamente.');
     }
 
-    getAllTags();
+    getAllTags(true);
 
     $('.div-search-button button').click(function () {
         search("tag");
