@@ -1,5 +1,6 @@
 $(function () {
 
+    //Validation plugin
     $('#publicidade').validate({
         rules: {
             imagem: {
@@ -17,22 +18,21 @@ $(function () {
         }
     });
 
+    //Init Firebase plugin
     initFirebase();
 
-    var usuario = localStorage.getItem('usuario').replace(/\"|\{|\}/g, '').replace(/,/g, ':').split(":");
-    if (usuario != null && usuario != "") {
-        $('.name').html(findAttribute("nome", usuario));
-        $('.email').html(findAttribute("email", usuario));
+    //Get info usuario
+    var usuario = getUsuario();
 
-    } else
-        logout('Sessão inválida. Faça o login novamente.');
-
+    //Load info de tabelas relacionadas
     getAllImagens();
 
+     //Botão de pesquisar
     $('.div-search-button button').click(function () {
         search("imagem");
     });
 
+    //Form Salve
     $('#publicidade').submit(function (e) {
         if ($("#publicidade").valid()) {
             $('.page-loader-wrapper').fadeIn();
@@ -58,7 +58,6 @@ $(function () {
                 }
             });
             e.preventDefault();
-
         }
     });
 

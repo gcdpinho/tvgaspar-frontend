@@ -1,4 +1,5 @@
 $(function () {
+    //Dropify plugin
     var dropify = $('.dropify').dropify({
         messages: {
             'default': 'Arraste ou clique para selecionar um arquivo',
@@ -12,18 +13,17 @@ $(function () {
         $(this).parents(".form-line").removeClass("focused");
 
     });
-
+    
     $(".dropify-wrapper").on('change', function () {
         $('.dropify').focus();
         $(this).parents(".form-line").removeClass("error");
         $(this).parents(".form-group").find("label.error").css("display", "none");
     });
 
+    //Validation plugin
     $.validator.addMethod("requiredImage", function (value, element, config) {
         return $('.dropify-wrapper').hasClass('has-preview');
     }, "Preencha esse campo.");
-
-    initFirebase();
 
     $('#imagem').validate({
         rules: {
@@ -46,22 +46,22 @@ $(function () {
             $(element).parents('.form-group').append(error);
         }
     });
-    var usuario = localStorage.getItem('usuario');
-    if (usuario != null && usuario != "") {
-        usuario = usuario.replace(/\"|\{|\}/g, '').replace(/,/g, ':').split(":");
-        $('.name').html(findAttribute("nome", usuario));
-        $('.email').html(findAttribute("email", usuario));
 
-    } else {
-        logout('Sessão inválida. Faça o login novamente.');
-    }
+    //Init Firebase plugin
+    initFirebase();
 
+    //Get info usuario
+    var usuario = getUsuario();
+
+    //Load info de tabelas relacionadas
     getAllTags(true);
 
+    //Botão de pesquisar
     $('.div-search-button button').click(function () {
         search("tag");
     });
 
+    //Form Salve
     $('#imagem').submit(function (e) {
         if ($("#imagem").valid()) {
             $('.page-loader-wrapper').fadeIn();

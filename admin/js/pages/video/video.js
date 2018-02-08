@@ -1,5 +1,5 @@
 $(function () {
-
+    //Validation plugin
     $('#video').validate({
         rules: {
             tag: {
@@ -18,20 +18,19 @@ $(function () {
             $(element).parents('.form-group').append(error);
         }
     });
-    var usuario = localStorage.getItem('usuario').replace(/\"|\{|\}/g, '').replace(/,/g, ':').split(":");
-    if (usuario != null && usuario != "") {
-        $('.name').html(findAttribute("nome", usuario));
-        $('.email').html(findAttribute("email", usuario));
 
-    } else
-        logout('Sessão inválida. Faça o login novamente.');
+    //Get info usuario
+    var usuario = getUsuario();
 
+    //Load info de tabelas relacionadas
     getAllTags(true);
 
+    //Botão de pesquisar
     $('.div-search-button button').click(function () {
         search("tag");
     });
 
+    //Form Salve
     $('#video').submit(function (e) {
         if ($("#video").valid()) {
             $('.page-loader-wrapper').fadeIn();

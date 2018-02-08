@@ -1,15 +1,12 @@
 ﻿$(function () {
-    //Autenticatoin
-
-    //$('.page-loader-wrapper').fadeIn();
+    //Get info usuario
     if (localStorage.getItem('usuario') != null && localStorage.getItem("usuario") != "") {
         console.log("Logado");
-        var usuario = localStorage.getItem('usuario').replace(/\"|\{|\}/g, '').replace(/,/g, ':').split(":");
-        $('.name').html(findAttribute("nome", usuario));
-        $('.email').html(findAttribute("email", usuario));
+        var usuario = getUsuario();
 
         $('.page-loader-wrapper').fadeOut();
     } else
+        //Autentication by token
         $.ajax({
             type: "POST",
             url: "https://tvgaspar-server.herokuapp.com/findByToken",

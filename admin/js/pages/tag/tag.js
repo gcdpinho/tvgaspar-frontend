@@ -1,5 +1,5 @@
 $(function () {
-    //$('.page-loader-wrapper').fadeIn();
+    //Validation plugin
     $('#tag').validate({
         highlight: function (input) {
             $(input).parents('.form-line').addClass('error');
@@ -12,16 +12,10 @@ $(function () {
         }
     });
 
-    var usuario = localStorage.getItem('usuario').replace(/\"|\{|\}/g, '').replace(/,/g, ':').split(":");
-    if (usuario != null && usuario != "") {
-        $('.name').html(findAttribute("nome", usuario));
-        $('.email').html(findAttribute("email", usuario));
+    //Get info usuario
+    var usuario = getUsuario();
 
-    } else
-        logout('Sessão inválida. Faça o login novamente.');
-
-    $('.page-loader-wrapper').fadeOut();
-
+    //Form Salve
     $('#tag').submit(function (e) {
         if ($("#tag").valid()) {
             $('.page-loader-wrapper').fadeIn();
@@ -42,7 +36,6 @@ $(function () {
                 }
             });
             e.preventDefault();
-
         }
     });
 

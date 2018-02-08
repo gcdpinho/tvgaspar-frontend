@@ -478,6 +478,9 @@ $(function () {
 });
 
 
+/* CUSTOM SCRIPTS GLOBAIS */ 
+
+//Função de logout do sistema
 var logout = function (msgError) {
     console.log(msgError);
     localStorage.setItem('token', "");
@@ -498,7 +501,6 @@ var logout = function (msgError) {
         location.href = "pages/examples/sign-in.html"
 }
 
-//Logout
 $('#logout').click(logout);
 
 //Preencher com as informações do usuário
@@ -511,6 +513,7 @@ var findAttribute = function (attribute, data) {
     return -1;
 }
 
+//Notificação de sucesso ou erro
 var showNotification = function (text, state) {
     var color = "bg-green";
     if (state == "error")
@@ -544,6 +547,7 @@ var showNotification = function (text, state) {
     });
 }
 
+//Teste de sucesso para elementos cadastrados
 var registerMessage = function (response, form, text, notification) {
     if (response.sqlMessage) {
         if (response.sqlMessage.indexOf("Duplicate") >= 0) {
@@ -585,6 +589,7 @@ var registerMessage = function (response, form, text, notification) {
     return true;
 }
 
+//Get todas as tags
 var getAllTags = async function (close) {
     $.validator.addMethod("invalidTag", function (value, element, config) {
         return $('.label-info.error').length > 0 ? false : true;
@@ -635,6 +640,7 @@ var getAllTags = async function (close) {
         $('.page-loader-wrapper').fadeOut();
 }
 
+//Get todas imagens
 var getAllImagens = async function () {
     $.validator.addMethod("invalidImagem", function (value, element, config) {
         if (value == "")
@@ -668,6 +674,7 @@ var getAllImagens = async function () {
         $('.page-loader-wrapper').fadeOut();
 }
 
+//Get todos os vídeos
 var getAllVideos = async function (close) {
     $.validator.addMethod("invalidVideo", function (value, element, config) {
         if (value == "")
@@ -703,6 +710,7 @@ var getAllVideos = async function (close) {
         $('.page-loader-wrapper').fadeOut();
 }
 
+//Get todas as categorias
 var getAllCategorias = async function (close) {
     $.validator.addMethod("invalidCategoria", function (value, element, config) {
         if (value == "")
@@ -738,6 +746,7 @@ var getAllCategorias = async function (close) {
         $('.page-loader-wrapper').fadeOut();
 }
 
+//Get data(localStorage) by param 
 var getData = function (data) {
     var datas = localStorage.getItem(data);
     datas = datas.replace(/\"|\}|\]/g, "").replace(/,/g, ":").split(":");
@@ -748,6 +757,7 @@ var getData = function (data) {
     return arrData;
 }
 
+//Get id (para inserção) by params
 var getDataId = function (data, element, diff) {
     var datas = localStorage.getItem(data);
     datas = datas.replace(/\"|\}|\]/g, "").replace(/,/g, ":").split(":");
@@ -757,6 +767,7 @@ var getDataId = function (data, element, diff) {
         }
 }
 
+//Abre o modal com a tabela (param)
 var search = async function (params) {
     if ($('.js-basic-example.' + params).find('td').length <= 0) {
         $('.page-loader-wrapper').fadeIn();
@@ -798,12 +809,14 @@ var search = async function (params) {
     }
 }
 
+//Get URL da imagem Firebase
 async function getUrls(arrayDeImagens) {
     return Promise.all(arrayDeImagens.map(async nome =>
         await firebase.storage().ref().child('imagens/' + nome).getDownloadURL()
     )).then();
 }
 
+//Incializa a tabela by params
 var tableFunction = function (data, colunas, params) {
     var table = $('.js-basic-example.' + params).DataTable({
         data: data,
@@ -867,12 +880,13 @@ var tableFunction = function (data, colunas, params) {
 
 }
 
+//FadeOut para minimizar tabela
 $('.background-table').click(function () {
     $(this).fadeOut();
     $(".table-responsive").fadeOut();
 });
 
-
+//Init Firebase
 var initFirebase = function () {
     firebase.initializeApp({
         apiKey: "AIzaSyAN8z_RHWKICWDl-QQ5cAQ8b1LvIWfrvOw",
@@ -882,4 +896,16 @@ var initFirebase = function () {
         storageBucket: "tvgaspar-backend.appspot.com",
         messagingSenderId: "702505431041"
     });
+}
+
+var getUsuario = function(){
+    var usuario = localStorage.getItem('usuario').replace(/\"|\{|\}/g, '').replace(/,/g, ':').split(":");
+    if (usuario != null && usuario != "") {
+        $('.name').html(findAttribute("nome", usuario));
+        $('.email').html(findAttribute("email", usuario));
+
+    } else
+        logout('Sessão inválida. Faça o login novamente.');
+
+    return usuario;
 }
