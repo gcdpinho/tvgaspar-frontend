@@ -184,6 +184,7 @@
           options: options
         }));
       }
+      $(self.$input).valid();
   },
 
     /**

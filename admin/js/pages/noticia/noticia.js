@@ -5,7 +5,7 @@ $(function () {
     autosize($('textarea.auto-growth'));
     //Datetimepicker plugin
     $('.datetimepicker').bootstrapMaterialDatePicker({
-        format: 'DD/MM/YYYY - HH:mm',
+        format: 'DD/MM/YYYY HH:mm',
         lang: "pt-br",
         clearButton: true,
         weekStart: 1,
@@ -17,6 +17,7 @@ $(function () {
         $('.datetimepicker').parents('.form-line').removeClass('error');
         $('#data-error').css('display', 'none');
     });
+
     $('#noticia').validate({
         rules: {
             tag: {
@@ -54,17 +55,38 @@ $(function () {
     } else 
         logout('Sessão inválida. Faça o login novamente.');
     
-    
-
     getAllTags(false).then(res=>getAllVideos(false).then(res=>getAllCategorias(false).then(res=>getAllImagens())));
 
     $('.div-search-button button').click(function () {
         search($(this).val());
     });
-
+    
     $('#noticia').submit(function (e) {
         if ($("#noticia").valid()) {
-            console.log("ok");
+            $('.page-loader-wrapper').fadeIn();
+            $.ajax({
+                type: "POST",
+                url: "https://tvgaspar-server.herokuapp.com/createNoticia",
+                data: {
+                    manchete: $('input[name="manchete"]').val(),
+                    subManchete: $('input[name="subManchete"]').val(),
+                    texto: $('textarea[name="texto"]').val(),
+                    autor: $('input[name="autor"]').val(),
+                    dtCadastro: $('input[name="dtCadastro"]').val(),
+                    flgAtivo: 1,
+                    aprovacao: parseInt(usuario[usuario.length-1]),
+                    idUsuario: parseInt(usuario[1]),
+                    token: localStorage.getItem('token')
+                },
+                success: function (response) {
+                    console.log(response);
+                    $('.page-loader-wrapper').fadeOut();
+                },
+                error: function (error) {
+                    console.log(error.message);
+                    logout('Sessão inválida. Faça o login novamente.');
+                }
+            });
             e.preventDefault();
 
         }
