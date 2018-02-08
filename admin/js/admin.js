@@ -788,20 +788,34 @@ var search = async function (params) {
             for (var element in linha)
                 linha[element] = linha[element].replace(":", ",");
             var newline = [];
-            for (var element in linha) {
-                newline = [...newline, linha[element].split(',').forEach(function(element, index, array){
-                    return element;})];
+            for (var e in linha) {
+               linha[e].split(',').forEach(function (element, index, array) {
+                    newline.push(element)
+                });
             }
-            console.log(newline);
-            if (j == 0)
+            linha = newline;
+            if (j == 0) {
                 for (var i = 0; i < linha.length; i += 2) {
                     coluna = {};
                     coluna["title"] = linha[i].toUpperCase();
                     colunas.push(coluna);
                 }
+                colunas.shift();
+                if (params == "noticia"){
+                    colunas.pop();
+                    colunas.pop();
+                    colunas.pop();
+                }
+            }
             for (var i = 1; i < linha.length; i += 2)
                 row.push(linha[i]);
             if (row.length > 0) {
+                row.shift();
+                if (params == "noticia"){
+                    row.pop();
+                    row.pop();
+                    row.pop();
+                }
                 data.push(row);
                 if (params == "imagem")
                     imagens.push(row[row.length - 1]);
@@ -856,23 +870,23 @@ var tableFunction = function (data, colunas, params) {
         switch (params) {
             case "tag":
                 $('.bootstrap-tagsinput input').focus();
-                $('input[data-role="tagsinput"]').tagsinput('add', table.row(this).data()[1]);
+                $('input[data-role="tagsinput"]').tagsinput('add', table.row(this).data()[0]);
                 break;
             case "imagem":
                 $('input[name="imagem"]').focus();
-                $('input[name="imagem"]').val(table.row(this).data()[2].split('>')[1]);
+                $('input[name="imagem"]').val(table.row(this).data()[1].split('>')[1]);
                 $('.background-table').click();
                 $('input[name="imagem"]').focusout();
                 break;
             case "video":
                 $('input[name="video"]').focus();
-                $('input[name="video"]').val(table.row(this).data()[3]);
+                $('input[name="video"]').val(table.row(this).data()[2]);
                 $('.background-table').click();
                 $('input[name="video"]').focusout();
                 break;
             case "categoria":
                 $('input[name="categoria"]').focus();
-                $('input[name="categoria"]').val(table.row(this).data()[1]);
+                $('input[name="categoria"]').val(table.row(this).data()[0]);
                 $('.background-table').click();
                 $('input[name="categoria"]').focusout();
         }
@@ -934,7 +948,7 @@ var getAllNoticias = function () {
             console.log(response);
             var arrNoticia = []
             for (var element in response)
-                if (response[element].aprovacao == 0)
+                if (response[element].aprovacao == 0 && response[element].flgAtivo == 1)
                     arrNoticia.push(response[element]);
             localStorage.setItem('noticia', JSON.stringify(arrNoticia));
             setAprovacoes();

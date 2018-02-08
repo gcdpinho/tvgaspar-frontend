@@ -129,16 +129,3 @@ tr {
 span.badge {
     display: none;
 }
-
-table.dataTable {
-    table-layout: fixed;
-    width: 100% !important;
-}
-
-table.table-bordered.dataTable th,
-table.table-bordered.dataTable td {
-    width: auto !important;
-    white-space: normal;
-    text-overflow: ellipsis;
-    overflow: hidden;
-}
