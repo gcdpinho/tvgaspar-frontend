@@ -3,7 +3,9 @@
     if (localStorage.getItem('usuario') != null && localStorage.getItem("usuario") != "") {
         console.log("Logado");
         var usuario = getUsuario();
-
+        //Set aprovacoes (noticias)
+        setAprovacoes();
+        
         $('.page-loader-wrapper').fadeOut();
     } else
         //Autentication by token
@@ -18,7 +20,8 @@
                 $('.name').html(response[0].nome);
                 $('.email').html(response[0].email);
                 localStorage.setItem("usuario", JSON.stringify(response[0]));
-                $('.page-loader-wrapper').fadeOut();
+                
+                getAllNoticias();
 
             },
             error: function (error) {

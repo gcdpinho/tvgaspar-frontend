@@ -51,6 +51,9 @@ $(function () {
     //Get info usuario
     var usuario = getUsuario();
 
+    //Set aprovacoes (noticias)
+    setAprovacoes();
+
     //Load info de tabelas relacionadas
     getAllTags(false).then(res => getAllVideos(false).then(res => getAllCategorias(false).then(res => getAllImagens())));
 

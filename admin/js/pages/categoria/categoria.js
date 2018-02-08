@@ -17,6 +17,11 @@ $(function () {
 
     //Get info usuario
     var usuario = getUsuario();
+    
+    //Set aprovacoes (noticias)
+    setAprovacoes();
+
+    $('.page-loader-wrapper').fadeOut();
 
     //Form Salve
     $('#categoria').submit(function (e) {

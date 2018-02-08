@@ -53,6 +53,9 @@ $(function () {
     //Get info usuario
     var usuario = getUsuario();
 
+    //Set aprovacoes (noticias)
+    setAprovacoes();
+
     //Load info de tabelas relacionadas
     getAllTags(true);
 

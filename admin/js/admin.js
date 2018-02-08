@@ -478,7 +478,7 @@ $(function () {
 });
 
 
-/* CUSTOM SCRIPTS GLOBAIS */ 
+/* CUSTOM SCRIPTS GLOBAIS */
 
 //Função de logout do sistema
 var logout = function (msgError) {
@@ -489,6 +489,7 @@ var logout = function (msgError) {
     localStorage.setItem('imagem', "");
     localStorage.setItem('video', "");
     localStorage.setItem('categoria', "");
+    localStorage.setItem('noticia', "");
     if (typeof msgError == "object")
         localStorage.setItem('msgError', "");
     else
@@ -786,7 +787,7 @@ var search = async function (params) {
             if (j == 0)
                 for (var i = 0; i < linha.length; i += 2) {
                     coluna = {};
-                    coluna["title"] = linha[i];
+                    coluna["title"] = linha[i].toUpperCase();
                     colunas.push(coluna);
                 }
             for (var i = 1; i < linha.length; i += 2)
@@ -898,7 +899,8 @@ var initFirebase = function () {
     });
 }
 
-var getUsuario = function(){
+//Get info usuário (menu)
+var getUsuario = function () {
     var usuario = localStorage.getItem('usuario').replace(/\"|\{|\}/g, '').replace(/,/g, ':').split(":");
     if (usuario != null && usuario != "") {
         $('.name').html(findAttribute("nome", usuario));
@@ -908,4 +910,39 @@ var getUsuario = function(){
         logout('Sessão inválida. Faça o login novamente.');
 
     return usuario;
+}
+
+//Get todas as notícias
+var getAllNoticias = function () {
+    $.ajax({
+        type: "POST",
+        url: "https://tvgaspar-server.herokuapp.com/getAllNoticias",
+        data: {
+            token: localStorage.getItem('token')
+        },
+        success: function (response) {
+            console.log(response);
+            var arrNoticia = []
+            for (var element in response)
+                if (response[element].aprovacao == 0)
+                    arrNoticia.push(response[element]);
+            localStorage.setItem('noticia', JSON.stringify(arrNoticia));
+            setAprovacoes();
+            $('.page-loader-wrapper').fadeOut();
+        },
+        error: function (error) {
+            console.log(error.message);
+            logout('Sessão inválida. Faça o login novamente.');
+        }
+    });
+}
+
+//Set badge aprovações
+var setAprovacoes = function () {
+    var noticia = localStorage.getItem('noticia').replace(/\[|\]|\{|\"/g, "").split('}');
+    noticia.pop();
+    if (noticia.length > 0) {
+        $('span.badge').html(noticia.length);
+        $('span.badge').css('display', 'block');
+    }
 }

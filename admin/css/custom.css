@@ -89,7 +89,7 @@
     top: 0;
     height: 100%;
     width: 100%;
-    z-index:90;
+    z-index: 90;
 }
 
 .table-responsive {
@@ -109,19 +109,36 @@ tr {
     cursor: pointer;
 }
 
-.form-group .form-line .form-label.img{
+.form-group .form-line .form-label.img {
     top: -20px;
 }
 
-.form-group.form-float.img{
+.form-group.form-float.img {
     margin-top: 5px;
 }
 
-.dropify-wrapper .dropify-message p{
+.dropify-wrapper .dropify-message p {
     text-align: center;
 }
 
-.img-preview{
+.img-preview {
     width: 100px;
     margin-right: 10px;
+}
+
+span.badge {
+    display: none;
+}
+
+table.dataTable {
+    table-layout: fixed;
+    width: 100% !important;
+}
+
+table.table-bordered.dataTable th,
+table.table-bordered.dataTable td {
+    width: auto !important;
+    white-space: normal;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
