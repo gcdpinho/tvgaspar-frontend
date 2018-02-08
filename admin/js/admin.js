@@ -783,7 +783,16 @@ var search = async function (params) {
         var imagens = []
         for (var j = 0; j < list.length; j++) {
             var row = [];
-            var linha = list[j].replace(/\,/g, ":").split(":");
+
+            var linha = list[j].split(",");
+            for (var element in linha)
+                linha[element] = linha[element].replace(":", ",");
+            var newline = [];
+            for (var element in linha) {
+                newline = [...newline, linha[element].split(',').forEach(function(element, index, array){
+                    return element;})];
+            }
+            console.log(newline);
             if (j == 0)
                 for (var i = 0; i < linha.length; i += 2) {
                     coluna = {};
@@ -802,6 +811,7 @@ var search = async function (params) {
         var urls = await getUrls(imagens);
         for (url in urls)
             data[url][data[url].length - 1] = "<img class='img-preview' src='" + urls[url] + "'>" + data[url][data[url].length - 1];
+
         tableFunction(data, colunas, params);
 
     } else {
