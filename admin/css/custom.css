@@ -19,7 +19,7 @@
     display: none;
 }
 
-.badge.active{
+.badge.active {
     background: #d4000e !important;
 }
 
@@ -99,6 +99,7 @@
     z-index: 99;
     background: white;
     padding: 20px;
+    max-width: 65%;
 }
 
 .js-basic-example {
@@ -126,18 +127,31 @@ tr {
     margin-right: 10px;
 }
 
-.card .card-inside-title{
+.card .card-inside-title {
     margin-bottom: 40px;
 }
 
-.card .card-inside-title.aprovacao{
+.card .card-inside-title.aprovacao {
     margin-bottom: 15px;
 }
 
-.noticia-detail{
+.noticia-detail {
     margin-top: 25px;
 }
 
-.colorpicker .form-label, .colorpicker.form-group .form-line.focused:after{
+.colorpicker .form-label,
+.colorpicker.form-group .form-line.focused:after {
     z-index: 10;
+}
+
+table.table-bordered.dataTable{
+    table-layout: fixed;
+    width: 100% !important;
+}
+
+table.table-bordered.dataTable th, table.table-bordered.dataTable td{
+    width: auto !important;
+    white-space: normal;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
