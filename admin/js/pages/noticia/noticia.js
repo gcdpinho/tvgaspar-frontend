@@ -108,12 +108,16 @@ $(function () {
                                 var data = [];
                                 var entry;
                                 if (registerMessage(response, $('#noticia'), "NOTÍCIA", false)) {
-                                    //Multiples
-                                    entry = {}
-                                    entry['idNoticia'] = insertId;
-                                    entry['idCategoria'] = getDataId("categoria", $('input[name="categoria"]').val(), 2);
-                                    data.push(entry);
-                                    //End-Multiples
+                                    var arrCategorias = $('input[name="categoria"]').val().split(", ");
+                                    arrCategorias = arrCategorias.filter(function (value, index, self) {
+                                        return (self.indexOf(value) == index)
+                                    });
+                                    for (var element in arrCategorias) {
+                                        entry = {}
+                                        entry['idNoticia'] = insertId;
+                                        entry['idCategoria'] = getDataId("categoria", arrCategorias[element], 2);
+                                        data.push(entry);
+                                    }
                                     console.log(data);
                                     $.ajax({
                                         type: "POST",
@@ -128,12 +132,16 @@ $(function () {
                                                 var data = [];
                                                 var entry;
                                                 if (registerMessage(response, $('#noticia'), "NOTÍCIA", false)) {
-                                                    //Multiples
-                                                    entry = {}
-                                                    entry['idNoticia'] = insertId;
-                                                    entry['idVideo'] = getDataId("video", $('input[name="video"]').val(), 6);
-                                                    data.push(entry);
-                                                    //End-Multiples
+                                                    var arrVideos = $('input[name="video"]').val().split(", ");
+                                                    arrVideos = arrVideos.filter(function (value, index, self) {
+                                                        return (self.indexOf(value) == index)
+                                                    });
+                                                    for (var element in arrVideos) {
+                                                        entry = {}
+                                                        entry['idNoticia'] = insertId;
+                                                        entry['idVideo'] = getDataId("video", arrVideos[element], 6);
+                                                        data.push(entry);
+                                                    }
                                                     console.log(data);
                                                     $.ajax({
                                                         type: "POST",
@@ -148,12 +156,16 @@ $(function () {
                                                                 var data = [];
                                                                 var entry;
                                                                 if (registerMessage(response, $('#noticia'), "NOTÍCIA", false)) {
-                                                                    //Multiples
-                                                                    entry = {}
-                                                                    entry['idNoticia'] = insertId;
-                                                                    entry['idImagem'] = getDataId("imagem", $('input[name="imagem"]').val(), 4);
-                                                                    data.push(entry);
-                                                                    //End-Multiples
+                                                                    var arrImagens = $('input[name="imagem"]').val().split(", ");
+                                                                    arrImagens = arrImagens.filter(function (value, index, self) {
+                                                                        return (self.indexOf(value) == index)
+                                                                    });
+                                                                    for (var element in arrImagens) {
+                                                                        entry = {}
+                                                                        entry['idNoticia'] = insertId;
+                                                                        entry['idImagem'] = getDataId("imagem", arrImagens[element], 4);
+                                                                        data.push(entry);
+                                                                    }
                                                                     console.log(data);
                                                                     $.ajax({
                                                                         type: "POST",

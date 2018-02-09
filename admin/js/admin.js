@@ -647,7 +647,14 @@ var getAllImagens = async function () {
     $.validator.addMethod("invalidImagem", function (value, element, config) {
         if (value == "")
             return true;
-        return getDataId("imagem", value, 4) != undefined;
+        else {
+            var imagens = value.split(", ");
+            for (var element in imagens)
+                if (getDataId("imagem", imagens[element], 4) == undefined)
+                    return false;
+
+            return true;
+        }
     }, "Existem IMAGENS não cadastradas.");
 
     var imagens = localStorage.getItem("imagem");
@@ -681,7 +688,14 @@ var getAllVideos = async function (close) {
     $.validator.addMethod("invalidVideo", function (value, element, config) {
         if (value == "")
             return true;
-        return getDataId("video", value, 6) != undefined;
+        else {
+            var videos = value.split(", ");
+            for (var element in videos)
+                if (getDataId("video", videos[element], 6) == undefined)
+                    return false;
+
+            return true;
+        }
     }, "Existem VÍDEOS não cadastradas.");
 
     var videos = localStorage.getItem("video");
@@ -717,7 +731,14 @@ var getAllCategorias = async function (close) {
     $.validator.addMethod("invalidCategoria", function (value, element, config) {
         if (value == "")
             return true;
-        return getDataId("categoria", value, 2) != undefined;
+        else {
+            var categorias = value.split(", ");
+            for (var element in categorias)
+                if (getDataId("categoria", categorias[element], 2) == undefined)
+                    return false;
+
+            return true;
+        }
     }, "Existem CATEGORIAS não cadastradas.");
 
     var categorias = localStorage.getItem("categoria");
@@ -868,8 +889,7 @@ var tableFunction = function (data, colunas, params) {
     if (params != "noticia") {
         $('.js-basic-example.' + params).parents('.table-responsive').css('top', $(window).height() / 2 - $('.js-basic-example.' + params).parents('.table-responsive').height() / 2 - 100);
         $('.js-basic-example.' + params).parents('.table-responsive').css('left', ($(window).width() + $('#leftsidebar').width()) / 2 - $('.js-basic-example.' + params).parents('.table-responsive').width() / 2);
-    }
-    else{
+    } else {
         $('.table-responsive').css('top', $(window).height() / 2 - $('.table-responsive').height() / 2 - 100);
         $('.table-responsive').css('left', ($(window).width() + $('#leftsidebar').width()) / 2 - $('.table-responsive').width() / 2);
     }
@@ -882,21 +902,19 @@ var tableFunction = function (data, colunas, params) {
                 break;
             case "imagem":
                 $('input[name="imagem"]').focus();
-                $('input[name="imagem"]').val(table.row(this).data()[1].split('>')[1]);
-                $('.background-table').click();
-                $('input[name="imagem"]').focusout();
+                var inputImagem = $('input[name="imagem"]');
+                $(inputImagem).val($(inputImagem).val() + ($(inputImagem).val() == "" ? "" : ", ") + table.row(this).data()[1].split('>')[1]);
                 break;
             case "video":
                 $('input[name="video"]').focus();
-                $('input[name="video"]').val(table.row(this).data()[2]);
-                $('.background-table').click();
-                $('input[name="video"]').focusout();
+                var inputVideo = $('input[name="video"]');
+                $(inputVideo).val($(inputVideo).val() + ($(inputVideo).val() == "" ? "" : ", ") + table.row(this).data()[2]);
+
                 break;
             case "categoria":
                 $('input[name="categoria"]').focus();
-                $('input[name="categoria"]').val(table.row(this).data()[0]);
-                $('.background-table').click();
-                $('input[name="categoria"]').focusout();
+                var inputCategoria = $('input[name="categoria"]');
+                $(inputCategoria).val($(inputCategoria).val() + ($(inputCategoria).val() == "" ? "" : ", ") + table.row(this).data()[0]);
                 break;
             case "noticia":
                 $('input[name="manchete"]').val(table.row(this).data()[0]);
@@ -989,7 +1007,7 @@ var setAprovacoes = function (flgNoticia) {
         $('span.badge').css('display', 'block');
     }
 
-    if (flgNoticia){
+    if (flgNoticia) {
         localStorage.setItem('not', "NOTÍCIA aprovada com sucesso!");
         location.reload();
     }
