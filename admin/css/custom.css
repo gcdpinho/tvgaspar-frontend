@@ -40,7 +40,7 @@
 .col-sm-6,
 .col-sm-10,
 .col-sm-2 {
-    margin-bottom: 0px !important;
+    /* margin-bottom: 0px !important; */
 }
 
 .bootstrap-tagsinput {
@@ -64,6 +64,7 @@
 
 .div-search-button {
     text-align: right;
+    margin-bottom: 35px;
 }
 
 .row-tag {
