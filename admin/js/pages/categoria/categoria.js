@@ -1,6 +1,9 @@
 $(function () {
     //Colorpick plugin
-    $('.colorpicker').colorpicker();
+    var colorpicker = $('.colorpicker').colorpicker();
+    colorpicker.on('changeColor', function(){
+        $('.colorpicker input').focus();
+    });
 
     //Validation plugin
     $('#categoria').validate({
@@ -19,7 +22,7 @@ $(function () {
     var usuario = getUsuario();
     
     //Set aprovacoes (noticias)
-    setAprovacoes();
+    setAprovacoes(false);
 
     $('.page-loader-wrapper').fadeOut();
 

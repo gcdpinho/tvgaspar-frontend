@@ -1,6 +1,6 @@
 .msgError {
     text-align: center;
-    color: #F44336;
+    color: #d4000e;
 }
 
 .vulpis {
@@ -16,6 +16,11 @@
     color: white !important;
     position: absolute;
     right: 17px;
+    display: none;
+}
+
+.badge.active{
+    background: #d4000e !important;
 }
 
 .cad span {
@@ -40,7 +45,7 @@
 .col-sm-6,
 .col-sm-10,
 .col-sm-2 {
-    /* margin-bottom: 0px !important; */
+    margin-bottom: 15px !important;
 }
 
 .bootstrap-tagsinput {
@@ -53,7 +58,7 @@
 }
 
 .label-info.error {
-    background-color: #F44336;
+    background-color: #d4000e;
 }
 
 .bootstrap-tagsinput input {
@@ -64,12 +69,6 @@
 
 .div-search-button {
     text-align: right;
-    margin-bottom: 35px;
-}
-
-.row-tag {
-    display: flex;
-    align-items: center;
 }
 
 @media (max-width: 1023px) {
@@ -115,7 +114,7 @@ tr {
 }
 
 .form-group.form-float.img {
-    margin-top: 5px;
+    margin-top: 15px;
 }
 
 .dropify-wrapper .dropify-message p {
@@ -127,6 +126,18 @@ tr {
     margin-right: 10px;
 }
 
-span.badge {
-    display: none;
+.card .card-inside-title{
+    margin-bottom: 40px;
+}
+
+.card .card-inside-title.aprovacao{
+    margin-bottom: 15px;
+}
+
+.noticia-detail{
+    margin-top: 25px;
+}
+
+.colorpicker .form-label, .colorpicker.form-group .form-line.focused:after{
+    z-index: 10;
 }

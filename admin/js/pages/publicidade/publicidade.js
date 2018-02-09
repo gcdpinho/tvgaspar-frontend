@@ -25,7 +25,7 @@ $(function () {
     var usuario = getUsuario();
 
     //Set aprovacoes (noticias)
-    setAprovacoes();
+    setAprovacoes(false);
 
     //Load info de tabelas relacionadas
     getAllImagens();

@@ -16,7 +16,7 @@ $(function () {
     var usuario = getUsuario();
 
     //Set aprovacoes (noticias)
-    setAprovacoes();
+    setAprovacoes(false);
 
     $('.page-loader-wrapper').fadeOut();
 

@@ -490,6 +490,7 @@ var logout = function (msgError) {
     localStorage.setItem('video', "");
     localStorage.setItem('categoria', "");
     localStorage.setItem('noticia', "");
+    localStorage.setItem('not', "");
     if (typeof msgError == "object")
         localStorage.setItem('msgError', "");
     else
@@ -789,7 +790,7 @@ var search = async function (params) {
                 linha[element] = linha[element].replace(":", ",");
             var newline = [];
             for (var e in linha) {
-               linha[e].split(',').forEach(function (element, index, array) {
+                linha[e].split(',').forEach(function (element, index, array) {
                     newline.push(element)
                 });
             }
@@ -801,7 +802,7 @@ var search = async function (params) {
                     colunas.push(coluna);
                 }
                 colunas.shift();
-                if (params == "noticia"){
+                if (params == "noticia") {
                     colunas.pop();
                     colunas.pop();
                     colunas.pop();
@@ -811,7 +812,7 @@ var search = async function (params) {
                 row.push(linha[i]);
             if (row.length > 0) {
                 row.shift();
-                if (params == "noticia"){
+                if (params == "noticia") {
                     row.pop();
                     row.pop();
                     row.pop();
@@ -826,7 +827,8 @@ var search = async function (params) {
         for (url in urls)
             data[url][data[url].length - 1] = "<img class='img-preview' src='" + urls[url] + "'>" + data[url][data[url].length - 1];
 
-        tableFunction(data, colunas, params);
+        if (data.length > 0)
+            tableFunction(data, colunas, params);
 
     } else {
         $('.background-table').fadeIn();
@@ -835,7 +837,7 @@ var search = async function (params) {
 }
 
 //Get URL da imagem Firebase
-async function getUrls(arrayDeImagens) {
+var getUrls = async function (arrayDeImagens) {
     return Promise.all(arrayDeImagens.map(async nome =>
         await firebase.storage().ref().child('imagens/' + nome).getDownloadURL()
     )).then();
@@ -848,6 +850,7 @@ var tableFunction = function (data, colunas, params) {
         columns: colunas,
         responsive: true,
         bLengthChange: false,
+        bDestroy: true,
         pageLength: 10,
         language: {
             zeroRecords: "Nenhum registro encontrado",
@@ -862,9 +865,14 @@ var tableFunction = function (data, colunas, params) {
         }
     });
 
-    $('.js-basic-example.' + params).parents('.table-responsive').css('top', $(window).height() / 2 - $('.js-basic-example.' + params).parents('.table-responsive').height() / 2 - 100);
-    $('.js-basic-example.' + params).parents('.table-responsive').css('left', ($(window).width() + $('#leftsidebar').width()) / 2 - $('.js-basic-example.' + params).parents('.table-responsive').width() / 2);
-
+    if (params != "noticia") {
+        $('.js-basic-example.' + params).parents('.table-responsive').css('top', $(window).height() / 2 - $('.js-basic-example.' + params).parents('.table-responsive').height() / 2 - 100);
+        $('.js-basic-example.' + params).parents('.table-responsive').css('left', ($(window).width() + $('#leftsidebar').width()) / 2 - $('.js-basic-example.' + params).parents('.table-responsive').width() / 2);
+    }
+    else{
+        $('.table-responsive').css('top', $(window).height() / 2 - $('.table-responsive').height() / 2 - 100);
+        $('.table-responsive').css('left', ($(window).width() + $('#leftsidebar').width()) / 2 - $('.table-responsive').width() / 2);
+    }
 
     $('.js-basic-example.' + params).find("tbody").on('click', 'tr', function (e, dt, type, indexes) {
         switch (params) {
@@ -889,12 +897,23 @@ var tableFunction = function (data, colunas, params) {
                 $('input[name="categoria"]').val(table.row(this).data()[0]);
                 $('.background-table').click();
                 $('input[name="categoria"]').focusout();
+                break;
+            case "noticia":
+                $('input[name="manchete"]').val(table.row(this).data()[0]);
+                $('input[name="subManchete"]').val(table.row(this).data()[1]);
+                $('textarea[name="texto"]').val(table.row(this).data()[2]);
+                $('input[name="autor"]').val(table.row(this).data()[3]);
+                $('input[name="dtCadastro"]').val(table.row(this).data()[4]);
+                $('.background-table').fadeIn();
+                $('.table-responsive').fadeIn();
+                break;
         }
 
     });
-
-    $('.background-table').fadeIn();
-    $('.js-basic-example.' + params).parents('.table-responsive').fadeIn();
+    if (params != "noticia") {
+        $('.background-table').fadeIn();
+        $('.js-basic-example.' + params).parents('.table-responsive').fadeIn();
+    }
 
     if (params == "imagem")
         $('.img-preview').on('load', function () {
@@ -937,7 +956,7 @@ var getUsuario = function () {
 }
 
 //Get todas as notícias
-var getAllNoticias = function () {
+var getAllNoticias = function (flgNoticia) {
     $.ajax({
         type: "POST",
         url: "https://tvgaspar-server.herokuapp.com/getAllNoticias",
@@ -951,22 +970,27 @@ var getAllNoticias = function () {
                 if (response[element].aprovacao == 0 && response[element].flgAtivo == 1)
                     arrNoticia.push(response[element]);
             localStorage.setItem('noticia', JSON.stringify(arrNoticia));
-            setAprovacoes();
+            setAprovacoes(flgNoticia);
             $('.page-loader-wrapper').fadeOut();
         },
         error: function (error) {
             console.log(error.message);
-            logout('Sessão inválida. Faça o login novamente.');
+            //logout('Sessão inválida. Faça o login novamente.');
         }
     });
 }
 
 //Set badge aprovações
-var setAprovacoes = function () {
+var setAprovacoes = function (flgNoticia) {
     var noticia = localStorage.getItem('noticia').replace(/\[|\]|\{|\"/g, "").split('}');
     noticia.pop();
     if (noticia.length > 0) {
         $('span.badge').html(noticia.length);
         $('span.badge').css('display', 'block');
+    }
+
+    if (flgNoticia){
+        localStorage.setItem('not', "NOTÍCIA aprovada com sucesso!");
+        location.reload();
     }
 }

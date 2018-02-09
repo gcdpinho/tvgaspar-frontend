@@ -13,7 +13,10 @@ $(function () {
     });
 
     $('.datetimepicker').on('change', function (e) {
-        $(this).parents('.form-line').addClass('focused');
+        if ($(this).val() == "")
+            $(this).parents('.form-line').removeClass('focused');
+        else
+            $(this).parents('.form-line').addClass('focused');
         $(this).valid();
     });
 
@@ -52,7 +55,7 @@ $(function () {
     var usuario = getUsuario();
 
     //Set aprovacoes (noticias)
-    setAprovacoes();
+    setAprovacoes(false);
 
     //Load info de tabelas relacionadas
     getAllTags(false).then(res => getAllVideos(false).then(res => getAllCategorias(false).then(res => getAllImagens())));
