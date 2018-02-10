@@ -996,11 +996,6 @@ $('.background-table').click(function () {
 });
 
 $('.table-cancel-button').click(function () {
-    if (dataTableParam == 'tag') {
-        $('span[data-role="remove"]').click();
-    } else {
-        $("input[name='" + dataTableParam + "']").val("");
-    }
     $('.background-table').click();
 });
 
