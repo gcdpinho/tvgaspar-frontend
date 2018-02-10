@@ -848,7 +848,7 @@ var search = async function (params) {
                     colunas.push(coluna);
                 }
                 colunas.shift();
-                if (params == "noticia") {
+                if (params == "noticia" || params == "aprovacao") {
                     colunas.pop();
                     colunas.pop();
                     colunas.pop();
@@ -861,7 +861,7 @@ var search = async function (params) {
                 row.push(linha[i]);
             if (row.length > 0) {
                 row.shift();
-                if (params == "noticia") {
+                if (params == "noticia" || params == "aprovacao") {
                     row.pop();
                     row.pop();
                     row.pop();
@@ -897,6 +897,7 @@ var getUrls = async function (arrayDeImagens) {
 
 //Incializa a tabela by params
 var dataTableParam; //Variável de controle para limpeza de campos em outra função fora
+var dataTableArr = [];
 var tableFunction = function (data, colunas, params) {
     dataTableParam = params;
     var table = $('.js-basic-example.' + params).DataTable({
@@ -929,27 +930,31 @@ var tableFunction = function (data, colunas, params) {
     }
 
     $('.js-basic-example.' + params).find("tbody").on('click', 'tr', function (e, dt, type, indexes) {
-        if ($('.js-basic-example.' + params).attr('value') != "listar")
+        if ($('.js-basic-example.' + params).attr('value') != "listar") {
+            $(this).css('background-color', '#bbbbbb');
             switch (params) {
                 case "tag":
-                    $('.bootstrap-tagsinput input').focus();
-                    $('input[data-role="tagsinput"]').tagsinput('add', table.row(this).data()[0]);
+                    //$('.bootstrap-tagsinput input').focus();
+                    //$('input[data-role="tagsinput"]').tagsinput('add', table.row(this).data()[0]);
+                    dataTableArr.push(table.row(this).data()[0]);
                     break;
                 case "imagem":
-                    $('input[name="imagem"]').focus();
-                    var inputImagem = $('input[name="imagem"]');
-                    $(inputImagem).val($(inputImagem).val() + ($(inputImagem).val() == "" ? "" : ", ") + table.row(this).data()[1].split('>')[1]);
+                    //$('input[name="imagem"]').focus();
+                    //var inputImagem = $('input[name="imagem"]');
+                    //$(inputImagem).val($(inputImagem).val() + ($(inputImagem).val() == "" ? "" : ", ") + table.row(this).data()[1].split('>')[1]);
+                    dataTableArr.push(table.row(this).data()[1].split('>')[1]);
                     break;
                 case "video":
-                    $('input[name="video"]').focus();
-                    var inputVideo = $('input[name="video"]');
-                    $(inputVideo).val($(inputVideo).val() + ($(inputVideo).val() == "" ? "" : ", ") + table.row(this).data()[2]);
-
+                    //$('input[name="video"]').focus();
+                    //var inputVideo = $('input[name="video"]');
+                    //$(inputVideo).val($(inputVideo).val() + ($(inputVideo).val() == "" ? "" : ", ") + table.row(this).data()[2]);
+                    dataTableArr.push(table.row(this).data()[2]);
                     break;
                 case "categoria":
-                    $('input[name="categoria"]').focus();
-                    var inputCategoria = $('input[name="categoria"]');
-                    $(inputCategoria).val($(inputCategoria).val() + ($(inputCategoria).val() == "" ? "" : ", ") + table.row(this).data()[0]);
+                    //$('input[name="categoria"]').focus();
+                    //var inputCategoria = $('input[name="categoria"]');
+                    //$(inputCategoria).val($(inputCategoria).val() + ($(inputCategoria).val() == "" ? "" : ", ") + table.row(this).data()[0]);
+                    dataTableArr.push(table.row(this).data()[0]);
                     break;
                 case "aprovacao":
                     $('input[name="manchete"]').val(table.row(this).data()[0]);
@@ -961,6 +966,7 @@ var tableFunction = function (data, colunas, params) {
                     $('.table-responsive').fadeIn();
                     break;
             }
+        }
 
     });
     if (params != "aprovacao" && $('.js-basic-example.' + params).attr('value') != "listar") {
@@ -979,22 +985,41 @@ var tableFunction = function (data, colunas, params) {
 
 //FadeOut para minimizar tabela
 $('.background-table').click(function () {
+    dataTableArr = [];
     $(this).fadeOut();
     $(".table-responsive").fadeOut();
+    $('tr.even').css('background-color', '#ffffff');
+    $('.table-striped > tbody > tr:nth-of-type(odd)').css('background-color', '#f9f9f9');
 });
 
 $('.table-cancel-button').click(function () {
-    $('.background-table').fadeOut();
-    $(".table-responsive").fadeOut();
     if (dataTableParam == 'tag') {
         $('span[data-role="remove"]').click();
     } else {
-        $( "input[name='"+dataTableParam+"']" ).val("");
+        $("input[name='" + dataTableParam + "']").val("");
     }
-
+    $('.background-table').click();
 });
 
 $('.table-confirm-button').click(function () {
+    dataTableArr = dataTableArr.filter(function (value, index, self) {
+        return (self.indexOf(value) == index)
+    });
+    if (dataTableParam == "tag") {
+        for (var element in dataTableArr)
+            $('input[data-role="tagsinput"]').tagsinput('add', dataTableArr[element]);
+
+        $('.bootstrap-tagsinput input').focus();
+    } else {
+        var text = "";
+        for (var element in dataTableArr)
+            text += (text != "" ? ", " : "") + dataTableArr[element];
+
+        $("input[name='" + dataTableParam + "']").val(text);
+        $('input[name="' + dataTableParam + '"]').focus();
+    }
+
+
     $('.background-table').click();
 });
 
