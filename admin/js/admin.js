@@ -931,7 +931,8 @@ var tableFunction = function (data, colunas, params) {
 
     $('.js-basic-example.' + params).find("tbody").on('click', 'tr', function (e, dt, type, indexes) {
         if ($('.js-basic-example.' + params).attr('value') != "listar") {
-            $(this).css('background-color', '#bbbbbb');
+            $(this).css('background-color', '#007fff');
+            $(this).css('color', '#fff');
             switch (params) {
                 case "tag":
                     //$('.bootstrap-tagsinput input').focus();
