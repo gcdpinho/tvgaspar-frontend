@@ -84,7 +84,7 @@
 
 .background-table {
     display: none;
-    position: absolute;
+    position: fixed;
     background: rgba(0, 0, 0, 0.5);
     top: 0;
     height: 100%;
@@ -144,14 +144,33 @@ tr {
     z-index: 10;
 }
 
-table.table-bordered.dataTable{
+table.table-bordered.dataTable {
     table-layout: fixed;
     width: 100% !important;
 }
 
-table.table-bordered.dataTable th, table.table-bordered.dataTable td{
+table.table-bordered.dataTable th,
+table.table-bordered.dataTable td {
     width: auto !important;
     white-space: normal;
     text-overflow: ellipsis;
     overflow: hidden;
+}
+
+.table-search-buttons.col-sm-12 {
+    padding: 0px !important;
+}
+
+div.dataTables_filter input {
+    background-image: url('../images/searchicon.png');
+    background-position: 10px 3px;
+    background-repeat: no-repeat;
+    width: 100% !important;
+    padding-left: 50px;
+    font-size: 16px !important;
+    
+}
+
+div.dataTables_wrapper div.dataTables_filter label {
+    width: 100% !important;
 }

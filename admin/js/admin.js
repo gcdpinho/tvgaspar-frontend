@@ -896,7 +896,9 @@ var getUrls = async function (arrayDeImagens) {
 }
 
 //Incializa a tabela by params
+var dataTableParam; //Variável de controle para limpeza de campos em outra função fora
 var tableFunction = function (data, colunas, params) {
+    dataTableParam = params;
     var table = $('.js-basic-example.' + params).DataTable({
         data: data,
         columns: colunas,
@@ -909,7 +911,8 @@ var tableFunction = function (data, colunas, params) {
             info: "Exibindo _START_ a _END_ de _TOTAL_ registros",
             infoEmpty: "Exibindo 0 a 0 de 0 registros",
             infoFiltered: "",
-            search: "Pesquisar:",
+            search: "",
+            searchPlaceholder: "Pesquisar " + params,
             paginate: {
                 "next": "Próximo",
                 "previous": "Anterior"
@@ -978,6 +981,21 @@ var tableFunction = function (data, colunas, params) {
 $('.background-table').click(function () {
     $(this).fadeOut();
     $(".table-responsive").fadeOut();
+});
+
+$('.table-cancel-button').click(function () {
+    $('.background-table').fadeOut();
+    $(".table-responsive").fadeOut();
+    if (dataTableParam == 'tag') {
+        $('span[data-role="remove"]').click();
+    } else {
+        $( "input[name='"+dataTableParam+"']" ).val("");
+    }
+
+});
+
+$('.table-confirm-button').click(function () {
+    $('.background-table').click();
 });
 
 //Init Firebase
