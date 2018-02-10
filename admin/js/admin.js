@@ -1015,7 +1015,7 @@ $('.table-confirm-button').click(function () {
         for (var element in dataTableArr)
             text += (text != "" ? ", " : "") + dataTableArr[element];
 
-        $("input[name='" + dataTableParam + "']").val(text);
+        $("input[name='" + dataTableParam + "']").val($("input[name='" + dataTableParam + "']").val() + ($("input[name='" + dataTableParam + "']").val() ? ", " : "") + text);
         $('input[name="' + dataTableParam + '"]').focus();
     }
 
