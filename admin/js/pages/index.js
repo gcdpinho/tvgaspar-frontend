@@ -21,7 +21,7 @@
                 $('.email').html(response[0].email);
                 localStorage.setItem("usuario", JSON.stringify(response[0]));
                 
-                getAllNoticias(false);
+                getAllNoticias(false, true);
 
             },
             error: function (error) {

@@ -58,12 +58,14 @@ $(function () {
     setAprovacoes(false);
 
     //Load info de tabelas relacionadas
-    getAllTags(false).then(res => getAllVideos(false).then(res => getAllCategorias(false).then(res => getAllImagens())));
+    getAllTags(false, false).then(res => getAllVideos(false, false).then(res => getAllCategorias(false, false).then(res => getAllImagens(false))));
 
     //Botão de pesquisar
     $('.div-search-button button').click(function () {
         search($(this).val());
     });
+
+    
 
     //Form Salve
     $('#noticia').submit(function (e) {

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>Aprovações | Área administrativa TV Gaspar</title>
+    <title>Tag | Área administrativa TV Gaspar</title>
     <!-- Favicon-->
     <link rel="icon" href="../../favicon.ico" type="image/x-icon">
 
@@ -395,17 +395,17 @@
                             </li>
                         </ul>
                     </li>
-                    <li>
+                    <li class="active">
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">bookmark</i>
                             <span>Tag</span>
                         </a>
                         <ul class="ml-menu">
                             <li>
-                                <a href="../tag/cadastrar.html">Cadastrar</a>
+                                <a href="cadastrar.html">Cadastrar</a>
                             </li>
-                            <li>
-                                <a href="../tag/listar.html">Listar</a>
+                            <li class="active">
+                                <a href="listar.html">Listar</a>
                             </li>
                         </ul>
                     </li>
@@ -423,11 +423,11 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="active">
+                    <li>
                         <a href="../aprovacao/aprovacao.html">
                             <i class="material-icons">done</i>
                             <span>Aprovações</span>
-                            <span class="badge active">0</span>
+                            <span class="badge">0</span>
                         </a>
                     </li>
                 </ul>
@@ -619,16 +619,16 @@
     <section class="content">
         <div class="container-fluid">
             <div class="block-header">
-                <h2>NOTÍCIAS EM APROVAÇÃO</h2>
+                <h2>LISTA DE TAGS</h2>
             </div>
             <!-- Input -->
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
                         <div class="body">
-                            <h2 class="card-inside-title aprovacao">Aprove as notícias a seguir</h2>
-                            <div class="div-table">
-                                <table class="table table-bordered table-striped table-hover js-basic-example dataTable aprovacao">
+                            <h2 class="card-inside-title aprovacao">Você pode desativar ou editar as tags a seguir</h2>
+                            <div class="div-table" value="tag">
+                                <table class="table table-bordered table-striped table-hover js-basic-example dataTable tag" value="listar">
                                 </table>
                             </div>
                         </div>
@@ -760,7 +760,7 @@
 
     <!-- Custom Js -->
     <script src="../../js/admin.js"></script>
-    <script src="../../js/pages/aprovacao/aprovacao.js"></script>
+    <script src="../../js/pages/listar/listar.js"></script>
 
     <!-- Demo Js -->
     <script src="../../js/demo.js"></script>

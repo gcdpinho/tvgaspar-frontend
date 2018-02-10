@@ -490,6 +490,7 @@ var logout = function (msgError) {
     localStorage.setItem('video', "");
     localStorage.setItem('categoria', "");
     localStorage.setItem('noticia', "");
+    localStorage.setItem('aprovacao', "");
     localStorage.setItem('not', "");
     if (typeof msgError == "object")
         localStorage.setItem('msgError', "");
@@ -592,7 +593,7 @@ var registerMessage = function (response, form, text, notification) {
 }
 
 //Get todas as tags
-var getAllTags = async function (close) {
+var getAllTags = async function (close, listar) {
     $.validator.addMethod("invalidTag", function (value, element, config) {
         return $('.label-info.error').length > 0 ? false : true;
     }, "Existem TAGS não cadastradas.");
@@ -629,6 +630,9 @@ var getAllTags = async function (close) {
                     tags.push($(this)[0]);
                 });
                 localStorage.setItem("tag", JSON.stringify(tags));
+                if (listar)
+                    search("tag");
+                else
                 if (close)
                     $('.page-loader-wrapper').fadeOut();
             },
@@ -638,12 +642,15 @@ var getAllTags = async function (close) {
             }
         });
     } else
+    if (listar)
+        search("tag");
+    else
     if (close)
         $('.page-loader-wrapper').fadeOut();
 }
 
 //Get todas imagens
-var getAllImagens = async function () {
+var getAllImagens = async function (listar) {
     $.validator.addMethod("invalidImagem", function (value, element, config) {
         if (value == "")
             return true;
@@ -672,7 +679,10 @@ var getAllImagens = async function () {
                     imagens.push($(this)[0]);
                 });
                 localStorage.setItem("imagem", JSON.stringify(imagens));
-                $('.page-loader-wrapper').fadeOut();
+                if (listar)
+                    search("imagem");
+                else
+                    $('.page-loader-wrapper').fadeOut();
             },
             error: function (error) {
                 console.log(error.message);
@@ -680,11 +690,14 @@ var getAllImagens = async function () {
             }
         });
     } else
+    if (listar)
+        search("imagem");
+    else
         $('.page-loader-wrapper').fadeOut();
 }
 
 //Get todos os vídeos
-var getAllVideos = async function (close) {
+var getAllVideos = async function (close, listar) {
     $.validator.addMethod("invalidVideo", function (value, element, config) {
         if (value == "")
             return true;
@@ -713,6 +726,9 @@ var getAllVideos = async function (close) {
                     videos.push($(this)[0]);
                 });
                 localStorage.setItem("video", JSON.stringify(videos));
+                if (listar)
+                    search("video");
+                else
                 if (close)
                     $('.page-loader-wrapper').fadeOut();
             },
@@ -722,12 +738,15 @@ var getAllVideos = async function (close) {
             }
         });
     } else
+    if (listar)
+        search("video");
+    else
     if (close)
         $('.page-loader-wrapper').fadeOut();
 }
 
 //Get todas as categorias
-var getAllCategorias = async function (close) {
+var getAllCategorias = async function (close, listar) {
     $.validator.addMethod("invalidCategoria", function (value, element, config) {
         if (value == "")
             return true;
@@ -756,6 +775,9 @@ var getAllCategorias = async function (close) {
                     categorias.push($(this)[0]);
                 });
                 localStorage.setItem("categoria", JSON.stringify(categorias));
+                if (listar)
+                    search("categoria");
+                else
                 if (close)
                     $('.page-loader-wrapper').fadeOut();
             },
@@ -765,6 +787,9 @@ var getAllCategorias = async function (close) {
             }
         });
     } else
+    if (listar)
+        search("categoria");
+    else
     if (close)
         $('.page-loader-wrapper').fadeOut();
 }
@@ -827,6 +852,9 @@ var search = async function (params) {
                     colunas.pop();
                     colunas.pop();
                     colunas.pop();
+                } else if (params == "publicidade") {
+                    colunas.pop();
+                    colunas.pop();
                 }
             }
             for (var i = 1; i < linha.length; i += 2)
@@ -835,6 +863,9 @@ var search = async function (params) {
                 row.shift();
                 if (params == "noticia") {
                     row.pop();
+                    row.pop();
+                    row.pop();
+                } else if (params == "publicidade") {
                     row.pop();
                     row.pop();
                 }
@@ -886,7 +917,7 @@ var tableFunction = function (data, colunas, params) {
         }
     });
 
-    if (params != "noticia") {
+    if (params != "aprovacao") {
         $('.js-basic-example.' + params).parents('.table-responsive').css('top', $(window).height() / 2 - $('.js-basic-example.' + params).parents('.table-responsive').height() / 2 - 100);
         $('.js-basic-example.' + params).parents('.table-responsive').css('left', ($(window).width() + $('#leftsidebar').width()) / 2 - $('.js-basic-example.' + params).parents('.table-responsive').width() / 2);
     } else {
@@ -895,40 +926,41 @@ var tableFunction = function (data, colunas, params) {
     }
 
     $('.js-basic-example.' + params).find("tbody").on('click', 'tr', function (e, dt, type, indexes) {
-        switch (params) {
-            case "tag":
-                $('.bootstrap-tagsinput input').focus();
-                $('input[data-role="tagsinput"]').tagsinput('add', table.row(this).data()[0]);
-                break;
-            case "imagem":
-                $('input[name="imagem"]').focus();
-                var inputImagem = $('input[name="imagem"]');
-                $(inputImagem).val($(inputImagem).val() + ($(inputImagem).val() == "" ? "" : ", ") + table.row(this).data()[1].split('>')[1]);
-                break;
-            case "video":
-                $('input[name="video"]').focus();
-                var inputVideo = $('input[name="video"]');
-                $(inputVideo).val($(inputVideo).val() + ($(inputVideo).val() == "" ? "" : ", ") + table.row(this).data()[2]);
+        if ($('.js-basic-example.' + params).attr('value') != "listar")
+            switch (params) {
+                case "tag":
+                    $('.bootstrap-tagsinput input').focus();
+                    $('input[data-role="tagsinput"]').tagsinput('add', table.row(this).data()[0]);
+                    break;
+                case "imagem":
+                    $('input[name="imagem"]').focus();
+                    var inputImagem = $('input[name="imagem"]');
+                    $(inputImagem).val($(inputImagem).val() + ($(inputImagem).val() == "" ? "" : ", ") + table.row(this).data()[1].split('>')[1]);
+                    break;
+                case "video":
+                    $('input[name="video"]').focus();
+                    var inputVideo = $('input[name="video"]');
+                    $(inputVideo).val($(inputVideo).val() + ($(inputVideo).val() == "" ? "" : ", ") + table.row(this).data()[2]);
 
-                break;
-            case "categoria":
-                $('input[name="categoria"]').focus();
-                var inputCategoria = $('input[name="categoria"]');
-                $(inputCategoria).val($(inputCategoria).val() + ($(inputCategoria).val() == "" ? "" : ", ") + table.row(this).data()[0]);
-                break;
-            case "noticia":
-                $('input[name="manchete"]').val(table.row(this).data()[0]);
-                $('input[name="subManchete"]').val(table.row(this).data()[1]);
-                $('textarea[name="texto"]').val(table.row(this).data()[2]);
-                $('input[name="autor"]').val(table.row(this).data()[3]);
-                $('input[name="dtCadastro"]').val(table.row(this).data()[4]);
-                $('.background-table').fadeIn();
-                $('.table-responsive').fadeIn();
-                break;
-        }
+                    break;
+                case "categoria":
+                    $('input[name="categoria"]').focus();
+                    var inputCategoria = $('input[name="categoria"]');
+                    $(inputCategoria).val($(inputCategoria).val() + ($(inputCategoria).val() == "" ? "" : ", ") + table.row(this).data()[0]);
+                    break;
+                case "aprovacao":
+                    $('input[name="manchete"]').val(table.row(this).data()[0]);
+                    $('input[name="subManchete"]').val(table.row(this).data()[1]);
+                    $('textarea[name="texto"]').val(table.row(this).data()[2]);
+                    $('input[name="autor"]').val(table.row(this).data()[3]);
+                    $('input[name="dtCadastro"]').val(table.row(this).data()[4]);
+                    $('.background-table').fadeIn();
+                    $('.table-responsive').fadeIn();
+                    break;
+            }
 
     });
-    if (params != "noticia") {
+    if (params != "aprovacao" && $('.js-basic-example.' + params).attr('value') != "listar") {
         $('.background-table').fadeIn();
         $('.js-basic-example.' + params).parents('.table-responsive').fadeIn();
     }
@@ -974,36 +1006,51 @@ var getUsuario = function () {
 }
 
 //Get todas as notícias
-var getAllNoticias = function (flgNoticia) {
-    $.ajax({
-        type: "POST",
-        url: "https://tvgaspar-server.herokuapp.com/getAllNoticias",
-        data: {
-            token: localStorage.getItem('token')
-        },
-        success: function (response) {
-            console.log(response);
-            var arrNoticia = []
-            for (var element in response)
-                if (response[element].aprovacao == 0 && response[element].flgAtivo == 1)
-                    arrNoticia.push(response[element]);
-            localStorage.setItem('noticia', JSON.stringify(arrNoticia));
-            setAprovacoes(flgNoticia);
-            $('.page-loader-wrapper').fadeOut();
-        },
-        error: function (error) {
-            console.log(error.message);
-            //logout('Sessão inválida. Faça o login novamente.');
-        }
-    });
+var getAllNoticias = async function (flgNoticia, aprovacao) {
+    var noticias = localStorage.getItem("noticia");
+    if (aprovacao || (noticias == null || noticias == ""))
+        $.ajax({
+            type: "POST",
+            url: "https://tvgaspar-server.herokuapp.com/getAllNoticias",
+            data: {
+                token: localStorage.getItem('token')
+            },
+            success: function (response) {
+                console.log(response);
+                var arrNoticia = [];
+                if (aprovacao) {
+                    for (var element in response)
+                        if (response[element].aprovacao == 0 && response[element].flgAtivo == 1)
+                            arrNoticia.push(response[element]);
+                    localStorage.setItem('aprovacao', JSON.stringify(arrNoticia));
+                    setAprovacoes(flgNoticia);
+                    $('.page-loader-wrapper').fadeOut();
+                } else {
+                    localStorage.setItem('noticia', JSON.stringify(response));
+                    setAprovacoes(flgNoticia);
+                    search("noticia");
+                }
+
+
+            },
+            error: function (error) {
+                console.log(error.message);
+                logout('Sessão inválida. Faça o login novamente.');
+            }
+        });
+    else {
+        setAprovacoes(flgNoticia);
+        search("noticia");
+        //$('.page-loader-wrapper').fadeOut();
+    }
 }
 
 //Set badge aprovações
 var setAprovacoes = function (flgNoticia) {
-    var noticia = localStorage.getItem('noticia').replace(/\[|\]|\{|\"/g, "").split('}');
-    noticia.pop();
-    if (noticia.length > 0) {
-        $('span.badge').html(noticia.length);
+    var aprovacao = localStorage.getItem('aprovacao').replace(/\[|\]|\{|\"/g, "").split('}');
+    aprovacao.pop();
+    if (aprovacao.length > 0) {
+        $('span.badge').html(aprovacao.length);
         $('span.badge').css('display', 'block');
     }
 
@@ -1011,4 +1058,31 @@ var setAprovacoes = function (flgNoticia) {
         localStorage.setItem('not', "NOTÍCIA aprovada com sucesso!");
         location.reload();
     }
+
+    //$('.page-loader-wrapper').fadeOut();
+}
+
+//Get todas publicidades
+var getAllPublicidades = async function () {
+    var publicidades = localStorage.getItem("publicidade");
+    if (publicidades == null || publicidades == "") {
+        $.ajax({
+            type: "POST",
+            url: "https://tvgaspar-server.herokuapp.com/getAllPublicidades",
+            data: {
+                token: localStorage.getItem('token')
+            },
+            success: function (response) {
+                console.log(response);
+                localStorage.setItem("publicidade", JSON.stringify(response));
+                search("publicidade");
+                //$('.page-loader-wrapper').fadeOut();
+            },
+            error: function (error) {
+                console.log(error.message);
+                logout('Sessão inválida. Faça o login novamente.');
+            }
+        });
+    } else
+        search("publicidade");
 }

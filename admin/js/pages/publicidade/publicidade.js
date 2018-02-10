@@ -28,7 +28,7 @@ $(function () {
     setAprovacoes(false);
 
     //Load info de tabelas relacionadas
-    getAllImagens();
+    getAllImagens(false);
 
      //Botão de pesquisar
     $('.div-search-button button').click(function () {

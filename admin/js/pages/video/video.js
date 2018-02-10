@@ -26,7 +26,7 @@ $(function () {
     setAprovacoes(false);
 
     //Load info de tabelas relacionadas
-    getAllTags(true);
+    getAllTags(true, false);
 
     //Botão de pesquisar
     $('.div-search-button button').click(function () {

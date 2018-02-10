@@ -5,16 +5,17 @@ $(function () {
     //Set aprovacoes (noticias)
     setAprovacoes(false);
 
-    search("noticia");
+    //Show table
+    search("aprovacao");
     
+    //Notification em caso de page reload
     var not = localStorage.getItem('not');
     if (not != null && not != ""){
         showNotification(not, 'success');
         localStorage.setItem('not', "");
     }
 
-    $('.page-loader-wrapper').fadeOut();
-
+    //Aprovação da notícia (update)
     $('.noticia-detail button').click(function () {
         $('.page-loader-wrapper').fadeIn();
         $.ajax({
@@ -27,7 +28,7 @@ $(function () {
             },
             success: function (response) {
                 console.log(response);
-                getAllNoticias(true);
+                getAllNoticias(true, true);
             },
             error: function (error) {
                 console.log(error.message);
