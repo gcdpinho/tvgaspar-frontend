@@ -990,6 +990,8 @@ $('.background-table').click(function () {
     $(this).fadeOut();
     $(".table-responsive").fadeOut();
     $('tr.even').css('background-color', '#ffffff');
+    $('tr.even').css('color', '#000000');
+    $('tr.odd').css('color', '#000000');
     $('.table-striped > tbody > tr:nth-of-type(odd)').css('background-color', '#f9f9f9');
 });
 
