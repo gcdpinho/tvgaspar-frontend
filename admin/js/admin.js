@@ -635,6 +635,8 @@ var getAllTags = async function (close, listar) {
                 else
                 if (close)
                     $('.page-loader-wrapper').fadeOut();
+                else
+                    getAllVideos(false, false);
             },
             error: function (error) {
                 console.log(error.message);
@@ -647,6 +649,8 @@ var getAllTags = async function (close, listar) {
     else
     if (close)
         $('.page-loader-wrapper').fadeOut();
+    else
+        getAllVideos(false, false);
 }
 
 //Get todas imagens
@@ -692,8 +696,9 @@ var getAllImagens = async function (listar) {
     } else
     if (listar)
         search("imagem");
-    else
+    else {
         $('.page-loader-wrapper').fadeOut();
+    }
 }
 
 //Get todos os vídeos
@@ -731,6 +736,8 @@ var getAllVideos = async function (close, listar) {
                 else
                 if (close)
                     $('.page-loader-wrapper').fadeOut();
+                else
+                    getAllCategorias(false, false);
             },
             error: function (error) {
                 console.log(error.message);
@@ -743,6 +750,8 @@ var getAllVideos = async function (close, listar) {
     else
     if (close)
         $('.page-loader-wrapper').fadeOut();
+    else
+        getAllCategorias(false, false);
 }
 
 //Get todas as categorias
@@ -780,6 +789,8 @@ var getAllCategorias = async function (close, listar) {
                 else
                 if (close)
                     $('.page-loader-wrapper').fadeOut();
+                else
+                    getAllImagens(false);
             },
             error: function (error) {
                 console.log(error.message);
@@ -792,6 +803,8 @@ var getAllCategorias = async function (close, listar) {
     else
     if (close)
         $('.page-loader-wrapper').fadeOut();
+    else
+        getAllImagens(false);
 }
 
 //Get data(localStorage) by param 
@@ -895,6 +908,23 @@ var getUrls = async function (arrayDeImagens) {
     )).then();
 }
 
+var acentuacaoTable = function (table) {
+    switch (table) {
+        case "aprovacao":
+            return "aprovação";
+            break;
+        case "noticia":
+            return "notícia";
+            break;
+        case "video":
+            return "vídeo";
+            break;
+        default:
+            return table;
+            break;
+    }
+}
+
 //Incializa a tabela by params
 var dataTableParam; //Variável de controle para limpeza de campos em outra função fora
 var dataTableArr = [];
@@ -913,7 +943,7 @@ var tableFunction = function (data, colunas, params) {
             infoEmpty: "Exibindo 0 a 0 de 0 registros",
             infoFiltered: "",
             search: "",
-            searchPlaceholder: "Pesquisar " + params,
+            searchPlaceholder: "Pesquisar " + acentuacaoTable(params),
             paginate: {
                 "next": "Próximo",
                 "previous": "Anterior"

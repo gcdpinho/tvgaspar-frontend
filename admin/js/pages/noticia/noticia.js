@@ -58,7 +58,7 @@ $(function () {
     setAprovacoes(false);
 
     //Load info de tabelas relacionadas
-    getAllTags(false, false).then(res => getAllVideos(false, false).then(res => getAllCategorias(false, false).then(res => getAllImagens(false))));
+    getAllTags(false, false);
 
     //Botão de pesquisar
     $('.div-search-button button').click(function () {
