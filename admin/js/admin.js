@@ -568,7 +568,13 @@ var registerMessage = function (response, form, text, notification) {
             $('.page-loader-wrapper').fadeOut();
 
             return false;
-        } else {
+        }
+        else
+        if (response.sqlMessage.indexOf("foreign key") >= 0) {
+            showNotification("Não é possível excluir esta " + text + ".", "error");
+            $('.page-loader-wrapper').fadeOut();
+        }
+        else {
             showNotification("Erro ao cadastrar " + text + ", tente novamente.", "error");
             $('.page-loader-wrapper').fadeOut();
         }
@@ -869,8 +875,22 @@ var search = async function (params) {
                     colunas.pop();
                     colunas.pop();
                 }
+                if ($('.js-basic-example.' + params).attr("value") == "listar")
+                    colunas.push({
+                        title: "Ações".toUpperCase()
+                    });
             }
             for (var i = 1; i < linha.length; i += 2)
+                if ($('.js-basic-example.' + params).attr("value") == "listar") {
+                    if (params != "imagem")
+                        row.push("<input class='dataTableEdit' type='text' value='" + linha[i] + "' disabled>");
+                    else
+                    if (i != 5)
+                        row.push("<input class='dataTableEdit' type='text' value='" + linha[i] + "' disabled>");
+                    else
+                        row.push(linha[i]);
+                }
+            else
                 row.push(linha[i]);
             if (row.length > 0) {
                 row.shift();
@@ -882,15 +902,21 @@ var search = async function (params) {
                     row.pop();
                     row.pop();
                 }
-                data.push(row);
                 if (params == "imagem")
                     imagens.push(row[row.length - 1]);
+                if ($('.js-basic-example.' + params).attr("value") == "listar")
+                    row.push(
+                        '<i class="material-icons">edit</i>' +
+                        '<i class="material-icons ml-20px">delete</i>'
+                    );
 
+                data.push(row);
             }
         }
         var urls = await getUrls(imagens);
+        var pos = $('.js-basic-example.' + params).attr("value") == "listar" ? 2 : 1;
         for (url in urls)
-            data[url][data[url].length - 1] = "<img class='img-preview' src='" + urls[url] + "'>" + data[url][data[url].length - 1];
+            data[url][data[url].length - pos] = "<img class='img-preview' src='" + urls[url] + "'>" + data[url][data[url].length - pos];
 
         if (data.length > 0)
             tableFunction(data, colunas, params);
@@ -999,6 +1025,124 @@ var tableFunction = function (data, colunas, params) {
             }
         }
 
+
+    });
+
+    $('.js-basic-example.' + params).find("tbody").on('click', 'i.material-icons', function (e, dt, type, indexes) {
+        switch ($(this).text()) {
+            case "edit":
+                $("tr input").prop('disabled', true);
+                $("tr i.material-icons:contains('playlist_add')").html("edit");
+                $(this).parents("tr").find('input').prop('disabled', false);
+                $(this).html("playlist_add");
+                break;
+            case "delete":
+                switch (params) {
+                    case "tag":
+                        $('#modalId').html(getDataId(params, $(table.row($(this).parents("tr")).data()[0]).val(), 2));
+                        break;
+                    case "imagem":
+                        $('#modalId').html(getDataId(params, $(this).parents("tr").find('img').parent('td').text(), 4));
+                        break;
+                    case "video":
+                        $('#modalId').html(getDataId(params, $(table.row($(this).parents("tr")).data()[2]).val(), 6));
+                        break;
+                    case "categoria":
+                        $('#modalId').html(getDataId(params, $(table.row($(this).parents("tr")).data()[0]).val(), 2));
+                        break;
+                    case "noticia":
+                        $('#modalId').html(getDataId(params, $(table.row($(this).parents("tr")).data()[0]).val(), 2));
+                        break
+                    case "publicidade":
+                        $('#modalId').html(getDataId(params, $(table.row($(this).parents("tr")).data()[0]).val(), 2));
+                        break
+                }
+                $('#defaultModal').modal('show');
+                break;
+            case "playlist_add":
+                $(".page-loader-wrapper").fadeIn();
+                var data = {};
+                var url = "https://tvgaspar-server.herokuapp.com/";
+                switch (params) {
+                    case "tag":
+                        url += "updateTag";
+                        data = {
+                            titulo: $($(this).parents("tr").find('input')[0]).val(),
+                            id: getDataId(params, $(table.row($(this).parents("tr")).data()[0]).val(), 2),
+                            token: localStorage.getItem('token')
+                        }
+                        break;
+                    case "imagem":
+                        url += "updateImagem";
+                        data = {
+                            titulo: $($(this).parents("tr").find('input')[0]).val(),
+                            id: getDataId(params, $(this).parents("tr").find('img').parent('td').text(), 4),
+                            token: localStorage.getItem('token')
+                        }
+                        break;
+                    case "video":
+                        url += "updateVideo";
+                        data = {
+                            titulo: $($(this).parents("tr").find('input')[0]).val(),
+                            texto: $($(this).parents("tr").find('input')[1]).val(),
+                            link: $($(this).parents("tr").find('input')[2]).val(),
+                            id: getDataId(params, $(table.row($(this).parents("tr")).data()[2]).val(), 6),
+                            token: localStorage.getItem('token')
+                        }
+                        break;
+                    case "categoria":
+                        url += "updateCategoria";
+                        data = {
+                            titulo: $($(this).parents("tr").find('input')[0]).val(),
+                            texto: $($(this).parents("tr").find('input')[1]).val(),
+                            cor: $($(this).parents("tr").find('input')[2]).val(),
+                            id: getDataId(params, $(table.row($(this).parents("tr")).data()[0]).val(), 2),
+                            token: localStorage.getItem('token')
+                        }
+                        break;
+                    case "noticia":
+                        url += "updateNoticia";
+                        data = {
+                            manchete: $($(this).parents("tr").find('input')[0]).val(),
+                            subManchete: $($(this).parents("tr").find('input')[1]).val(),
+                            texto: $($(this).parents("tr").find('input')[2]).val(),
+                            autor: $($(this).parents("tr").find('input')[3]).val(),
+                            dtCadastro: $($(this).parents("tr").find('input')[4]).val(),
+                            id: getDataId(params, $(table.row($(this).parents("tr")).data()[0]).val(), 2),
+                            token: localStorage.getItem('token')
+                        }
+                        break
+                    case "publicidade":
+                        url += "updatePublicidade";
+                        data = {
+                            titulo: $($(this).parents("tr").find('input')[0]).val(),
+                            tipo: $($(this).parents("tr").find('input')[1]).val(),
+                            texto: $($(this).parents("tr").find('input')[2]).val(),
+                            link: $($(this).parents("tr").find('input')[3]).val(),
+                            id: getDataId(params, $(table.row($(this).parents("tr")).data()[0]).val(), 2),
+                            token: localStorage.getItem('token')
+                        }
+                        break
+                }
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: data,
+                    success: function (response) {
+                        console.log(response);
+                        localStorage.setItem(params, "");
+                        localStorage.setItem('not', acentuacaoTable(params).toUpperCase() + " editado com sucesso!");
+
+                        location.reload();
+
+                    },
+                    error: function (error) {
+                        console.log(error.message);
+                        //logout('Sessão inválida. Faça o login novamente.');
+                    }
+                });
+                break;
+        }
     });
     if (params != "aprovacao" && $('.js-basic-example.' + params).attr('value') != "listar") {
         $('.background-table').fadeIn();
@@ -1091,7 +1235,7 @@ var getAllNoticias = async function (flgNoticia, aprovacao) {
                 var arrNoticia = [];
                 if (aprovacao) {
                     for (var element in response)
-                        if (response[element].aprovacao == 0 && response[element].flgAtivo == 1)
+                        if (response[element].aprovacao == 0)
                             arrNoticia.push(response[element]);
                     localStorage.setItem('aprovacao', JSON.stringify(arrNoticia));
                     setAprovacoes(flgNoticia);
@@ -1126,7 +1270,7 @@ var setAprovacoes = function (flgNoticia) {
     }
 
     if (flgNoticia) {
-        localStorage.setItem('not', "NOTÍCIA aprovada com sucesso!");
+        localStorage.setItem('not', "");
         location.reload();
     }
 

@@ -110,6 +110,10 @@ tr {
     cursor: pointer;
 }
 
+.js-basic-example[value="listar"] tr {
+    cursor: default;
+}
+
 .form-group .form-line .form-label.img {
     top: -20px;
 }
@@ -174,4 +178,21 @@ div.dataTables_filter input {
 
 div.dataTables_wrapper div.dataTables_filter label {
     width: 100% !important;
+}
+
+.ml-20px{
+    margin-left: 20px;
+}
+
+.dataTableEdit[disabled]{
+    background: none;
+    border: none;
+}
+
+td i.material-icons{
+    cursor: pointer;
+}
+
+#modalId{
+    display: none;
 }
