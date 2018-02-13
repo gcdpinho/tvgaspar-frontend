@@ -25,6 +25,7 @@ $(function () {
     $('input[name="texto"]').val(dataCategoria.texto);
     $('input[name="texto"]').focus();
     $('input[name="cor"]').val(dataCategoria.cor);
+    $('input[name="cor"]').change();
     
     //Get info usuario
     var usuario = getUsuario();

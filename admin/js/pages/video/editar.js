@@ -27,6 +27,7 @@ $(function () {
     $('input[name="texto"]').focus();
     $('input[name="link"]').val(dataVideo.link);
     $('input[name="link"]').focus();
+    
 
     //Get info usuario
     var usuario = getUsuario();

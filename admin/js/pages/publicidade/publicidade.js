@@ -4,7 +4,8 @@ $(function () {
     $('#publicidade').validate({
         rules: {
             imagem: {
-                invalidImagem: true
+                invalidImagem: true,
+                oneImagem: true
             }
         },
         highlight: function (input) {

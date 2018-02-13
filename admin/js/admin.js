@@ -679,6 +679,17 @@ var getAllImagens = async function (listar) {
         }
     }, "Existem IMAGENS não cadastradas.");
 
+    $.validator.addMethod("oneImagem", function (value, element, config) {
+        if (value == "")
+            return true;
+        else {
+            if (value.indexOf(",") >= 0)
+                return false;
+
+            return true;
+        }
+    }, "É permitido apenas uma IMAGEM.");
+
     var imagens = localStorage.getItem("imagem");
     if (imagens == null || imagens == "") {
         $.ajax({
@@ -979,7 +990,7 @@ var tableFunction = function (data, colunas, params) {
                 "next": "Próximo",
                 "previous": "Anterior"
             },
-        }
+        },
     });
 
     if (params != "aprovacao") {
@@ -1001,10 +1012,19 @@ var tableFunction = function (data, colunas, params) {
                     dataTableArr.push(table.row(this).data()[0]);
                     break;
                 case "imagem":
+                    if ($('input[name="imagem"]').hasClass('oneImagem')) {
+                        $('tr.even').css('background-color', '#ffffff');
+                        $('tr.even').css('color', '#000000');
+                        $('tr.odd').css('color', '#000000');
+                        $('.table-striped > tbody > tr:nth-of-type(odd)').css('background-color', '#f9f9f9');
+                        $(this).css('background-color', '#007fff');
+                        $(this).css('color', '#fff');
+                        dataTableArr = [];
+                    }
+                    dataTableArr.push(table.row(this).data()[1].split('>')[1]);
                     //$('input[name="imagem"]').focus();
                     //var inputImagem = $('input[name="imagem"]');
                     //$(inputImagem).val($(inputImagem).val() + ($(inputImagem).val() == "" ? "" : ", ") + table.row(this).data()[1].split('>')[1]);
-                    dataTableArr.push(table.row(this).data()[1].split('>')[1]);
                     break;
                 case "video":
                     //$('input[name="video"]').focus();
@@ -1027,6 +1047,7 @@ var tableFunction = function (data, colunas, params) {
                     $('.background-table').fadeIn();
                     $('.table-responsive').fadeIn();
                     break;
+
             }
         }
 
@@ -1364,6 +1385,6 @@ var getAllPublicidades = async function () {
 }
 
 //Cancel button edit page
-$('.save-button .btn-danger').click(function () {
+$('.btn-cancel').click(function () {
     location.href = "listar.html";
 });

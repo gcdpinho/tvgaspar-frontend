@@ -196,3 +196,9 @@ td i.material-icons{
 #modalId{
     display: none;
 }
+
+label#cor-error{
+    position: absolute;
+    left: 5px;
+    top: 40px;
+}

@@ -7,6 +7,12 @@ $(function () {
 
     //Show table
     search("aprovacao");
+
+    if (localStorage.getItem('aprovacao').length <= 2){
+        $('.div-table').html("Não há notícias para aprovação.");
+        $('.div-table').css('margin-top', '30px');
+        $('.page-loader-wrapper').fadeOut();
+    }
     
     //Notification em caso de page reload
     var not = localStorage.getItem('not');
