@@ -490,8 +490,15 @@ var logout = function (msgError) {
     localStorage.setItem('video', "");
     localStorage.setItem('categoria', "");
     localStorage.setItem('noticia', "");
+    localStorage.setItem('publicidade', "");
     localStorage.setItem('aprovacao', "");
     localStorage.setItem('not', "");
+    localStorage.setItem('tagEdit', "");
+    localStorage.setItem('imagemEdit', "");
+    localStorage.setItem('videoEdit', "");
+    localStorage.setItem('categoriaEdit', "");
+    localStorage.setItem('noticiaEdit', "");
+    localStorage.setItem('publicidadeEdit', "");
     if (typeof msgError == "object")
         localStorage.setItem('msgError', "");
     else
@@ -568,13 +575,11 @@ var registerMessage = function (response, form, text, notification) {
             $('.page-loader-wrapper').fadeOut();
 
             return false;
-        }
-        else
+        } else
         if (response.sqlMessage.indexOf("foreign key") >= 0) {
             showNotification("Não é possível excluir esta " + text + ".", "error");
             $('.page-loader-wrapper').fadeOut();
-        }
-        else {
+        } else {
             showNotification("Erro ao cadastrar " + text + ", tente novamente.", "error");
             $('.page-loader-wrapper').fadeOut();
         }
@@ -1031,10 +1036,64 @@ var tableFunction = function (data, colunas, params) {
     $('.js-basic-example.' + params).find("tbody").on('click', 'i.material-icons', function (e, dt, type, indexes) {
         switch ($(this).text()) {
             case "edit":
+                var data = {};
+                switch (params) {
+                    case "tag":
+                        data = {
+                            titulo: $($(this).parents("tr").find('input')[0]).val(),
+                            id: getDataId(params, $(table.row($(this).parents("tr")).data()[0]).val(), 2),
+                        }
+                        break;
+                    case "imagem":
+                        data = {
+                            titulo: $($(this).parents("tr").find('input')[0]).val(),
+                            id: getDataId(params, $(this).parents("tr").find('img').parent('td').text(), 4),
+                        }
+                        break;
+                    case "video":
+                        data = {
+                            titulo: $($(this).parents("tr").find('input')[0]).val(),
+                            texto: $($(this).parents("tr").find('input')[1]).val(),
+                            link: $($(this).parents("tr").find('input')[2]).val(),
+                            id: getDataId(params, $(table.row($(this).parents("tr")).data()[2]).val(), 6),
+                        }
+                        break;
+                    case "categoria":
+                        data = {
+                            titulo: $($(this).parents("tr").find('input')[0]).val(),
+                            texto: $($(this).parents("tr").find('input')[1]).val(),
+                            cor: $($(this).parents("tr").find('input')[2]).val(),
+                            id: getDataId(params, $(table.row($(this).parents("tr")).data()[0]).val(), 2),
+                        }
+                        break;
+                    case "noticia":
+                        data = {
+                            manchete: $($(this).parents("tr").find('input')[0]).val(),
+                            subManchete: $($(this).parents("tr").find('input')[1]).val(),
+                            texto: $($(this).parents("tr").find('input')[2]).val(),
+                            autor: $($(this).parents("tr").find('input')[3]).val(),
+                            dtCadastro: $($(this).parents("tr").find('input')[4]).val(),
+                            id: getDataId(params, $(table.row($(this).parents("tr")).data()[0]).val(), 2),
+                        }
+                        break
+                    case "publicidade":
+                        data = {
+                            titulo: $($(this).parents("tr").find('input')[0]).val(),
+                            tipo: $($(this).parents("tr").find('input')[1]).val(),
+                            texto: $($(this).parents("tr").find('input')[2]).val(),
+                            link: $($(this).parents("tr").find('input')[3]).val(),
+                            id: getDataId(params, $(table.row($(this).parents("tr")).data()[0]).val(), 2),
+                        }
+                        break;
+                }
+                localStorage.setItem(params + "Edit", JSON.stringify(data));
+                location.href = "editar.html";
+                /*
                 $("tr input").prop('disabled', true);
                 $("tr i.material-icons:contains('playlist_add')").html("edit");
                 $(this).parents("tr").find('input').prop('disabled', false);
                 $(this).html("playlist_add");
+                */
                 break;
             case "delete":
                 switch (params) {
@@ -1059,6 +1118,7 @@ var tableFunction = function (data, colunas, params) {
                 }
                 $('#defaultModal').modal('show');
                 break;
+                /*
             case "playlist_add":
                 $(".page-loader-wrapper").fadeIn();
                 var data = {};
@@ -1122,7 +1182,7 @@ var tableFunction = function (data, colunas, params) {
                             id: getDataId(params, $(table.row($(this).parents("tr")).data()[0]).val(), 2),
                             token: localStorage.getItem('token')
                         }
-                        break
+                        break;
                 }
                 $.ajax({
                     type: "POST",
@@ -1142,6 +1202,7 @@ var tableFunction = function (data, colunas, params) {
                     }
                 });
                 break;
+                */
         }
     });
     if (params != "aprovacao" && $('.js-basic-example.' + params).attr('value') != "listar") {
@@ -1301,3 +1362,8 @@ var getAllPublicidades = async function () {
     } else
         search("publicidade");
 }
+
+//Cancel button edit page
+$('.save-button .btn-danger').click(function () {
+    location.href = "listar.html";
+});
