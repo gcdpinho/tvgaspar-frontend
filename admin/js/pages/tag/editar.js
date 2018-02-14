@@ -12,10 +12,10 @@ $(function () {
         }
     });
 
-     //Preenchimento da categoria (edit)
-     var dataTag = JSON.parse(localStorage.getItem('tagEdit'));
-     $('input[name="tag"]').val(dataTag.titulo);
-     $('input[name="tag"]').focus();
+    //Preenchimento da categoria (edit)
+    var dataTag = JSON.parse(localStorage.getItem('tagEdit'));
+    $('input[name="tag"]').val(dataTag.titulo);
+    $('input[name="tag"]').focus();
 
     //Get info usuario
     var usuario = getUsuario();
@@ -39,10 +39,15 @@ $(function () {
                 },
                 success: function (response) {
                     console.log(response);
-                    localStorage.setItem('tag', "");
-                    localStorage.setItem('not', "TAG editada com sucesso!");
+                    createInsercao(function () {
+                        localStorage.setItem('tag', "");
+                        localStorage.setItem('not', "TAG editada com sucesso!");
 
-                    location.href = "listar.html";
+                        location.href = "listar.html";
+                    }, {
+                        campo: "tag"
+                    });
+
                 },
                 error: function (error) {
                     console.log(error.message);

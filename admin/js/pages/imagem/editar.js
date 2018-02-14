@@ -53,10 +53,14 @@ $(function () {
                 },
                 success: function (response) {
                     console.log(response);
-                    localStorage.setItem('imagem', "");
-                    localStorage.setItem('not', "IMAGEM editada com sucesso!");
+                    createInsercao(function () {
+                        localStorage.setItem('imagem', "");
+                        localStorage.setItem('not', "IMAGEM editada com sucesso!");
 
-                    location.href = "listar.html";
+                        location.href = "listar.html";
+                    }, {
+                        campo: "imagem"
+                    });
                 },
                 error: function (error) {
                     console.log(error.message);

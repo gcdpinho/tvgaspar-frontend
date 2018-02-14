@@ -26,7 +26,7 @@ $(function () {
     $('input[name="texto"]').focus();
     $('input[name="cor"]').val(dataCategoria.cor);
     $('input[name="cor"]').change();
-    
+
     //Get info usuario
     var usuario = getUsuario();
 
@@ -51,10 +51,15 @@ $(function () {
                 },
                 success: function (response) {
                     console.log(response);
-                    localStorage.setItem('categoria', "");
-                    localStorage.setItem('not', "CATEGORIA editada com sucesso!");
+                    createInsercao(function () {
+                        localStorage.setItem('categoria', "");
+                        localStorage.setItem('not', "CATEGORIA editada com sucesso!");
 
-                    location.href = "listar.html";
+                        location.href = "listar.html";
+                    }, {
+                        campo: "categoria"
+                    });
+
                 },
                 error: function (error) {
                     console.log(error.message);

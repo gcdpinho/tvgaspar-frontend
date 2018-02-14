@@ -54,10 +54,14 @@ $(function () {
                 },
                 success: function (response) {
                     console.log(response);
-                    localStorage.setItem('publicidade', "");
-                    localStorage.setItem('not', "PUBLICIDADE editada com sucesso!");
-
-                    location.href = "listar.html";
+                    createInsercao(function(){
+                        localStorage.setItem('publicidade', "");
+                        localStorage.setItem('not', "PUBLICIDADE editada com sucesso!");
+    
+                        location.href = "listar.html";
+                    }, {
+                        campo: "publicidade"
+                    });
                 },
                 error: function (error) {
                     console.log(error.message);

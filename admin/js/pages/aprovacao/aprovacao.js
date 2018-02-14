@@ -8,15 +8,15 @@ $(function () {
     //Show table
     search("aprovacao");
 
-    if (localStorage.getItem('aprovacao').length <= 2){
+    if (localStorage.getItem('aprovacao').length <= 2) {
         $('.div-table').html("Não há notícias para aprovação.");
         $('.div-table').css('margin-top', '30px');
         $('.page-loader-wrapper').fadeOut();
     }
-    
+
     //Notification em caso de page reload
     var not = localStorage.getItem('not');
-    if (not != null && not != ""){
+    if (not != null && not != "") {
         showNotification(not, 'success');
         localStorage.setItem('not', "");
     }
@@ -28,13 +28,17 @@ $(function () {
             type: "POST",
             url: "https://tvgaspar-server.herokuapp.com/updateAprovacao",
             data: {
-                id: getDataId("noticia", $('input[name="manchete"]').val(), "manchete"),
+                id: getDataId("aprovacao", $('input[name="manchete"]').val(), "manchete"),
                 aprovacao: 1,
                 token: localStorage.getItem('token')
             },
             success: function (response) {
                 console.log(response);
-                getAllNoticias(true, true);
+                createInsercao(function () {
+                    getAllNoticias(true, true);
+                }, {
+                    campo: "aprovacao"
+                });
             },
             error: function (error) {
                 console.log(error.message);

@@ -53,10 +53,15 @@ $(function () {
                 },
                 success: function (response) {
                     console.log(response);
-                    localStorage.setItem('video', "");
-                    localStorage.setItem('not', "Video editada com sucesso!");
+                    createInsercao(function(){
+                        localStorage.setItem('video', "");
+                        localStorage.setItem('not', "Vídeo editado com sucesso!");
+    
+                        location.href = "listar.html";
+                    }, {
+                        campo: "video"
+                    });
 
-                    location.href = "listar.html";
                 },
                 error: function (error) {
                     console.log(error.message);

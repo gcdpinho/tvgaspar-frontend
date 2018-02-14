@@ -574,20 +574,22 @@ var registerMessage = function (response, form, text, notification) {
             $('.page-loader-wrapper').fadeOut();
         }
     } else {
-        createInsercao(function () {
-            $('.form-control').each(function (index) {
-                $(this).val("");
-                $(this).parents('.form-line').removeClass("focused");
-                $(this).parents('.bootstrap-tagsinput').find('span').each(function (index) {
-                    $(this).find('span[data-role="remove"]').click();
+        createInsercao(function (params) {
+            if (params.notification) {
+                $('.form-control').each(function (index) {
+                    $(this).val("");
+                    $(this).parents('.form-line').removeClass("focused");
+                    $(this).parents('.bootstrap-tagsinput').find('span').each(function (index) {
+                        $(this).find('span[data-role="remove"]').click();
+                    });
+                    if ($(this).parents('.dropify-clear'))
+                        $('.dropify-clear').click();
                 });
-                if ($(this).parents('.dropify-clear'))
-                    $('.dropify-clear').click();
-            });
 
-            $('.page-loader-wrapper').fadeOut();
+                $('.page-loader-wrapper').fadeOut();
 
-            showNotification(text + " cadastrada com sucesso!", "success");
+                showNotification(params.campo + " cadastrada com sucesso!", "success");
+            }
         }, {
             campo: text,
             notification: notification
@@ -609,9 +611,8 @@ var createInsercao = function (success, params) {
         },
         success: function (response) {
             console.log(response);
-            if (params.notification) {
-                success();
-            }
+            success(params);
+
         },
         error: function (error) {
             console.log(error.message);
@@ -917,7 +918,8 @@ var search = async function (params) {
         if (data.length > 0)
             tableFunction(data, colunas, params);
 
-    } else {
+    } else
+    if (params != "aprovacao" && $('.js-basic-example.' + params).attr("value") != "listar") {
         $('.background-table').fadeIn();
         $('.js-basic-example.' + params).parents('.table-responsive').fadeIn();
     }
