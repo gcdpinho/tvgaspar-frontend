@@ -49,7 +49,7 @@ $(function () {
                     texto: $('input[name="texto"]').val(),
                     link: $('input[name="link"]').val(),
                     flgAtivo: 1,
-                    idImagem: getDataId("imagem", $('input[name="imagem"]').val(), 4),
+                    idImagem: getDataId("imagem", $('input[name="imagem"]').val(), "link"),
                     token: localStorage.getItem('token')
                 },
                 success: function (response) {

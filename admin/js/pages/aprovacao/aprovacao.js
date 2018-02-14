@@ -28,7 +28,7 @@ $(function () {
             type: "POST",
             url: "https://tvgaspar-server.herokuapp.com/updateAprovacao",
             data: {
-                id: getDataId("noticia", $('input[name="manchete"]').val(), 2),
+                id: getDataId("noticia", $('input[name="manchete"]').val(), "manchete"),
                 aprovacao: 1,
                 token: localStorage.getItem('token')
             },

@@ -85,7 +85,7 @@ $(function () {
                         $('.label-info.success').each(function () {
                             entry = {}
                             entry['idImagem'] = response.insertId;
-                            entry['idTag'] = getDataId("tag", $(this).text(), 2);
+                            entry['idTag'] = getDataId("tag", $(this).text(), "titulo");
                             data.push(entry);
                         });
                         console.log(data);

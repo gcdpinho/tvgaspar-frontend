@@ -513,16 +513,6 @@ var logout = function (msgError) {
 
 $('#logout').click(logout);
 
-//Preencher com as informações do usuário
-var findAttribute = function (attribute, data) {
-    for (var i = 0; i < data.length; i++) {
-        if (data[i] == attribute)
-            return data[i + 1];
-    }
-
-    return -1;
-}
-
 //Notificação de sucesso ou erro
 var showNotification = function (text, state) {
     var color = "bg-green";
@@ -672,7 +662,7 @@ var getAllImagens = async function (listar) {
         else {
             var imagens = value.split(", ");
             for (var element in imagens)
-                if (getDataId("imagem", imagens[element], 4) == undefined)
+                if (getDataId("imagem", imagens[element], "link") == undefined)
                     return false;
 
             return true;
@@ -731,7 +721,7 @@ var getAllVideos = async function (close, listar) {
         else {
             var videos = value.split(", ");
             for (var element in videos)
-                if (getDataId("video", videos[element], 6) == undefined)
+                if (getDataId("video", videos[element], "link") == undefined)
                     return false;
 
             return true;
@@ -784,7 +774,7 @@ var getAllCategorias = async function (close, listar) {
         else {
             var categorias = value.split(", ");
             for (var element in categorias)
-                if (getDataId("categoria", categorias[element], 2) == undefined)
+                if (getDataId("categoria", categorias[element], "titulo") == undefined)
                     return false;
 
             return true;
@@ -829,105 +819,68 @@ var getAllCategorias = async function (close, listar) {
         getAllImagens(false);
 }
 
-//Get data(localStorage) by param 
-var getData = function (data) {
-    var datas = localStorage.getItem(data);
-    datas = datas.replace(/\"|\}|\]/g, "").replace(/,/g, ":").split(":");
-    var arrData = []
-    for (var i = 3; i < datas.length; i += 4)
-        arrData.push(datas[i]);
-
-    return arrData;
-}
-
 //Get id (para inserção) by params
 var getDataId = function (data, element, diff) {
-    var datas = localStorage.getItem(data);
-    datas = datas.replace(/\"|\}|\]/g, "").replace(/,/g, ":").split(":");
-    for (var i = 0; i < datas.length; i++)
-        if (element == datas[i]) {
-            return parseInt(datas[i - diff]) || undefined;
+    var datas = JSON.parse(localStorage.getItem(data));
+    for (var e in datas) {
+        if (datas[e][diff] == element) {
+            return datas[e].id;
         }
+    }
+
+    return undefined;
 }
 
 //Abre o modal com a tabela (param)
 var search = async function (params) {
-    if ($('.js-basic-example.' + params).find('td').length <= 0) {
+    if ($('.js-basic-example.' + params).find('td').length <= 0 && JSON.parse(localStorage.getItem(params)).length > 0) {
         $('.page-loader-wrapper').fadeIn();
-        var list = localStorage.getItem(params).replace(/\[|\{|\"|\]/g, "").split("}");
-        for (var i = 0; i < list.length; i++) {
-            if (list[i][0] == ",")
-                list[i] = list[i].replace(",", "");
-        }
+        var list = JSON.parse(localStorage.getItem(params));
+        var colunaAux = Object.keys(list[0]);
         var colunas = [];
-        var coluna = {};
+        colunaAux.shift();
+        if (params == "noticia" || params == "aprovacao") {
+            colunaAux.pop();
+            colunaAux.pop();
+            colunaAux.pop();
+        } else if (params == "publicidade") {
+            colunaAux.pop();
+            colunaAux.pop();
+        }
+        for (var element in colunaAux) {
+            var coluna = {};
+            coluna["title"] = colunaAux[element];
+            colunas.push(coluna);
+        }
+        if ($('.js-basic-example.' + params).attr("value") == "listar")
+            colunas.push({
+                title: "Ações".toUpperCase()
+            });
         var data = [];
         var imagens = []
-        for (var j = 0; j < list.length; j++) {
+        for (var index in list) {
             var row = [];
+            for (var element in list[index])
+                row.push(list[index][element]);
+            row.shift();
+            if (params == "noticia" || params == "aprovacao") {
+                row.pop();
+                row.pop();
+                row.pop();
+            } else if (params == "publicidade") {
+                row.pop();
+                row.pop();
+            }
+            if (params == "imagem")
+                imagens.push(row[row.length - 1]);
 
-            var linha = list[j].split(",");
-            for (var element in linha)
-                linha[element] = linha[element].replace(":", ",");
-            var newline = [];
-            for (var e in linha) {
-                linha[e].split(',').forEach(function (element, index, array) {
-                    newline.push(element)
-                });
-            }
-            linha = newline;
-            if (j == 0) {
-                for (var i = 0; i < linha.length; i += 2) {
-                    coluna = {};
-                    coluna["title"] = linha[i].toUpperCase();
-                    colunas.push(coluna);
-                }
-                colunas.shift();
-                if (params == "noticia" || params == "aprovacao") {
-                    colunas.pop();
-                    colunas.pop();
-                    colunas.pop();
-                } else if (params == "publicidade") {
-                    colunas.pop();
-                    colunas.pop();
-                }
-                if ($('.js-basic-example.' + params).attr("value") == "listar")
-                    colunas.push({
-                        title: "Ações".toUpperCase()
-                    });
-            }
-            for (var i = 1; i < linha.length; i += 2)
-                if ($('.js-basic-example.' + params).attr("value") == "listar") {
-                    if (params != "imagem")
-                        row.push("<input class='dataTableEdit' type='text' value='" + linha[i] + "' disabled>");
-                    else
-                    if (i != 5)
-                        row.push("<input class='dataTableEdit' type='text' value='" + linha[i] + "' disabled>");
-                    else
-                        row.push(linha[i]);
-                }
-            else
-                row.push(linha[i]);
-            if (row.length > 0) {
-                row.shift();
-                if (params == "noticia" || params == "aprovacao") {
-                    row.pop();
-                    row.pop();
-                    row.pop();
-                } else if (params == "publicidade") {
-                    row.pop();
-                    row.pop();
-                }
-                if (params == "imagem")
-                    imagens.push(row[row.length - 1]);
-                if ($('.js-basic-example.' + params).attr("value") == "listar")
-                    row.push(
-                        '<i class="material-icons">edit</i>' +
-                        '<i class="material-icons ml-20px">delete</i>'
-                    );
+            if ($('.js-basic-example.' + params).attr("value") == "listar")
+                row.push(
+                    '<i class="material-icons">edit</i>' +
+                    '<i class="material-icons ml-20px">delete</i>'
+                );
 
-                data.push(row);
-            }
+            data.push(row);
         }
         var urls = await getUrls(imagens);
         var pos = $('.js-basic-example.' + params).attr("value") == "listar" ? 2 : 1;
@@ -1007,8 +960,6 @@ var tableFunction = function (data, colunas, params) {
             $(this).css('color', '#fff');
             switch (params) {
                 case "tag":
-                    //$('.bootstrap-tagsinput input').focus();
-                    //$('input[data-role="tagsinput"]').tagsinput('add', table.row(this).data()[0]);
                     dataTableArr.push(table.row(this).data()[0]);
                     break;
                 case "imagem":
@@ -1022,36 +973,24 @@ var tableFunction = function (data, colunas, params) {
                         dataTableArr = [];
                     }
                     dataTableArr.push(table.row(this).data()[1].split('>')[1]);
-                    //$('input[name="imagem"]').focus();
-                    //var inputImagem = $('input[name="imagem"]');
-                    //$(inputImagem).val($(inputImagem).val() + ($(inputImagem).val() == "" ? "" : ", ") + table.row(this).data()[1].split('>')[1]);
                     break;
                 case "video":
-                    //$('input[name="video"]').focus();
-                    //var inputVideo = $('input[name="video"]');
-                    //$(inputVideo).val($(inputVideo).val() + ($(inputVideo).val() == "" ? "" : ", ") + table.row(this).data()[2]);
                     dataTableArr.push(table.row(this).data()[2]);
                     break;
-                case "categoria":
-                    //$('input[name="categoria"]').focus();
-                    //var inputCategoria = $('input[name="categoria"]');
-                    //$(inputCategoria).val($(inputCategoria).val() + ($(inputCategoria).val() == "" ? "" : ", ") + table.row(this).data()[0]);
                     dataTableArr.push(table.row(this).data()[0]);
                     break;
                 case "aprovacao":
                     $('input[name="manchete"]').val(table.row(this).data()[0]);
                     $('input[name="subManchete"]').val(table.row(this).data()[1]);
                     $('textarea[name="texto"]').val(table.row(this).data()[2]);
+                    autosize($('textarea[name="texto"]'));
                     $('input[name="autor"]').val(table.row(this).data()[3]);
                     $('input[name="dtCadastro"]').val(table.row(this).data()[4]);
                     $('.background-table').fadeIn();
                     $('.table-responsive').fadeIn();
                     break;
-
             }
         }
-
-
     });
 
     $('.js-basic-example.' + params).find("tbody").on('click', 'i.material-icons', function (e, dt, type, indexes) {
@@ -1061,169 +1000,78 @@ var tableFunction = function (data, colunas, params) {
                 switch (params) {
                     case "tag":
                         data = {
-                            titulo: $($(this).parents("tr").find('input')[0]).val(),
-                            id: getDataId(params, $(table.row($(this).parents("tr")).data()[0]).val(), 2),
+                            titulo: table.row($(this).parents("tr")).data()[0],
+                            id: getDataId(params, table.row($(this).parents("tr")).data()[0], "titulo"),
                         }
                         break;
                     case "imagem":
                         data = {
-                            titulo: $($(this).parents("tr").find('input')[0]).val(),
-                            id: getDataId(params, $(this).parents("tr").find('img').parent('td').text(), 4),
+                            titulo: table.row($(this).parents("tr")).data()[0],
+                            id: getDataId(params, $(this).parents("tr").find('img').parent('td').text(), "link"),
                         }
                         break;
                     case "video":
                         data = {
-                            titulo: $($(this).parents("tr").find('input')[0]).val(),
-                            texto: $($(this).parents("tr").find('input')[1]).val(),
-                            link: $($(this).parents("tr").find('input')[2]).val(),
-                            id: getDataId(params, $(table.row($(this).parents("tr")).data()[2]).val(), 6),
+                            titulo: table.row($(this).parents("tr")).data()[0],
+                            texto: table.row($(this).parents("tr")).data()[1],
+                            link: table.row($(this).parents("tr")).data()[2],
+                            id: getDataId(params, table.row($(this).parents("tr")).data()[2], "link"),
                         }
                         break;
                     case "categoria":
                         data = {
-                            titulo: $($(this).parents("tr").find('input')[0]).val(),
-                            texto: $($(this).parents("tr").find('input')[1]).val(),
-                            cor: $($(this).parents("tr").find('input')[2]).val(),
-                            id: getDataId(params, $(table.row($(this).parents("tr")).data()[0]).val(), 2),
+                            titulo: table.row($(this).parents("tr")).data()[0],
+                            texto: table.row($(this).parents("tr")).data()[1],
+                            cor: table.row($(this).parents("tr")).data()[2],
+                            id: getDataId(params, table.row($(this).parents("tr")).data()[0], "titulo"),
                         }
                         break;
                     case "noticia":
                         data = {
-                            manchete: $($(this).parents("tr").find('input')[0]).val(),
-                            subManchete: $($(this).parents("tr").find('input')[1]).val(),
-                            texto: $($(this).parents("tr").find('input')[2]).val(),
-                            autor: $($(this).parents("tr").find('input')[3]).val(),
-                            dtCadastro: $($(this).parents("tr").find('input')[4]).val(),
-                            id: getDataId(params, $(table.row($(this).parents("tr")).data()[0]).val(), 2),
+                            manchete: table.row($(this).parents("tr")).data()[0],
+                            subManchete: table.row($(this).parents("tr")).data()[1],
+                            texto: table.row($(this).parents("tr")).data()[2],
+                            autor: table.row($(this).parents("tr")).data()[3],
+                            dtCadastro: table.row($(this).parents("tr")).data()[4],
+                            id: getDataId(params, table.row($(this).parents("tr")).data()[0], "manchete"),
                         }
                         break
                     case "publicidade":
                         data = {
-                            titulo: $($(this).parents("tr").find('input')[0]).val(),
-                            tipo: $($(this).parents("tr").find('input')[1]).val(),
-                            texto: $($(this).parents("tr").find('input')[2]).val(),
-                            link: $($(this).parents("tr").find('input')[3]).val(),
-                            id: getDataId(params, $(table.row($(this).parents("tr")).data()[0]).val(), 2),
+                            titulo: table.row($(this).parents("tr")).data()[0],
+                            tipo: table.row($(this).parents("tr")).data()[1],
+                            texto: table.row($(this).parents("tr")).data()[2],
+                            link: table.row($(this).parents("tr")).data()[3],
+                            id: getDataId(params, table.row($(this).parents("tr")).data()[0], "titulo"),
                         }
                         break;
                 }
                 localStorage.setItem(params + "Edit", JSON.stringify(data));
                 location.href = "editar.html";
-                /*
-                $("tr input").prop('disabled', true);
-                $("tr i.material-icons:contains('playlist_add')").html("edit");
-                $(this).parents("tr").find('input').prop('disabled', false);
-                $(this).html("playlist_add");
-                */
                 break;
             case "delete":
                 switch (params) {
                     case "tag":
-                        $('#modalId').html(getDataId(params, $(table.row($(this).parents("tr")).data()[0]).val(), 2));
+                        $('#modalId').html(getDataId(params, $(table.row($(this).parents("tr")).data()[0]).val(), "titulo"));
                         break;
                     case "imagem":
-                        $('#modalId').html(getDataId(params, $(this).parents("tr").find('img').parent('td').text(), 4));
+                        $('#modalId').html(getDataId(params, $(this).parents("tr").find('img').parent('td').text(), "link"));
                         break;
                     case "video":
-                        $('#modalId').html(getDataId(params, $(table.row($(this).parents("tr")).data()[2]).val(), 6));
+                        $('#modalId').html(getDataId(params, $(table.row($(this).parents("tr")).data()[2]).val(), "link"));
                         break;
                     case "categoria":
-                        $('#modalId').html(getDataId(params, $(table.row($(this).parents("tr")).data()[0]).val(), 2));
+                        $('#modalId').html(getDataId(params, $(table.row($(this).parents("tr")).data()[0]).val(), "titulo"));
                         break;
                     case "noticia":
-                        $('#modalId').html(getDataId(params, $(table.row($(this).parents("tr")).data()[0]).val(), 2));
+                        $('#modalId').html(getDataId(params, $(table.row($(this).parents("tr")).data()[0]).val(), "manchete"));
                         break
                     case "publicidade":
-                        $('#modalId').html(getDataId(params, $(table.row($(this).parents("tr")).data()[0]).val(), 2));
+                        $('#modalId').html(getDataId(params, $(table.row($(this).parents("tr")).data()[0]).val(), "titulo"));
                         break
                 }
                 $('#defaultModal').modal('show');
                 break;
-                /*
-            case "playlist_add":
-                $(".page-loader-wrapper").fadeIn();
-                var data = {};
-                var url = "https://tvgaspar-server.herokuapp.com/";
-                switch (params) {
-                    case "tag":
-                        url += "updateTag";
-                        data = {
-                            titulo: $($(this).parents("tr").find('input')[0]).val(),
-                            id: getDataId(params, $(table.row($(this).parents("tr")).data()[0]).val(), 2),
-                            token: localStorage.getItem('token')
-                        }
-                        break;
-                    case "imagem":
-                        url += "updateImagem";
-                        data = {
-                            titulo: $($(this).parents("tr").find('input')[0]).val(),
-                            id: getDataId(params, $(this).parents("tr").find('img').parent('td').text(), 4),
-                            token: localStorage.getItem('token')
-                        }
-                        break;
-                    case "video":
-                        url += "updateVideo";
-                        data = {
-                            titulo: $($(this).parents("tr").find('input')[0]).val(),
-                            texto: $($(this).parents("tr").find('input')[1]).val(),
-                            link: $($(this).parents("tr").find('input')[2]).val(),
-                            id: getDataId(params, $(table.row($(this).parents("tr")).data()[2]).val(), 6),
-                            token: localStorage.getItem('token')
-                        }
-                        break;
-                    case "categoria":
-                        url += "updateCategoria";
-                        data = {
-                            titulo: $($(this).parents("tr").find('input')[0]).val(),
-                            texto: $($(this).parents("tr").find('input')[1]).val(),
-                            cor: $($(this).parents("tr").find('input')[2]).val(),
-                            id: getDataId(params, $(table.row($(this).parents("tr")).data()[0]).val(), 2),
-                            token: localStorage.getItem('token')
-                        }
-                        break;
-                    case "noticia":
-                        url += "updateNoticia";
-                        data = {
-                            manchete: $($(this).parents("tr").find('input')[0]).val(),
-                            subManchete: $($(this).parents("tr").find('input')[1]).val(),
-                            texto: $($(this).parents("tr").find('input')[2]).val(),
-                            autor: $($(this).parents("tr").find('input')[3]).val(),
-                            dtCadastro: $($(this).parents("tr").find('input')[4]).val(),
-                            id: getDataId(params, $(table.row($(this).parents("tr")).data()[0]).val(), 2),
-                            token: localStorage.getItem('token')
-                        }
-                        break
-                    case "publicidade":
-                        url += "updatePublicidade";
-                        data = {
-                            titulo: $($(this).parents("tr").find('input')[0]).val(),
-                            tipo: $($(this).parents("tr").find('input')[1]).val(),
-                            texto: $($(this).parents("tr").find('input')[2]).val(),
-                            link: $($(this).parents("tr").find('input')[3]).val(),
-                            id: getDataId(params, $(table.row($(this).parents("tr")).data()[0]).val(), 2),
-                            token: localStorage.getItem('token')
-                        }
-                        break;
-                }
-                $.ajax({
-                    type: "POST",
-                    url: url,
-                    data: data,
-                    success: function (response) {
-                        console.log(response);
-                        localStorage.setItem(params, "");
-                        localStorage.setItem('not', acentuacaoTable(params).toUpperCase() + " editado com sucesso!");
-
-                        location.reload();
-
-                    },
-                    error: function (error) {
-                        console.log(error.message);
-                        //logout('Sessão inválida. Faça o login novamente.');
-                    }
-                });
-                break;
-                */
         }
     });
     if (params != "aprovacao" && $('.js-basic-example.' + params).attr('value') != "listar") {
@@ -1291,10 +1139,10 @@ var initFirebase = function () {
 
 //Get info usuário (menu)
 var getUsuario = function () {
-    var usuario = localStorage.getItem('usuario').replace(/\"|\{|\}/g, '').replace(/,/g, ':').split(":");
+    var usuario = JSON.parse(localStorage.getItem('usuario'));
     if (usuario != null && usuario != "") {
-        $('.name').html(findAttribute("nome", usuario));
-        $('.email').html(findAttribute("email", usuario));
+        $('.name').html(usuario.nome);
+        $('.email').html(usuario.email);
 
     } else
         logout('Sessão inválida. Faça o login novamente.');
@@ -1327,8 +1175,6 @@ var getAllNoticias = async function (flgNoticia, aprovacao) {
                     setAprovacoes(flgNoticia);
                     search("noticia");
                 }
-
-
             },
             error: function (error) {
                 console.log(error.message);
@@ -1338,14 +1184,12 @@ var getAllNoticias = async function (flgNoticia, aprovacao) {
     else {
         setAprovacoes(flgNoticia);
         search("noticia");
-        //$('.page-loader-wrapper').fadeOut();
     }
 }
 
 //Set badge aprovações
 var setAprovacoes = function (flgNoticia) {
-    var aprovacao = localStorage.getItem('aprovacao').replace(/\[|\]|\{|\"/g, "").split('}');
-    aprovacao.pop();
+    var aprovacao = JSON.parse(localStorage.getItem('aprovacao'));
     if (aprovacao.length > 0) {
         $('span.badge').html(aprovacao.length);
         $('span.badge').css('display', 'block');
@@ -1355,8 +1199,6 @@ var setAprovacoes = function (flgNoticia) {
         localStorage.setItem('not', "");
         location.reload();
     }
-
-    //$('.page-loader-wrapper').fadeOut();
 }
 
 //Get todas publicidades
@@ -1373,7 +1215,6 @@ var getAllPublicidades = async function () {
                 console.log(response);
                 localStorage.setItem("publicidade", JSON.stringify(response));
                 search("publicidade");
-                //$('.page-loader-wrapper').fadeOut();
             },
             error: function (error) {
                 console.log(error.message);

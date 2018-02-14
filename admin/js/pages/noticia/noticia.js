@@ -94,7 +94,7 @@ $(function () {
                         $('.label-info.success').each(function () {
                             entry = {}
                             entry['idNoticia'] = insertId;
-                            entry['idTag'] = getDataId("tag", $(this).text(), 2);
+                            entry['idTag'] = getDataId("tag", $(this).text(), "titulo");
                             data.push(entry);
                         });
                         console.log(data);
@@ -117,7 +117,7 @@ $(function () {
                                     for (var element in arrCategorias) {
                                         entry = {}
                                         entry['idNoticia'] = insertId;
-                                        entry['idCategoria'] = getDataId("categoria", arrCategorias[element], 2);
+                                        entry['idCategoria'] = getDataId("categoria", arrCategorias[element], "titulo");
                                         data.push(entry);
                                     }
                                     console.log(data);
@@ -141,7 +141,7 @@ $(function () {
                                                     for (var element in arrVideos) {
                                                         entry = {}
                                                         entry['idNoticia'] = insertId;
-                                                        entry['idVideo'] = getDataId("video", arrVideos[element], 6);
+                                                        entry['idVideo'] = getDataId("video", arrVideos[element], "link");
                                                         data.push(entry);
                                                     }
                                                     console.log(data);
@@ -165,7 +165,7 @@ $(function () {
                                                                     for (var element in arrImagens) {
                                                                         entry = {}
                                                                         entry['idNoticia'] = insertId;
-                                                                        entry['idImagem'] = getDataId("imagem", arrImagens[element], 4);
+                                                                        entry['idImagem'] = getDataId("imagem", arrImagens[element], "link");
                                                                         data.push(entry);
                                                                     }
                                                                     console.log(data);
