@@ -573,24 +573,51 @@ var registerMessage = function (response, form, text, notification) {
             showNotification("Erro ao cadastrar " + text + ", tente novamente.", "error");
             $('.page-loader-wrapper').fadeOut();
         }
-    } else
-    if (notification) {
-        $('.form-control').each(function (index) {
-            $(this).val("");
-            $(this).parents('.form-line').removeClass("focused");
-            $(this).parents('.bootstrap-tagsinput').find('span').each(function (index) {
-                $(this).find('span[data-role="remove"]').click();
+    } else {
+        createInsercao(function () {
+            $('.form-control').each(function (index) {
+                $(this).val("");
+                $(this).parents('.form-line').removeClass("focused");
+                $(this).parents('.bootstrap-tagsinput').find('span').each(function (index) {
+                    $(this).find('span[data-role="remove"]').click();
+                });
+                if ($(this).parents('.dropify-clear'))
+                    $('.dropify-clear').click();
             });
-            if ($(this).parents('.dropify-clear'))
-                $('.dropify-clear').click();
+
+            $('.page-loader-wrapper').fadeOut();
+
+            showNotification(text + " cadastrada com sucesso!", "success");
+        }, {
+            campo: text,
+            notification: notification
         });
 
-        $('.page-loader-wrapper').fadeOut();
-
-        showNotification(text + " cadastrada com sucesso!", "success");
     }
 
     return true;
+}
+
+var createInsercao = function (success, params) {
+    $.ajax({
+        type: "POST",
+        url: "https://tvgaspar-server.herokuapp.com/createInsercao",
+        data: {
+            campo: params.campo.toLowerCase(),
+            dtCadastro: new Date().toString("dd/MM/yyyy H:mm"),
+            token: localStorage.getItem('token')
+        },
+        success: function (response) {
+            console.log(response);
+            if (params.notification) {
+                success();
+            }
+        },
+        error: function (error) {
+            console.log(error.message);
+            logout('Sessão inválida. Faça o login novamente.');
+        }
+    });
 }
 
 //Get todas as tags
