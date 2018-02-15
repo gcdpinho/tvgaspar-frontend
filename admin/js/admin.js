@@ -870,6 +870,7 @@ var getUrls = async function (arrayDeImagens) {
     )).then();
 }
 
+//Acentua as palavras das tabelas
 var acentuacaoTable = function (table) {
     switch (table) {
         case "aprovacao":
@@ -1070,6 +1071,7 @@ $('.table-cancel-button').click(function () {
     $('.background-table').click();
 });
 
+//Confirm button tables
 $('.table-confirm-button').click(function () {
     dataTableArr = dataTableArr.filter(function (value, index, self) {
         return (self.indexOf(value) == index)

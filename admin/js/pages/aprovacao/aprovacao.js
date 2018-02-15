@@ -8,7 +8,8 @@ $(function () {
     //Show table
     search("aprovacao");
 
-    if (localStorage.getItem('aprovacao').length <= 2) {
+    //Sem aprovações
+    if (JSON.parse(localStorage.getItem('aprovacao')).length <= 0) {
         $('.div-table').html("Não há notícias para aprovação.");
         $('.div-table').css('margin-top', '30px');
         $('.page-loader-wrapper').fadeOut();

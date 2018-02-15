@@ -2,7 +2,10 @@ $(function () {
     //Get info usuario
     var usuario = getUsuario();
 
+    //Set aprovacoes (noticias)
     setAprovacoes(false);
+
+    //Escolhe o serviço baseado no parâmetro da tabela
     var table = ('.js-basic-example');
     var page = "";
     if ($(table).hasClass("noticia")) {
@@ -34,7 +37,9 @@ $(function () {
         localStorage.setItem('not', "");
     }
 
+    //Delete
     $('.dataTableDelete').click(function () {
+        //URL do delete
         $(".page-loader-wrapper").fadeIn();
         var url = "https://tvgaspar-server.herokuapp.com/";
         switch (page) {
@@ -57,7 +62,7 @@ $(function () {
                 url += "deleteCategoriaById";
                 break;
         }
-
+        //Delete function
         $.ajax({
             type: "POST",
             url: url,

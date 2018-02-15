@@ -28,13 +28,13 @@ $(function () {
     $('input[name="link"]').val(dataVideo.link);
     $('input[name="link"]').focus();
 
-
     //Get info usuario
     var usuario = getUsuario();
 
     //Set aprovacoes (noticias)
     setAprovacoes(false);
 
+    //Close loader
     $('.page-loader-wrapper').fadeOut();
 
     //Form Salve

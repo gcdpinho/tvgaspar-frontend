@@ -18,6 +18,7 @@ $(function () {
     //Set aprovacoes (noticias)
     setAprovacoes(false);
 
+    //Close loader
     $('.page-loader-wrapper').fadeOut();
 
     //Form Salve

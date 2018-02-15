@@ -65,8 +65,6 @@ $(function () {
         search($(this).val());
     });
 
-    
-
     //Form Salve
     $('#noticia').submit(function (e) {
         if ($("#noticia").valid()) {

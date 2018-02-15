@@ -5,7 +5,7 @@
         var usuario = getUsuario();
         //Set aprovacoes (noticias)
         setAprovacoes(false);
-        
+        //Close loader
         $('.page-loader-wrapper').fadeOut();
     } else
         //Autentication by token
