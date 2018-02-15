@@ -27,7 +27,7 @@ $(function () {
     $('input[name="texto"]').focus();
     $('input[name="link"]').val(dataVideo.link);
     $('input[name="link"]').focus();
-    
+
 
     //Get info usuario
     var usuario = getUsuario();
@@ -53,14 +53,11 @@ $(function () {
                 },
                 success: function (response) {
                     console.log(response);
-                    createInsercao(function(){
-                        localStorage.setItem('video', "");
-                        localStorage.setItem('not', "Vídeo editado com sucesso!");
-    
-                        location.href = "listar.html";
-                    }, {
-                        campo: "video"
-                    });
+
+                    localStorage.setItem('video', "");
+                    localStorage.setItem('not', "Vídeo editado com sucesso!");
+
+                    location.href = "listar.html";
 
                 },
                 error: function (error) {

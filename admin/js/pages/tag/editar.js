@@ -39,14 +39,10 @@ $(function () {
                 },
                 success: function (response) {
                     console.log(response);
-                    createInsercao(function () {
-                        localStorage.setItem('tag', "");
-                        localStorage.setItem('not', "TAG editada com sucesso!");
+                    localStorage.setItem('tag', "");
+                    localStorage.setItem('not', "TAG editada com sucesso!");
 
-                        location.href = "listar.html";
-                    }, {
-                        campo: "tag"
-                    });
+                    location.href = "listar.html";
 
                 },
                 error: function (error) {

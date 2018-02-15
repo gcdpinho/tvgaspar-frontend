@@ -34,11 +34,9 @@ $(function () {
             },
             success: function (response) {
                 console.log(response);
-                createInsercao(function () {
-                    getAllNoticias(true, true);
-                }, {
-                    campo: "aprovacao"
-                });
+
+                getAllNoticias(true, true);
+
             },
             error: function (error) {
                 console.log(error.message);

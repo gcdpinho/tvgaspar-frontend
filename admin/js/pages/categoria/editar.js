@@ -51,14 +51,12 @@ $(function () {
                 },
                 success: function (response) {
                     console.log(response);
-                    createInsercao(function () {
-                        localStorage.setItem('categoria', "");
-                        localStorage.setItem('not', "CATEGORIA editada com sucesso!");
 
-                        location.href = "listar.html";
-                    }, {
-                        campo: "categoria"
-                    });
+                    localStorage.setItem('categoria', "");
+                    localStorage.setItem('not', "CATEGORIA editada com sucesso!");
+
+                    location.href = "listar.html";
+
 
                 },
                 error: function (error) {

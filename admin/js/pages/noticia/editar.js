@@ -86,14 +86,12 @@ $(function () {
                 },
                 success: function (response) {
                     console.log(response);
-                    createInsercao(function () {
-                        localStorage.setItem('noticia', "");
-                        localStorage.setItem('not', "NOTICIA editada com sucesso!");
 
-                        location.href = "listar.html";
-                    }, {
-                        campo: "noticia"
-                    });
+                    localStorage.setItem('noticia', "");
+                    localStorage.setItem('not', "NOTICIA editada com sucesso!");
+
+                    location.href = "listar.html";
+
                 },
                 error: function (error) {
                     console.log(error.message);

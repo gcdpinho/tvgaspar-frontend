@@ -28,7 +28,7 @@ $(function () {
     $('input[name="texto"]').focus();
     $('input[name="link"]').val(dataPublicidade.link);
     $('input[name="link"]').focus();
-    
+
     //Get info usuario
     var usuario = getUsuario();
 
@@ -54,14 +54,11 @@ $(function () {
                 },
                 success: function (response) {
                     console.log(response);
-                    createInsercao(function(){
-                        localStorage.setItem('publicidade', "");
-                        localStorage.setItem('not', "PUBLICIDADE editada com sucesso!");
-    
-                        location.href = "listar.html";
-                    }, {
-                        campo: "publicidade"
-                    });
+
+                    localStorage.setItem('publicidade', "");
+                    localStorage.setItem('not', "PUBLICIDADE editada com sucesso!");
+
+                    location.href = "listar.html";
                 },
                 error: function (error) {
                     console.log(error.message);
