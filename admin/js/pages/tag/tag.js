@@ -16,7 +16,7 @@ $(function () {
     var usuario = getUsuario();
 
     //Set aprovacoes (noticias)
-    getAllNoticias(false, true, true);
+    getAllNoticias(true, true);
 
     //Close loader
     //$('.page-loader-wrapper').fadeOut();

@@ -4,7 +4,7 @@
         console.log("Logado");
         var usuario = getUsuario();
         //Set aprovacoes (noticias)
-        getAllNoticias(false, true, true);
+        getAllNoticias(true, true);
         //Close loader
         //$('.page-loader-wrapper').fadeOut();
     } else
@@ -21,7 +21,7 @@
                 $('.email').html(response[0].email);
                 localStorage.setItem("usuario", JSON.stringify(response[0]));
                 
-                getAllNoticias(false, true, true);
+                getAllNoticias(true, true);
                 
             },
             error: function (error) {

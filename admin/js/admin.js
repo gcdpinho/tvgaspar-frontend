@@ -1122,7 +1122,7 @@ var getUsuario = function () {
 }
 
 //Get todas as notícias
-var getAllNoticias = function (flgNoticia, aprovacao, close) {
+var getAllNoticias = function (aprovacao, close) {
     $.ajax({
         type: "POST",
         url: "https://tvgaspar-server.herokuapp.com/getAllNoticias",
@@ -1132,20 +1132,20 @@ var getAllNoticias = function (flgNoticia, aprovacao, close) {
         success: function (response) {
             console.log(response);
             var arrNoticia = [];
-            if (aprovacao) {
-                for (var element in response)
-                    if (response[element].aprovacao == 0)
-                        arrNoticia.push(response[element]);
-                localStorage.setItem('aprovacao', JSON.stringify(arrNoticia));
-                setAprovacoes(flgNoticia);
+
+            for (var element in response)
+                if (response[element].aprovacao == 0)
+                    arrNoticia.push(response[element]);
+            localStorage.setItem('aprovacao', JSON.stringify(arrNoticia));
+            localStorage.setItem('noticia', JSON.stringify(response));
+            setAprovacoes(aprovacao);
+            if (aprovacao)
                 search("aprovacao");
-                if (close)
-                    $('.page-loader-wrapper').fadeOut();
-            } else {
-                localStorage.setItem('noticia', JSON.stringify(response));
-                setAprovacoes(flgNoticia);
+            else
                 search("noticia");
-            }
+            if (close)
+                $('.page-loader-wrapper').fadeOut();
+
         },
         error: function (error) {
             console.log(error.message);
@@ -1160,16 +1160,13 @@ var setAprovacoes = function (flgNoticia) {
     if (aprovacao.length > 0) {
         $('span.badge').html(aprovacao.length);
         $('span.badge').css('display', 'block');
-    } else {
+    } else
+    if (flgNoticia && location.href.indexOf("aprovacao") >= 0) {
         $('.div-table').html("Não há notícias para aprovação.");
         $('.div-table').css('margin-top', '30px');
         $('.page-loader-wrapper').fadeOut();
     }
 
-    if (flgNoticia) {
-        localStorage.setItem('not', "");
-        location.reload();
-    }
 }
 
 //Get todas publicidades

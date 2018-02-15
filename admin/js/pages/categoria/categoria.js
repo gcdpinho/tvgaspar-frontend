@@ -22,7 +22,7 @@ $(function () {
     var usuario = getUsuario();
     
     //Set aprovacoes (noticias)
-    getAllNoticias(false, true, true);
+    getAllNoticias(true, true);
 
     //$('.page-loader-wrapper').fadeOut();
 
