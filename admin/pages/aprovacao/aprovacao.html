@@ -680,10 +680,10 @@
             </div>
             <div class="row clearfix">
                 <div class="col-sm-12">
-                    <div class="form-group form-float">
+                    <div class="form-group form-float tinymce">
                         <div class="form-line focused">
-                            <textarea row="1" class="form-control no-resize auto-growth" name="texto" disabled></textarea>
-                            <label class="form-label">Texto</label>
+                            <textarea id="tinymce" class="form-control" name="texto" disabled></textarea>
+                            <label class="form-label tinymce">Texto</label>
                         </div>
                     </div>
                 </div>
@@ -732,9 +732,6 @@
     <script src="../../plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
     <script src="../../plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
 
-    <!-- Autosize Plugin Js -->
-    <script src="../../plugins/autosize/autosize.js"></script>
-
     <!-- Jquery CountTo Plugin Js -->
     <script src="../../plugins/jquery-countto/jquery.countTo.js"></script>
 
@@ -763,6 +760,9 @@
 
     <!-- Datejs Plugin -->
     <script src="../../plugins/datejs/date.js"></script>
+
+     <!-- TinyMCE -->
+     <script src="../../plugins/tinymce/tinymce.js"></script>
 
     <!-- Custom Js -->
     <script src="../../js/admin.js"></script>

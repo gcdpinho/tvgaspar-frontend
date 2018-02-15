@@ -595,7 +595,7 @@ var registerMessage = function (response, form, text, notification) {
 }
 
 //Get todas as tags
-var getAllTags = async function (close, listar) {
+var getAllTags = function (close, listar) {
     $.validator.addMethod("invalidTag", function (value, element, config) {
         return $('.label-info.error').length > 0 ? false : true;
     }, "Existem TAGS não cadastradas.");
@@ -620,6 +620,7 @@ var getAllTags = async function (close, listar) {
     $.ajax({
         type: "POST",
         url: "https://tvgaspar-server.herokuapp.com/getAllTags",
+        //async: false,
         data: {
             token: localStorage.getItem('token')
         },
@@ -635,8 +636,8 @@ var getAllTags = async function (close, listar) {
             else
             if (close)
                 $('.page-loader-wrapper').fadeOut();
-            else
-                getAllVideos(false, false);
+            //else
+
         },
         error: function (error) {
             console.log(error.message);
@@ -647,7 +648,7 @@ var getAllTags = async function (close, listar) {
 }
 
 //Get todas imagens
-var getAllImagens = async function (listar) {
+var getAllImagens = function (listar) {
     $.validator.addMethod("invalidImagem", function (value, element, config) {
         if (value == "")
             return true;
@@ -675,6 +676,7 @@ var getAllImagens = async function (listar) {
     $.ajax({
         type: "POST",
         url: "https://tvgaspar-server.herokuapp.com/getAllImagens",
+        //async: false,
         data: {
             token: localStorage.getItem('token')
         },
@@ -699,7 +701,7 @@ var getAllImagens = async function (listar) {
 }
 
 //Get todos os vídeos
-var getAllVideos = async function (close, listar) {
+var getAllVideos = function (close, listar) {
     $.validator.addMethod("invalidVideo", function (value, element, config) {
         if (value == "")
             return true;
@@ -716,6 +718,7 @@ var getAllVideos = async function (close, listar) {
     $.ajax({
         type: "POST",
         url: "https://tvgaspar-server.herokuapp.com/getAllVideos",
+        //async: false,
         data: {
             token: localStorage.getItem('token')
         },
@@ -731,8 +734,6 @@ var getAllVideos = async function (close, listar) {
             else
             if (close)
                 $('.page-loader-wrapper').fadeOut();
-            else
-                getAllCategorias(false, false);
         },
         error: function (error) {
             console.log(error.message);
@@ -742,7 +743,7 @@ var getAllVideos = async function (close, listar) {
 }
 
 //Get todas as categorias
-var getAllCategorias = async function (close, listar) {
+var getAllCategorias = function (close, listar) {
     $.validator.addMethod("invalidCategoria", function (value, element, config) {
         if (value == "")
             return true;
@@ -759,6 +760,7 @@ var getAllCategorias = async function (close, listar) {
     $.ajax({
         type: "POST",
         url: "https://tvgaspar-server.herokuapp.com/getAllCategorias",
+        //async: false,
         data: {
             token: localStorage.getItem('token')
         },
@@ -774,8 +776,7 @@ var getAllCategorias = async function (close, listar) {
             else
             if (close)
                 $('.page-loader-wrapper').fadeOut();
-            else
-                getAllImagens(false);
+
         },
         error: function (error) {
             console.log(error.message);
@@ -951,8 +952,8 @@ var tableFunction = function (data, colunas, params) {
                 case "aprovacao":
                     $('input[name="manchete"]').val(table.row(this).data()[0]);
                     $('input[name="subManchete"]').val(table.row(this).data()[1]);
-                    $('textarea[name="texto"]').val(table.row(this).data()[2]);
-                    autosize($('textarea[name="texto"]'));
+                    tinymce.activeEditor.setContent(table.row(this).data()[2]);
+                    tinymce.activeEditor.setMode('readonly');
                     $('input[name="autor"]').val(table.row(this).data()[3]);
                     $('input[name="dtCadastro"]').val(table.row(this).data()[4]);
                     $('.background-table').fadeIn();
@@ -1121,7 +1122,7 @@ var getUsuario = function () {
 }
 
 //Get todas as notícias
-var getAllNoticias = async function (flgNoticia, aprovacao) {
+var getAllNoticias = function (flgNoticia, aprovacao, close) {
     $.ajax({
         type: "POST",
         url: "https://tvgaspar-server.herokuapp.com/getAllNoticias",
@@ -1137,7 +1138,9 @@ var getAllNoticias = async function (flgNoticia, aprovacao) {
                         arrNoticia.push(response[element]);
                 localStorage.setItem('aprovacao', JSON.stringify(arrNoticia));
                 setAprovacoes(flgNoticia);
-                $('.page-loader-wrapper').fadeOut();
+                search("aprovacao");
+                if (close)
+                    $('.page-loader-wrapper').fadeOut();
             } else {
                 localStorage.setItem('noticia', JSON.stringify(response));
                 setAprovacoes(flgNoticia);
@@ -1157,6 +1160,10 @@ var setAprovacoes = function (flgNoticia) {
     if (aprovacao.length > 0) {
         $('span.badge').html(aprovacao.length);
         $('span.badge').css('display', 'block');
+    } else {
+        $('.div-table').html("Não há notícias para aprovação.");
+        $('.div-table').css('margin-top', '30px');
+        $('.page-loader-wrapper').fadeOut();
     }
 
     if (flgNoticia) {
@@ -1166,7 +1173,7 @@ var setAprovacoes = function (flgNoticia) {
 }
 
 //Get todas publicidades
-var getAllPublicidades = async function () {
+var getAllPublicidades = function () {
     $.ajax({
         type: "POST",
         url: "https://tvgaspar-server.herokuapp.com/getAllPublicidades",

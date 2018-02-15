@@ -1,19 +1,22 @@
 $(function () {
+    //TinyMCE
+    tinymce.init({
+        selector: "textarea#tinymce",
+        theme: "modern",
+        menubar: false,
+        height: 300,
+        resize: false,
+        statusbar: false,
+        toolbar1: ' '
+    });
+    tinymce.suffix = ".min";
+    tinymce.baseURL = '../../plugins/tinymce';
+
     //Get info usuario
     var usuario = getUsuario();
 
-    //Set aprovacoes (noticias)
-    setAprovacoes(false);
-
-    //Show table
-    search("aprovacao");
-
-    //Sem aprovações
-    if (JSON.parse(localStorage.getItem('aprovacao')).length <= 0) {
-        $('.div-table').html("Não há notícias para aprovação.");
-        $('.div-table').css('margin-top', '30px');
-        $('.page-loader-wrapper').fadeOut();
-    }
+     //Set aprovacoes (noticias)
+     getAllNoticias(false, true, false);
 
     //Notification em caso de page reload
     var not = localStorage.getItem('not');
@@ -36,7 +39,8 @@ $(function () {
             success: function (response) {
                 console.log(response);
 
-                getAllNoticias(true, true);
+                localStorage.setItem('not', 'NOTÍCIA aprovada com sucesso!');
+                location.reload();
 
             },
             error: function (error) {

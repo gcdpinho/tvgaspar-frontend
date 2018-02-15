@@ -4,9 +4,9 @@
         console.log("Logado");
         var usuario = getUsuario();
         //Set aprovacoes (noticias)
-        setAprovacoes(false);
+        getAllNoticias(false, true, true);
         //Close loader
-        $('.page-loader-wrapper').fadeOut();
+        //$('.page-loader-wrapper').fadeOut();
     } else
         //Autentication by token
         $.ajax({
@@ -21,8 +21,8 @@
                 $('.email').html(response[0].email);
                 localStorage.setItem("usuario", JSON.stringify(response[0]));
                 
-                getAllNoticias(false, true);
-
+                getAllNoticias(false, true, true);
+                
             },
             error: function (error) {
                 console.log(error.message);

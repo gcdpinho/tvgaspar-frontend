@@ -118,7 +118,11 @@ tr {
     top: -20px;
 }
 
-.form-group.form-float.img {
+.form-group .form-line .form-label.tinymce {
+    top: -25px;
+}
+
+.form-group.form-float.tinymce {
     margin-top: 15px;
 }
 
@@ -159,6 +163,7 @@ table.table-bordered.dataTable td {
     white-space: normal;
     text-overflow: ellipsis;
     overflow: hidden;
+    
 }
 
 .table-search-buttons.col-sm-12 {

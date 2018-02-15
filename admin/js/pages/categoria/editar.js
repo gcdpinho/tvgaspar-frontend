@@ -31,10 +31,10 @@ $(function () {
     var usuario = getUsuario();
 
     //Set aprovacoes (noticias)
-    setAprovacoes(false);
+    getAllNoticias(false, true, true);
 
     //Close loader
-    $('.page-loader-wrapper').fadeOut();
+    //$('.page-loader-wrapper').fadeOut();
 
     //Form Salve
     $('#categoria').submit(function (e) {

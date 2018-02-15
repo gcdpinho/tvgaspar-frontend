@@ -1,4 +1,47 @@
 $(function () {
+    //TinyMCE
+    tinymce.init({
+        selector: "textarea#tinymce",
+        theme: "modern",
+        menubar: false,
+        height: 300,
+        resize: false,
+        statusbar: false,
+        plugins: [
+            'advlist autolink lists link charmap hr anchor',
+            'searchreplace visualblocks visualchars',
+            'insertdatetime nonbreaking table contextmenu directionality',
+            'paste textcolor colorpicker textpattern changeTooltip'
+        ],
+        toolbar1: 'undo redo | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link table | forecolor backcolor'
+    });
+    tinymce.suffix = ".min";
+    tinymce.baseURL = '../../plugins/tinymce';
+    tinymce.PluginManager.add('changeTooltip', function (editor, url) {
+        editor.buttons.undo.tooltip = "Desfazer";
+        editor.buttons.redo.tooltip = "Refazer";
+        editor.buttons.bold.tooltip = "Negrito";
+        editor.buttons.italic.tooltip = "Itálico";
+        editor.buttons.alignleft.tooltip = "Alinhar à esquerda";
+        editor.buttons.aligncenter.tooltip = "Centralizar";
+        editor.buttons.alignright.tooltip = "Alinhar à direita";
+        editor.buttons.alignjustify.tooltip = "Justificar";
+        editor.buttons.bullist.tooltip = "Lista com marcadores";
+        editor.buttons.numlist.tooltip = "Lista numerada";
+        editor.buttons.outdent.tooltip = "Diminuir recuo";
+        editor.buttons.indent.tooltip = "Aumentar recuo";
+        editor.buttons.link.tooltip = "Inserir/editar link";
+        editor.buttons.forecolor.tooltip = "Cor do texto";
+        editor.buttons.backcolor.tooltip = "Cor do fundo";
+
+        editor.on('focus', function (e) {
+            $('.form-group.form-float.tinymce .form-line').addClass('focused');
+        });
+        editor.on('blur', function (e) {
+            if (this.getContent() == "")
+                $('.form-group.form-float.tinymce .form-line').removeClass('focused');
+        });
+    });
 
     //Datetimepicker plugin
     $('.datetimepicker').bootstrapMaterialDatePicker({
@@ -57,17 +100,16 @@ $(function () {
     $('input[name="dtCadastro"]').val(Date.parse(dataNoticia.dtCadastro.split('.')[0]).toString("dd/MM/yyyy H:mm"));
     $('input[name="dtCadastro"]').parents('.form-line').addClass('focused');
     $('textarea[name="texto"]').val(dataNoticia.texto);
-    //Textare auto growth
-    autosize($('textarea.auto-growth'));
     $('textarea[name="texto"]').focus();
+
     //Get info usuario
     var usuario = getUsuario();
 
     //Set aprovacoes (noticias)
-    setAprovacoes(false);
+    getAllNoticias(false, true, true);
 
     //Close loader
-    $('.page-loader-wrapper').fadeOut();
+    //$('.page-loader-wrapper').fadeOut();
 
     //Form Salve
     $('#noticia').submit(function (e) {
@@ -79,7 +121,7 @@ $(function () {
                 data: {
                     manchete: $('input[name="manchete"]').val(),
                     subManchete: $('input[name="subManchete"]').val(),
-                    texto: $('textarea[name="texto"]').val(),
+                    texto: tinymce.activeEditor.getContent(),
                     autor: $('input[name="autor"]').val(),
                     dtCadastro: $('input[name="dtCadastro"]').val(),
                     id: dataNoticia.id,

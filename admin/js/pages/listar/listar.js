@@ -3,14 +3,14 @@ $(function () {
     var usuario = getUsuario();
 
     //Set aprovacoes (noticias)
-    setAprovacoes(false);
+    getAllNoticias(false, true, false);
 
     //Escolhe o serviço baseado no parâmetro da tabela
     var table = ('.js-basic-example');
     var page = "";
     if ($(table).hasClass("noticia")) {
         page = "noticia";
-        getAllNoticias(false, false);
+        getAllNoticias(false, false, true);
     } else if ($(table).hasClass("publicidade")) {
         page = "publicidade";
         getAllPublicidades();
