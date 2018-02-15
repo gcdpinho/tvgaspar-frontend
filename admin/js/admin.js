@@ -499,6 +499,7 @@ var logout = function (msgError) {
     localStorage.setItem('categoriaEdit', "");
     localStorage.setItem('noticiaEdit', "");
     localStorage.setItem('publicidadeEdit', "");
+    localStorage.setItem('dtAtualizacao', "");
     if (typeof msgError == "object")
         localStorage.setItem('msgError', "");
     else
@@ -680,6 +681,43 @@ var getAllTags = async function (close, listar) {
         $('.page-loader-wrapper').fadeOut();
     else
         getAllVideos(false, false);
+}
+
+var testData = function (campo, close, listar) {
+    var dtAtualizacao = localStorage.getItem("dtAtualizacao");
+    if (dtAtualizacao != "" && dtAtualizacao != null) {
+        $.ajax({
+            type: "POST",
+            url: "https://tvgaspar-server.herokuapp.com/getInsercoes",
+            data: {
+                campo: campo,
+                token: localStorage.getItem('token')
+            },
+            success: function (response) {
+                console.log(response);
+                if (Date.parse(response[response.length - 1].dtCadastro) > Date.parse(dtAtualizacao))
+                    localStorage.setItem(campo, "");
+
+                localStorage.setItem("dtAtualizacao", new Date().toString("dd/MM/yyyy H:mm"));
+                switch (campo) {
+                    case "tag":
+                        getAllTags(close, listar);
+                        break;
+                }
+            },
+            error: function (error) {
+                console.log(error.message);
+                logout('Sessão inválida. Faça o login novamente.');
+            }
+        });
+    } else {
+        localStorage.setItem("dtAtualizacao", new Date().toString("dd/MM/yyyy H:mm"));
+        switch (campo) {
+            case "tag":
+                getAllTags(close, listar);
+                break;
+        }
+    }
 }
 
 //Get todas imagens

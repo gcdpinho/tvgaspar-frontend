@@ -21,7 +21,7 @@ $(function () {
         getAllVideos(false, true);
     } else if ($(table).hasClass("tag")) {
         page = "tag";
-        getAllTags(false, true);
+        testData("tag", false, true);
     } else if ($(table).hasClass("categoria")) {
         page = "categoria";
         getAllCategorias(false, true);
