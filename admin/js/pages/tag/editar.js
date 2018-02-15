@@ -14,8 +14,8 @@ $(function () {
 
     //Preenchimento da categoria (edit)
     var dataTag = JSON.parse(localStorage.getItem('tagEdit'));
-    $('input[name="tag"]').val(dataTag.titulo);
-    $('input[name="tag"]').focus();
+    $('input[name="titulo"]').val(dataTag.titulo);
+    $('input[name="titulo"]').focus();
 
     //Get info usuario
     var usuario = getUsuario();
@@ -34,7 +34,7 @@ $(function () {
                 type: "POST",
                 url: "https://tvgaspar-server.herokuapp.com/updateTag",
                 data: {
-                    titulo: $('input[name="tag"]').val(),
+                    titulo: $('input[name="titulo"]').val(),
                     id: dataTag.id,
                     token: localStorage.getItem('token')
                 },

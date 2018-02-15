@@ -29,7 +29,7 @@ $(function () {
                 type: "POST",
                 url: "https://tvgaspar-server.herokuapp.com/createTag",
                 data: {
-                    titulo: $('input[name="tag"]').val(),
+                    titulo: $('input[name="titulo"]').val(),
                     token: localStorage.getItem('token')
                 },
                 success: function (response) {

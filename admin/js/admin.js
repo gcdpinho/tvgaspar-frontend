@@ -551,10 +551,10 @@ var showNotification = function (text, state) {
 var registerMessage = function (response, form, text, notification) {
     if (response.sqlMessage) {
         if (response.sqlMessage.indexOf("Duplicate") >= 0) {
-            var entry = response.sqlMessage.split('\'')[1].replace('\'', '');
+            var entry = response.sqlMessage.split('\'')[3].replace('\'', '');
             var name;
             $('.form-control').each(function (index) {
-                if ($(this).val() == entry) {
+                if ($(this).attr('name') == entry) {
                     name = $(this).attr("name");
                     return;
                 }
