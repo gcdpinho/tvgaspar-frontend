@@ -799,6 +799,7 @@ var getDataId = function (data, element, diff) {
 
 //Abre o modal com a tabela (param)
 var search = async function (params) {
+    dataTableParam = params;
     if ($('.js-basic-example.' + params).find('td').length <= 0 && JSON.parse(localStorage.getItem(params)).length > 0) {
         $('.page-loader-wrapper').fadeIn();
         var list = JSON.parse(localStorage.getItem(params));
@@ -892,7 +893,6 @@ var acentuacaoTable = function (table) {
 var dataTableParam; //Variável de controle para limpeza de campos em outra função fora
 var dataTableArr = [];
 var tableFunction = function (data, colunas, params) {
-    dataTableParam = params;
     var table = $('.js-basic-example.' + params).DataTable({
         data: data,
         columns: colunas,
@@ -945,6 +945,7 @@ var tableFunction = function (data, colunas, params) {
                 case "video":
                     dataTableArr.push(table.row(this).data()[2]);
                     break;
+                case "categoria":
                     dataTableArr.push(table.row(this).data()[0]);
                     break;
                 case "aprovacao":

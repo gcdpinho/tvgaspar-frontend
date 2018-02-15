@@ -53,7 +53,7 @@ $(function () {
 
     //Get info usuario
     var usuario = getUsuario();
-
+    
     //Set aprovacoes (noticias)
     setAprovacoes(false);
 
@@ -79,8 +79,8 @@ $(function () {
                     autor: $('input[name="autor"]').val(),
                     dtCadastro: $('input[name="dtCadastro"]').val(),
                     flgAtivo: 1,
-                    aprovacao: parseInt(usuario[usuario.length - 1]),
-                    idUsuario: parseInt(usuario[1]),
+                    aprovacao: usuario.isAdm,
+                    idUsuario: usuario.id,
                     token: localStorage.getItem('token')
                 },
                 success: function (response) {
