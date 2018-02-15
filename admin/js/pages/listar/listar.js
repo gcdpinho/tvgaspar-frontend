@@ -86,7 +86,7 @@ $(function () {
             },
             error: function (error) {
                 console.log(error.message);
-                //logout('Sessão inválida. Faça o login novamente.');
+                logout('Sessão inválida. Faça o login novamente.');
             }
         });
     });
