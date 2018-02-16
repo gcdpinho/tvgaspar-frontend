@@ -106,7 +106,7 @@ $(function () {
 
     //Botão de pesquisar
     $('.div-search-button button').click(function () {
-        search($(this).val());
+        search($(this).val(), true);
     });
 
     //Form Salve

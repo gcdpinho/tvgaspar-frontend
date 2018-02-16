@@ -33,7 +33,7 @@ $(function () {
 
      //Botão de pesquisar
     $('.div-search-button button').click(function () {
-        search("imagem");
+        search("imagem", true);
     });
 
     //Form Salve

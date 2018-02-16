@@ -16,7 +16,7 @@ $(function () {
     var usuario = getUsuario();
 
      //Set aprovacoes (noticias)
-     getAllNoticias(true, false);
+     getAllNoticias(true, true);
 
     //Notification em caso de page reload
     var not = localStorage.getItem('not');

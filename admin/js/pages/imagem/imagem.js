@@ -61,7 +61,7 @@ $(function () {
 
     //Botão de pesquisar
     $('.div-search-button button').click(function () {
-        search("tag");
+        search("tag", true);
     });
 
     //Form Salve

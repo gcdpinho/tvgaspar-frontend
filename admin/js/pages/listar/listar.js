@@ -21,13 +21,13 @@ $(function () {
         getAllImagens(true);
     } else if ($(table).hasClass("video")) {
         page = "video";
-        getAllVideos(false, true);
+        getAllVideos(true, true);
     } else if ($(table).hasClass("tag")) {
         page = "tag";
-        getAllTags(false, true);
+        getAllTags(true, true);
     } else if ($(table).hasClass("categoria")) {
         page = "categoria";
-        getAllCategorias(false, true);
+        getAllCategorias(true, true);
     }
 
     //Notification em caso de page reload

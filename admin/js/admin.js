@@ -567,10 +567,10 @@ var registerMessage = function (response, form, text, notification) {
             return false;
         } else
         if (response.sqlMessage.indexOf("foreign key") >= 0) {
-            showNotification("Não é possível excluir esta " + text + ".", "error");
+            showNotification("Não é possível excluir "+ (text == "VIDEO" ? "este " : "esta ") + acentuacaoTable(text.toLowerCase()).toUpperCase() + ".", "error");
             $('.page-loader-wrapper').fadeOut();
         } else {
-            showNotification("Erro ao cadastrar " + text + ", tente novamente.", "error");
+            showNotification("Erro ao cadastrar " + acentuacaoTable(text.toLowerCase()).toUpperCase() + ", tente novamente.", "error");
             $('.page-loader-wrapper').fadeOut();
         }
     } else
@@ -587,7 +587,7 @@ var registerMessage = function (response, form, text, notification) {
 
         $('.page-loader-wrapper').fadeOut();
 
-        showNotification(text + " cadastrada com sucesso!", "success");
+        showNotification(acentuacaoTable(text.toLowerCase()).toUpperCase() + (text == "VIDEO" ? " cadastrado" : " cadastrada") +"com sucesso!", "success");
     }
 
 
@@ -632,7 +632,7 @@ var getAllTags = function (close, listar) {
             });
             localStorage.setItem("tag", JSON.stringify(tags));
             if (listar)
-                search("tag");
+                search("tag", close);
             else
             if (close)
                 $('.page-loader-wrapper').fadeOut();
@@ -688,7 +688,7 @@ var getAllImagens = function (listar) {
             });
             localStorage.setItem("imagem", JSON.stringify(imagens));
             if (listar)
-                search("imagem");
+                search("imagem", true);
             else
                 $('.page-loader-wrapper').fadeOut();
         },
@@ -730,7 +730,7 @@ var getAllVideos = function (close, listar) {
             });
             localStorage.setItem("video", JSON.stringify(videos));
             if (listar)
-                search("video");
+                search("video", close);
             else
             if (close)
                 $('.page-loader-wrapper').fadeOut();
@@ -772,7 +772,7 @@ var getAllCategorias = function (close, listar) {
             });
             localStorage.setItem("categoria", JSON.stringify(categorias));
             if (listar)
-                search("categoria");
+                search("categoria", close);
             else
             if (close)
                 $('.page-loader-wrapper').fadeOut();
@@ -799,11 +799,13 @@ var getDataId = function (data, element, diff) {
 }
 
 //Abre o modal com a tabela (param)
-var search = async function (params) {
+var search = async function (params, close) {
     dataTableParam = params;
-    if ($('.js-basic-example.' + params).find('td').length <= 0 && JSON.parse(localStorage.getItem(params)).length > 0) {
-        $('.page-loader-wrapper').fadeIn();
-        var list = JSON.parse(localStorage.getItem(params));
+    var list = JSON.parse(localStorage.getItem(params));
+    if ($('.js-basic-example.' + params).find('td').length <= 0 && list.length > 0) {
+        //if ($('.page-loader-wrapper').css('display') != "none")
+        if (close)
+            $('.page-loader-wrapper').fadeIn();
         var colunaAux = Object.keys(list[0]);
         var colunas = [];
         colunaAux.shift();
@@ -855,13 +857,19 @@ var search = async function (params) {
         for (url in urls)
             data[url][data[url].length - pos] = "<img class='img-preview' src='" + urls[url] + "'>" + data[url][data[url].length - pos];
 
-        if (data.length > 0)
-            tableFunction(data, colunas, params);
+        if (data.length > 0 && $('.js-basic-example').length > 0)
+            tableFunction(data, colunas, params, close);
 
-    } else
-    if (params != "aprovacao" && $('.js-basic-example.' + params).attr("value") != "listar") {
-        $('.background-table').fadeIn();
-        $('.js-basic-example.' + params).parents('.table-responsive').fadeIn();
+    } else {
+        if (list.length <= 0) {
+            $('.div-table').html("Não há registros de "+acentuacaoTable(params)+".");
+            $('.div-table').css('margin-top', '30px');
+            $('.page-loader-wrapper').fadeOut();
+        } else
+        if (params != "aprovacao" && $('.js-basic-example.' + params).attr("value") != "listar") {
+            $('.background-table').fadeIn();
+            $('.js-basic-example.' + params).parents('.table-responsive').fadeIn();
+        }
     }
 }
 
@@ -893,7 +901,7 @@ var acentuacaoTable = function (table) {
 //Incializa a tabela by params
 var dataTableParam; //Variável de controle para limpeza de campos em outra função fora
 var dataTableArr = [];
-var tableFunction = function (data, colunas, params) {
+var tableFunction = function (data, colunas, params, close) {
     var table = $('.js-basic-example.' + params).DataTable({
         data: data,
         columns: colunas,
@@ -915,17 +923,20 @@ var tableFunction = function (data, colunas, params) {
         },
     });
     if (params != "aprovacao") {
-        $('.js-basic-example.' + params).parents('.table-responsive').css('top', 'calc(50% - ' + $('.js-basic-example.' + params).parents('.table-responsive').height() / 2 + 'px)');
+        if ($(window).width() >= 768)
+            $('.js-basic-example.' + params).parents('.table-responsive').css('top', 'calc(50% - ' + $('.js-basic-example.' + params).parents('.table-responsive').height() / 2 + 'px)');
+        else
+            $('.js-basic-example.' + params).parents('.table-responsive').css('top', '30px');
         if ($(window).width() > 1024)
             $('.js-basic-example.' + params).parents('.table-responsive').css('left', 'calc(50% - ' + ($('.js-basic-example.' + params).parents('.table-responsive').width() / 2 - $('#leftsidebar').width() / 2) + 'px)');
         else
-            $('.js-basic-example.' + params).parents('.table-responsive').css('left', $(window).width() <= 768 ? 0 : $(window).width()/2 - $('.js-basic-example.' + params).parents('.table-responsive').width()/2);
+            $('.js-basic-example.' + params).parents('.table-responsive').css('left', $(window).width() <= 768 ? 0 : $(window).width() / 2 - $('.js-basic-example.' + params).parents('.table-responsive').width() / 2);
     } else {
         $('.table-responsive').css('top', 'calc(50% - ' + $('.table-responsive').height() / 2 + 'px)');
         if ($(window).width() > 1024)
             $('.table-responsive').css('left', 'calc(50% - ' + ($('.table-responsive').width() / 2 - $('#leftsidebar').width() / 2) + 'px)');
         else
-            $('.table-responsive').css('left', $(window).width() <= 768 ? 0 : $(window).width()/2 - $('.table-responsive').width() / 2);
+            $('.table-responsive').css('left', $(window).width() <= 768 ? 0 : $(window).width() / 2 - $('.table-responsive').width() / 2);
     }
 
     $('.js-basic-example.' + params).find("tbody").on('click', 'tr', function (e, dt, type, indexes) {
@@ -1059,6 +1070,7 @@ var tableFunction = function (data, colunas, params) {
             $('.page-loader-wrapper').fadeOut();
         });
     else
+    if (close)
         $('.page-loader-wrapper').fadeOut();
 
 }
@@ -1144,10 +1156,11 @@ var getAllNoticias = function (aprovacao, close) {
             localStorage.setItem('aprovacao', JSON.stringify(arrNoticia));
             localStorage.setItem('noticia', JSON.stringify(response));
             setAprovacoes(aprovacao);
-            if (aprovacao)
-                search("aprovacao");
-            else
-                search("noticia");
+            if (aprovacao) {
+                if (location.href.indexOf("aprovacao") >= 0)
+                    search("aprovacao", close);
+            } else
+                search("noticia", close);
             if (close)
                 $('.page-loader-wrapper').fadeOut();
 
@@ -1185,7 +1198,7 @@ var getAllPublicidades = function () {
         success: function (response) {
             console.log(response);
             localStorage.setItem("publicidade", JSON.stringify(response));
-            search("publicidade");
+            search("publicidade", true);
         },
         error: function (error) {
             console.log(error.message);
