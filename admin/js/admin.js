@@ -914,12 +914,11 @@ var tableFunction = function (data, colunas, params) {
             },
         },
     });
-
     if (params != "aprovacao") {
-        $('.js-basic-example.' + params).parents('.table-responsive').css('top', $(window).height() / 2 - $('.js-basic-example.' + params).parents('.table-responsive').height() / 2 - 100);
-        $('.js-basic-example.' + params).parents('.table-responsive').css('left', ($(window).width() + $('#leftsidebar').width()) / 2 - $('.js-basic-example.' + params).parents('.table-responsive').width() / 2);
+        $('.js-basic-example.' + params).parents('.table-responsive').css('top', 'calc(50% - ' + $('.js-basic-example.' + params).parents('.table-responsive').height() / 2 + 'px)');
+        $('.js-basic-example.' + params).parents('.table-responsive').css('left', 'calc(50% - ' + ($('.js-basic-example.' + params).parents('.table-responsive').width() / 2 - $(window).width() > 1024 ? $('#leftsidebar').width()/2 : $('#leftsidebar').width()) + 'px)');
     } else {
-        $('.table-responsive').css('top', $(window).height() / 2 - $('.table-responsive').height() / 2 - 100);
+        $('.table-responsive').css('top', 'calc(50% - ' + $('.table-responsive').height() / 2 + 'px)');
         $('.table-responsive').css('left', ($(window).width() + $('#leftsidebar').width()) / 2 - $('.table-responsive').width() / 2);
     }
 
