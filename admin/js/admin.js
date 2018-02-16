@@ -916,10 +916,16 @@ var tableFunction = function (data, colunas, params) {
     });
     if (params != "aprovacao") {
         $('.js-basic-example.' + params).parents('.table-responsive').css('top', 'calc(50% - ' + $('.js-basic-example.' + params).parents('.table-responsive').height() / 2 + 'px)');
-        $('.js-basic-example.' + params).parents('.table-responsive').css('left', 'calc(50% - ' + ($('.js-basic-example.' + params).parents('.table-responsive').width() / 2 - $(window).width() > 1024 ? $('#leftsidebar').width()/2 : $('#leftsidebar').width()) + 'px)');
+        if ($(window).width() > 1024)
+            $('.js-basic-example.' + params).parents('.table-responsive').css('left', 'calc(50% - ' + ($('.js-basic-example.' + params).parents('.table-responsive').width() / 2 - $('#leftsidebar').width() / 2) + 'px)');
+        else
+            $('.js-basic-example.' + params).parents('.table-responsive').css('left', $(window).width() <= 768 ? 0 : $(window).width()/2 - $('.js-basic-example.' + params).parents('.table-responsive').width()/2);
     } else {
         $('.table-responsive').css('top', 'calc(50% - ' + $('.table-responsive').height() / 2 + 'px)');
-        $('.table-responsive').css('left', ($(window).width() + $('#leftsidebar').width()) / 2 - $('.table-responsive').width() / 2);
+        if ($(window).width() > 1024)
+            $('.table-responsive').css('left', 'calc(50% - ' + ($('.table-responsive').width() / 2 - $('#leftsidebar').width() / 2) + 'px)');
+        else
+            $('.table-responsive').css('left', $(window).width() <= 768 ? 0 : $(window).width()/2 - $('.table-responsive').width() / 2);
     }
 
     $('.js-basic-example.' + params).find("tbody").on('click', 'tr', function (e, dt, type, indexes) {
