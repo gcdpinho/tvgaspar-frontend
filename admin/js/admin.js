@@ -126,10 +126,13 @@ $.AdminBSB.leftSideBar = {
 
             //Scroll active menu item when page load, if option set = true
             if ($.AdminBSB.options.leftSideBar.scrollActiveItemWhenPageLoad) {
-                var activeItemOffsetTop = $('.menu .list li.active')[0].offsetTop
-                if (activeItemOffsetTop > 150) $el.slimscroll({
-                    scrollTo: activeItemOffsetTop + 'px'
-                });
+                var activeItemOffsetTop = $('.menu .list li.active')[0];
+                if (activeItemOffsetTop) {
+                    activeItemOffsetTop = activeItemOffsetTop.offsetTop
+                    if (activeItemOffsetTop > 150) $el.slimscroll({
+                        scrollTo: activeItemOffsetTop + 'px'
+                    });
+                }
             }
         }
     },
@@ -564,15 +567,26 @@ var registerMessage = function (response, form, text, notification) {
             $(form).validate().showErrors(error);
             $('.page-loader-wrapper').fadeOut();
 
-            return false;
         } else
         if (response.sqlMessage.indexOf("foreign key") >= 0) {
-            showNotification("Não é possível excluir "+ (text == "VIDEO" ? "este " : "esta ") + acentuacaoTable(text.toLowerCase()).toUpperCase() + ".", "error");
+            showNotification("Não é possível excluir " + (text == "VIDEO" ? "este " : "esta ") + acentuacaoTable(text.toLowerCase()).toUpperCase() + ".", "error");
             $('.page-loader-wrapper').fadeOut();
         } else {
             showNotification("Erro ao cadastrar " + acentuacaoTable(text.toLowerCase()).toUpperCase() + ", tente novamente.", "error");
             $('.page-loader-wrapper').fadeOut();
         }
+        return false;
+    } else
+    if (response.success == false) {
+        switch (response.message) {
+            case "Senha atual incorreta.":
+                var error = {};
+                error["senhaAtual"] = response.message;
+                $(form).validate().showErrors(error);
+                break;
+        }
+
+        return false;
     } else
     if (notification) {
         $('.form-control').each(function (index) {
@@ -587,7 +601,7 @@ var registerMessage = function (response, form, text, notification) {
 
         $('.page-loader-wrapper').fadeOut();
 
-        showNotification(acentuacaoTable(text.toLowerCase()).toUpperCase() + (text == "VIDEO" ? " cadastrado" : " cadastrada") +"com sucesso!", "success");
+        showNotification(acentuacaoTable(text.toLowerCase()).toUpperCase() + (text == "VIDEO" ? " cadastrado" : " cadastrada") + "com sucesso!", "success");
     }
 
 
@@ -862,7 +876,7 @@ var search = async function (params, close) {
 
     } else {
         if (list.length <= 0) {
-            $('.div-table').html("Não há registros de "+acentuacaoTable(params)+".");
+            $('.div-table').html("Não há registros de " + acentuacaoTable(params) + ".");
             $('.div-table').css('margin-top', '30px');
             $('.page-loader-wrapper').fadeOut();
         } else
@@ -1149,12 +1163,14 @@ var getAllNoticias = function (aprovacao, close) {
         success: function (response) {
             console.log(response);
             var arrNoticia = [];
-
+            var arrAprov = [];
             for (var element in response)
                 if (response[element].aprovacao == 0)
-                    arrNoticia.push(response[element]);
-            localStorage.setItem('aprovacao', JSON.stringify(arrNoticia));
-            localStorage.setItem('noticia', JSON.stringify(response));
+                    arrAprov.push(response[element]);
+                else
+                    arrNoticia.push(response[element])
+            localStorage.setItem('aprovacao', JSON.stringify(arrAprov));
+            localStorage.setItem('noticia', JSON.stringify(arrNoticia));
             setAprovacoes(aprovacao);
             if (aprovacao) {
                 if (location.href.indexOf("aprovacao") >= 0)
