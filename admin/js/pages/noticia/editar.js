@@ -108,9 +108,6 @@ $(function () {
     //Set aprovacoes (noticias)
     getAllNoticias(true, true);
 
-    //Close loader
-    //$('.page-loader-wrapper').fadeOut();
-
     //Form Salve
     $('#noticia').submit(function (e) {
         if ($("#noticia").valid()) {

@@ -202,3 +202,12 @@ label#cor-error{
     left: 5px;
     top: 40px;
 }
+
+.innerTd{
+    max-height: 40px;
+    min-height: 40px;
+}
+
+.innerTd p{
+    margin: 0;
+}

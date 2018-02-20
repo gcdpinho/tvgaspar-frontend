@@ -817,7 +817,6 @@ var search = async function (params, close) {
     dataTableParam = params;
     var list = JSON.parse(localStorage.getItem(params));
     if ($('.js-basic-example.' + params).find('td').length <= 0 && list.length > 0) {
-        //if ($('.page-loader-wrapper').css('display') != "none")
         if (close)
             $('.page-loader-wrapper').fadeIn();
         var colunaAux = Object.keys(list[0]);
@@ -833,7 +832,7 @@ var search = async function (params, close) {
         }
         for (var element in colunaAux) {
             var coluna = {};
-            coluna["title"] = colunaAux[element];
+            coluna["title"] = colunaAux[element].toUpperCase();
             colunas.push(coluna);
         }
         if ($('.js-basic-example.' + params).attr("value") == "listar")
@@ -844,8 +843,15 @@ var search = async function (params, close) {
         var imagens = []
         for (var index in list) {
             var row = [];
-            for (var element in list[index])
-                row.push(list[index][element]);
+            for (var element in list[index]) {
+                if ((params == "noticia" || params == "aprovacao") && element == "texto")
+                    row.push('<div class="innerTd">' + list[index][element] + '</div>');
+                else
+                if (element == "dtCadastro")
+                    row.push(Date.parse(list[index][element].split('.')[0]).toString("dd/MM/yyyy H:mm"));
+                else
+                    row.push(list[index][element]);
+            }
             row.shift();
             if (params == "noticia" || params == "aprovacao") {
                 row.pop();

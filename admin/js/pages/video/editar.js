@@ -34,9 +34,6 @@ $(function () {
     //Set aprovacoes (noticias)
     getAllNoticias(true, true);
 
-    //Close loader
-    //$('.page-loader-wrapper').fadeOut();
-
     //Form Salve
     $('#video').submit(function (e) {
         if ($("#video").valid()) {
