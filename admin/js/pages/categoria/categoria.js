@@ -24,7 +24,6 @@ $(function () {
     //Set aprovacoes (noticias)
     getAllNoticias(true, true);
 
-    //$('.page-loader-wrapper').fadeOut();
 
     //Form Salve
     $('#categoria').submit(function (e) {

@@ -104,6 +104,7 @@ $(function () {
     getAllCategorias(false, false);
     getAllImagens(false);
 
+
     //Botão de pesquisar
     $('.div-search-button button').click(function () {
         search($(this).val(), true);

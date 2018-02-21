@@ -5,8 +5,6 @@
         var usuario = getUsuario();
         //Set aprovacoes (noticias)
         getAllNoticias(true, true);
-        //Close loader
-        //$('.page-loader-wrapper').fadeOut();
     } else
         //Autentication by token
         $.ajax({

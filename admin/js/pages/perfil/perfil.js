@@ -46,6 +46,7 @@ $(function () {
         }
     });
 
+
     //Form Salve
     $('#perfil').submit(function (e) {
         var nome = $('input[name="nome"]').val();

@@ -33,8 +33,6 @@ $(function () {
     //Set aprovacoes (noticias)
     getAllNoticias(true, true);
 
-    //Close loader
-    //$('.page-loader-wrapper').fadeOut();
 
     //Form Salve
     $('#categoria').submit(function (e) {

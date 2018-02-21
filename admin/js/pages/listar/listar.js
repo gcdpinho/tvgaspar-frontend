@@ -5,6 +5,7 @@ $(function () {
     //Set aprovacoes (noticias)
     getAllNoticias(true, false);
 
+
     //Escolhe o serviço baseado no parâmetro da tabela
     var table = ('.js-basic-example');
     var page = "";

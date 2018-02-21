@@ -108,6 +108,7 @@ $(function () {
     //Set aprovacoes (noticias)
     getAllNoticias(true, true);
 
+
     //Form Salve
     $('#noticia').submit(function (e) {
         if ($("#noticia").valid()) {

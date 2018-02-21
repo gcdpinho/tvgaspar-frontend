@@ -35,8 +35,6 @@ $(function () {
     //Set aprovacoes (noticias)
     getAllNoticias(true, true);
 
-    //Close loader
-    //$('.page-loader-wrapper').fadeOut();
 
     //Form Salve
     $('#publicidade').submit(function (e) {

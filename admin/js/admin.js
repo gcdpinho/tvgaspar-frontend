@@ -1234,3 +1234,9 @@ var getAllPublicidades = function () {
 $('.btn-cancel').click(function () {
     location.href = "listar.html";
 });
+
+var adm = function(){
+    var usuario = JSON.parse(localStorage.getItem('usuario'));
+    if (usuario.isAdm == 1)
+        $('.isAdm').css('display', 'block');
+}();

@@ -211,3 +211,7 @@ label#cor-error{
 .innerTd p{
     margin: 0;
 }
+
+.isAdm{
+    display: none;
+}
