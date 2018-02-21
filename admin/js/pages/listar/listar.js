@@ -5,7 +5,6 @@ $(function () {
     //Set aprovacoes (noticias)
     getAllNoticias(true, false);
 
-
     //Escolhe o serviço baseado no parâmetro da tabela
     var table = ('.js-basic-example');
     var page = "";
@@ -73,7 +72,6 @@ $(function () {
             },
             success: function (response) {
                 console.log(response);
-
                 if (response.sqlMessage) {
                     $('#defaultModal').modal('hide');
                     registerMessage(response, "", page.toUpperCase(), false);
@@ -83,7 +81,6 @@ $(function () {
 
                     location.reload();
                 }
-
             },
             error: function (error) {
                 console.log(error.message);

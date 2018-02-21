@@ -33,7 +33,6 @@ $(function () {
     //Set aprovacoes (noticias)
     getAllNoticias(true, true);
 
-
     //Form Salve
     $('#categoria').submit(function (e) {
         if ($("#categoria").valid()) {

@@ -1,4 +1,5 @@
 $(function () {
+    //Validator
     $.validator.addMethod("confirmPassword", function (value, element, config) {
         if (value == $('input[name="novaSenha"]').val())
             return true;
@@ -46,7 +47,6 @@ $(function () {
         }
     });
 
-
     //Form Salve
     $('#perfil').submit(function (e) {
         var nome = $('input[name="nome"]').val();
@@ -77,7 +77,6 @@ $(function () {
             });
         }
         e.preventDefault();
-
     });
 
     $('#senha').submit(function (e) {
@@ -108,6 +107,5 @@ $(function () {
             });
         }
         e.preventDefault();
-
     });
 });

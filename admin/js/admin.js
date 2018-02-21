@@ -1235,6 +1235,7 @@ $('.btn-cancel').click(function () {
     location.href = "listar.html";
 });
 
+//Permissão de adm para todos os elementos de classe isAdm
 var adm = function(){
     var usuario = JSON.parse(localStorage.getItem('usuario'));
     if (usuario.isAdm == 1)

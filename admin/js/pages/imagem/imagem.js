@@ -59,7 +59,6 @@ $(function () {
     //Load info de tabelas relacionadas
     getAllTags(true, false);
 
-
     //Botão de pesquisar
     $('.div-search-button button').click(function () {
         search("tag", true);

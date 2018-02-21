@@ -1,5 +1,4 @@
 $(function () {
-
     //Validation plugin
     $('#publicidade').validate({
         rules: {
@@ -34,7 +33,6 @@ $(function () {
 
     //Set aprovacoes (noticias)
     getAllNoticias(true, true);
-
 
     //Form Salve
     $('#publicidade').submit(function (e) {

@@ -25,7 +25,6 @@ $(function () {
         localStorage.setItem('not', "");
     }
 
-
     //Aprovação da notícia (update)
     $('.noticia-detail button').click(function () {
         $('.page-loader-wrapper').fadeIn();

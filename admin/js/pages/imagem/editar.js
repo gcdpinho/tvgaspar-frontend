@@ -37,7 +37,6 @@ $(function () {
     //Set aprovacoes (noticias)
     getAllNoticias(true, true);
 
-
     //Form Salve
     $('#imagem').submit(function (e) {
         if ($("#imagem").valid()) {

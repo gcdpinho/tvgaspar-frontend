@@ -18,9 +18,6 @@ $(function () {
     //Set aprovacoes (noticias)
     getAllNoticias(true, true);
 
-    //Close loader
-    //$('.page-loader-wrapper').fadeOut();
-
     //Form Salve
     $('#tag').submit(function (e) {
         if ($("#tag").valid()) {

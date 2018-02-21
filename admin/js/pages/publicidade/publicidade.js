@@ -1,5 +1,4 @@
 $(function () {
-
     //Validation plugin
     $('#publicidade').validate({
         rules: {
@@ -30,7 +29,6 @@ $(function () {
 
     //Load info de tabelas relacionadas
     getAllImagens(false);
-
 
      //Botão de pesquisar
     $('.div-search-button button').click(function () {
