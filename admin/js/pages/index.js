@@ -3,8 +3,10 @@
     if (localStorage.getItem('usuario') != null && localStorage.getItem("usuario") != "") {
         console.log("Logado");
         var usuario = getUsuario();
+        adm();
         //Set aprovacoes (noticias)
         getAllNoticias(true, true);
+        
     } else
         //Autentication by token
         $.ajax({
@@ -18,9 +20,8 @@
                 $('.name').html(response[0].nome);
                 $('.email').html(response[0].email);
                 localStorage.setItem("usuario", JSON.stringify(response[0]));
-                
+                adm();
                 getAllNoticias(true, true);
-                
             },
             error: function (error) {
                 console.log(error.message);

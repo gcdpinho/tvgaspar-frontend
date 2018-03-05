@@ -1,5 +1,8 @@
 $(function () {
-    $('.page-loader-wrapper').fadeOut();
+    if (localStorage.getItem('lembrarSenha') == "true" || localStorage.getItem('lembrarSenha') == true)
+        location.href = "../../index.html";
+    else
+        $('.page-loader-wrapper').fadeOut();
     if (performance.navigation.type == 1 && localStorage.getItem('msgError') != "")
         localStorage.setItem('msgError', "");
 
@@ -20,6 +23,7 @@ $(function () {
     $('#sign_in').submit(function (e) {
         if ($("#sign_in").valid()) {
             $('.page-loader-wrapper').fadeIn();
+            localStorage.setItem('lembrarSenha', $('input#rememberme').is(":checked"));
             $.ajax({
                 type: "POST",
                 url: "https://tvgaspar-server.herokuapp.com/login",

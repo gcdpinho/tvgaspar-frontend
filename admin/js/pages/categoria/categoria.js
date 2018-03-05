@@ -20,7 +20,7 @@ $(function () {
 
     //Get info usuario
     var usuario = getUsuario();
-    
+    adm();
     //Set aprovacoes (noticias)
     getAllNoticias(true, true);
 

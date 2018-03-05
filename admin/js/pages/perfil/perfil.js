@@ -9,7 +9,7 @@ $(function () {
 
     //Get info usuario
     var usuario = getUsuario();
-
+    adm();
     $('input[name="nome"]').val(usuario.nome);
     $('input[name="nome"]').focus();
     $('input[name="email"]').val(usuario.email);

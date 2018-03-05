@@ -502,6 +502,7 @@ var logout = function (msgError) {
     localStorage.setItem('categoriaEdit', "");
     localStorage.setItem('noticiaEdit', "");
     localStorage.setItem('publicidadeEdit', "");
+    localStorage.setItem('lembrarSenha', "");
     if (typeof msgError == "object")
         localStorage.setItem('msgError', "");
     else
@@ -1240,4 +1241,4 @@ var adm = function(){
     var usuario = JSON.parse(localStorage.getItem('usuario'));
     if (usuario.isAdm == 1)
         $('.isAdm').css('display', 'block');
-}();
+};

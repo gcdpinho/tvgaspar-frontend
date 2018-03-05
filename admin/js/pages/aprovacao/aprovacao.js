@@ -14,9 +14,9 @@ $(function () {
 
     //Get info usuario
     var usuario = getUsuario();
-
-     //Set aprovacoes (noticias)
-     getAllNoticias(true, true);
+    adm();
+    //Set aprovacoes (noticias)
+    getAllNoticias(true, true);
 
     //Notification em caso de page reload
     var not = localStorage.getItem('not');
