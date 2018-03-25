@@ -185,7 +185,7 @@
         }));
       }
       $(self.$input).valid();
-  },
+    },
 
     /**
      * Removes the given item. Pass true to dontPushVal to prevent updating the
@@ -238,7 +238,7 @@
         item: item,
         options: options
       }));
-      
+
       $(self.$input).focusout();
       $(self.$input).focus();
     },
@@ -409,7 +409,9 @@
           // HACK: only process on focusout when no typeahead opened, to
           //       avoid adding the typeahead text as tag
           if ($('.typeahead, .twitter-typeahead', self.$container).length === 0) {
-            if (self.$input.val() == "" || getData("tag").includes(self.$input.val()))
+            if (self.$input.val() == "" || JSON.parse(localStorage.getItem("tag")).map((e) => {
+                return e.titulo;
+              }).includes(self.$input.val()))
               self.options.corTag = "success";
             else
               self.options.corTag = "error";
@@ -492,7 +494,9 @@
         if (self.options.freeInput && (keyCombinationInList(event, self.options.confirmKeys) || maxLengthReached)) {
           // Only attempt to add a tag if there is data in the field
           if (text.length !== 0) {
-            if (getData("tag").includes(text))
+            if (JSON.parse(localStorage.getItem("tag")).map((e) => {
+                return e.titulo;
+              }).includes(text))
               self.options.corTag = "success";
             else
               self.options.corTag = "error";
