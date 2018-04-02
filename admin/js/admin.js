@@ -510,9 +510,9 @@ var logout = function (msgError) {
 
     var path = location.pathname;
     if (path.indexOf('pages') >= 0)
-        location.href = "../examples/sign-in.html";
+        location.href = "../login/login.html";
     else
-        location.href = "pages/examples/sign-in.html"
+        location.href = "pages/login/login.html"
 }
 
 $('#logout').click(logout);
@@ -599,7 +599,7 @@ var registerMessage = function (response, form, text, notification) {
             if ($(this).parents('.dropify-clear'))
                 $('.dropify-clear').click();
         });
-
+        tinyMCE.activeEditor.setContent("");
         $('.page-loader-wrapper').fadeOut();
 
         showNotification(acentuacaoTable(text.toLowerCase()).toUpperCase() + (text == "VIDEO" ? " cadastrado" : " cadastrada") + "com sucesso!", "success");
@@ -848,9 +848,12 @@ var search = async function (params, close) {
                 if ((params == "noticia" || params == "aprovacao") && element == "texto")
                     row.push('<div class="innerTd">' + list[index][element] + '</div>');
                 else
-                if (element == "dtCadastro")
-                    row.push(Date.parse(list[index][element].split('.')[0]).toString("dd/MM/yyyy H:mm"));
-                else
+                if (element == "dtCadastro") {
+                    if (list[index][element].split('.')[1]!= undefined)
+                        row.push(Date.parse(list[index][element].split('.')[0]).toString("dd/MM/yyyy H:mm"));
+                    else
+                        row.push("");
+                } else
                     row.push(list[index][element]);
             }
             row.shift();
@@ -1237,7 +1240,7 @@ $('.btn-cancel').click(function () {
 });
 
 //Permissão de adm para todos os elementos de classe isAdm
-var adm = function(){
+var adm = function () {
     var usuario = JSON.parse(localStorage.getItem('usuario'));
     if (usuario.isAdm == 0)
         $('.isAdm').css('display', 'none');

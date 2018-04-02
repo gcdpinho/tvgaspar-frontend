@@ -97,7 +97,7 @@ $(function () {
     $('input[name="subManchete"]').focus();
     $('input[name="autor"]').val(dataNoticia.autor);
     $('input[name="autor"]').focus();
-    $('input[name="dtCadastro"]').val(Date.parse(dataNoticia.dtCadastro.split('.')[0]).toString("dd/MM/yyyy H:mm"));
+    $('input[name="dtCadastro"]').val(dataNoticia.dtCadastro);
     $('input[name="dtCadastro"]').parents('.form-line').addClass('focused');
     $('textarea[name="texto"]').val(dataNoticia.texto);
     $('textarea[name="texto"]').focus();
