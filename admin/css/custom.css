@@ -213,5 +213,5 @@ label#cor-error{
 }
 
 .isAdm{
-    display: none;
+    display: block;
 }

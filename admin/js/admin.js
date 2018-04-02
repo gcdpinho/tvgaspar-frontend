@@ -1239,6 +1239,6 @@ $('.btn-cancel').click(function () {
 //Permissão de adm para todos os elementos de classe isAdm
 var adm = function(){
     var usuario = JSON.parse(localStorage.getItem('usuario'));
-    if (usuario.isAdm == 1)
-        $('.isAdm').css('display', 'block');
+    if (usuario.isAdm == 0)
+        $('.isAdm').css('display', 'none');
 };
