@@ -599,7 +599,11 @@ var registerMessage = function (response, form, text, notification) {
             if ($(this).parents('.dropify-clear'))
                 $('.dropify-clear').click();
         });
-        tinyMCE.activeEditor.setContent("");
+        try {
+            tinyMCE.activeEditor.setContent("");
+        } catch (e) {
+            
+        }
         $('.page-loader-wrapper').fadeOut();
 
         showNotification(acentuacaoTable(text.toLowerCase()).toUpperCase() + (text == "VIDEO" ? " cadastrado" : " cadastrada") + "com sucesso!", "success");
@@ -849,7 +853,7 @@ var search = async function (params, close) {
                     row.push('<div class="innerTd">' + list[index][element] + '</div>');
                 else
                 if (element == "dtCadastro") {
-                    if (list[index][element].split('.')[1]!= undefined)
+                    if (list[index][element].split('.')[1] != undefined)
                         row.push(Date.parse(list[index][element].split('.')[0]).toString("dd/MM/yyyy H:mm"));
                     else
                         row.push("");
