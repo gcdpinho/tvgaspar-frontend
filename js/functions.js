@@ -455,6 +455,6 @@
 		live: false,
 		liveSelector: null
 	});
-
+	console.log(getNoticias());
 })(jQuery);
 
