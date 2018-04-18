@@ -1,0 +1,21 @@
+- Foco em notícias: base no site da globo
+
+
+- HOME, NOTÍCIAS, COMERCIAL, AO VIVO \/ (MORE), COMUNIDADE, ESPORTES
+	VERDE: ESPORTES;
+	AMARELO: COMUNIDADE/GERAL;
+	VERMELHO: POLÍTICA;
+- Home com notícias com várias formas:
+	- Notícias normais;
+	- Destaque: fonte maior e imagem maior;
+	- Manchetes sem foto;
+
+- Notícias já visualizadas não tem prioridade na home;
+
+- PAINEL DE CONTROLE:
+	- ADMIN;
+	- COLUNISTA;
+
+- PROPAGANDA: AREAS DE PROPAGANDAS FIXAS - CONTROLE NO PAINEL DE CONTROLE
+
+- FILTRO DE PESQUISAS - PAGINA NOTÍCIAS
