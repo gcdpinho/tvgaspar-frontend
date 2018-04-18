@@ -1,0 +1,12 @@
+.demais{
+    display: block !important;
+    width: 100% !important;
+}
+
+.row.no-gutter .middle{
+    padding: 0 7.5px;
+}
+
+.noticias-footer .item{
+    margin-bottom: 10px;
+}

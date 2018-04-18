@@ -221,7 +221,7 @@
 		itemsMobile: false // itemsMobile disabled - inherit from itemsTablet option
 	});
 	
-	/* 20. Clock */
+	/* 20. Clock 
 	function getDate() {
 		var date = new Date();
 		var weekday = date.getDay();
@@ -250,7 +250,7 @@
 		requestAnimationFrame(getDate);
 	}
 	getDate();
-
+	*/
 	/* 21. Subscribe Form */
 	$('#subscribeForm').ketchup().submit(function() {
 		if ($(this).ketchup('isValid')) {
