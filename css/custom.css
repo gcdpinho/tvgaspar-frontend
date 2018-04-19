@@ -1,12 +1,54 @@
-.demais{
+.demais {
     display: block !important;
     width: 100% !important;
 }
 
-.row.no-gutter .middle{
+.row.no-gutter .middle {
     padding: 0 7.5px;
 }
 
-.noticias-footer .item{
+.noticias-footer .item {
     margin-bottom: 10px;
+}
+
+.politica span,
+.politica span a,
+.politica span p a,
+.politica .title-left.underline04::before {
+    background-color: #d40004 !important;
+}
+
+.politica a:hover,
+.politica p:hover,
+.news-block.politica span {
+    color: #d40004;
+}
+
+.esporte span,
+.esporte span a,
+.esporte span p a,
+.esporte .title-left.underline04::before {
+    background-color: #5ab45f !important;
+}
+
+.esporte a:hover,
+.esporte p:hover,
+.news-block.esporte span {
+    color: #5ab45f;
+}
+
+.comunidade span,
+.comunidade span a,
+.comunidade span p a,
+.comunidade .title-left.underline04::before  {
+    background: #4faefc;
+}
+
+.comunidade a:hover,
+.comunidade p:hover,
+.news-block.comunidade span {
+    color: #4faefc;
+}
+.news-block span{
+    background: none !important;
 }
