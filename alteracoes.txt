@@ -1,0 +1,27 @@
+MENU
+	ordem menu: home, mega menu, notícias, ao vivo, comunidade, esportes, institucional, contato
+	novas abas: TV INDOOR
+		    INSTITUCIONAL
+	troca: COMERCIAL -> CONTATO
+	abas ao vivo: Av. Comunidades Nº310
+ 		      Nereu Ramos Nº110
+   		      Rua São José
+		      Praça Getúlio Vargas
+		      Ponte Hercílio Deeke
+		      Viaduto Avenida
+
+
+Comentário com o facebook - fora de escopo
+
+Propaganda a cada duas linhas de notícia
+
+Notícia em destaque especial pode ter ou não
+
+Disposição: três colunas
+
+Stream ao vivo (pode não ter) iframe no lugar da notícia em destaque
+
+Galeria de imagens = slider de marcas
+
+Notícias
+	Detalhe Notícia
