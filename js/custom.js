@@ -4,7 +4,7 @@ $(function ($) {
         url: "https://tvgaspar-server.herokuapp.com/getAllNoticiasAprovadas",
         success: function (response) {
             console.log(response);
-            showNoticias(response, 3, 2, 15);
+            showNoticias(response, $('#ultimasNoticias'), 3, 2, 15);
         },
         error: function (error) {
             console.log(error.message);
@@ -23,10 +23,13 @@ var enabledLoader = function () {
 }
 
 // Lines não funciona
-var showNoticias = function (data, column, lines, limit) {
+var showNoticias = function (data, row, columns, lines, limit) {
     var controlC = 0;
     var controlL = 0;
     var controlLimite = 0;
+
+    createColumns(row, columns);
+
     for (var i = 0; i < data.length; i++) {
         var aux = item;
         aux = aux.replace('?', data[i].categoriaTitulo);
@@ -38,18 +41,30 @@ var showNoticias = function (data, column, lines, limit) {
         aux = aux.replace('?', data[i].manchete);
         aux = aux.replace('?', '#');
         aux = aux.replace('?', data[i].texto);
-        $('#colItem' + controlC).append(aux);
+        $(row).find('.colItem' + controlC).append(aux);
         controlC++;
-        
-        if (controlC == column)
+
+        if (controlC == columns)
             controlC = 0;
-        
+
         controlLimite++;
         if (controlLimite >= limit)
             break;
     }
 
     disabledLoader();
+}
+
+var createColumns = function (row, columns) {
+    var col = 12 / columns;
+
+    for (var i = 0; i < col; i++)
+        $(row).append(
+            '<div class="col-sm-' + col + ' col-md-' + col + '">' +
+            '<div class="news colItem' + i + '">' +
+            '</div>' +
+            '</div>'
+        );
 }
 
 var getNoticias = function () {
