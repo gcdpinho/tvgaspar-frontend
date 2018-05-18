@@ -1,3 +1,51 @@
+$(function ($) {
+    $.ajax({
+        type: "GET",
+        url: "https://tvgaspar-server.herokuapp.com/getAllNoticiasAprovadas",
+        success: function (response) {
+            console.log(response);
+            showNoticias(response, 3, 2, 15);
+        },
+        error: function (error) {
+            console.log(error.message);
+        }
+    });
+});
+
+var disabledLoader = function () {
+    $(".loader-item").fadeOut();
+    $("#pageloader").fadeOut("slow");
+}
+
+var enabledLoader = function () {
+    $(".loader-item").fadeIn();
+    $("#pageloader").fadeIn();
+}
+
+var showNoticias = function (data, column, lines, limit) {
+    var controlC = 0;
+    var controlL = 0;
+    $.each(data, function (k, v) { 
+        var aux = item;
+        aux = aux.replace('?', v.categoriaTitulo);
+        aux = aux.replace('?', '#');
+        aux = aux.replace('?', v.imagemLink);
+        aux = aux.replace('?', '#');
+        aux = aux.replace('?', v.categoriaTitulo);
+        aux = aux.replace('?', '#');
+        aux = aux.replace('?', v.manchete);
+        aux = aux.replace('?', '#');
+        aux = aux.replace('?', v.texto);
+        $('#colItem'+controlC).append(aux);
+        if (controlC < 3)
+            controlC ++
+        else
+            controlC = 0;
+    });
+    
+    disabledLoader();
+}
+
 var getNoticias = function () {
     var date = new Date();
     var noticia = {

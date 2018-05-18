@@ -29,21 +29,35 @@
 //
 // ======================================= //
 
-(function($) {
-    "use strict";
-	
-	/* 1. Page Loader */	
-	$(".loader-item").delay(700).fadeOut();
-	$("#pageloader").delay(1200).fadeOut("slow");
+(function ($) {
+	"use strict";
 
-	/* 2. Text fitting for headlines */	
-	$('.extra-large-caption').fitText(1.5, { minFontSize: '26px', maxFontSize: '80px' });
-	$('.large-caption').fitText(1.5, { minFontSize: '26px', maxFontSize: '60px' });
-	$('.medium-caption').fitText(2, { minFontSize: '20px', maxFontSize: '30px' });
-	$('.small-caption').fitText(2.4, { minFontSize: '20px', maxFontSize: '26px' });
-	$('.extra-small-caption').fitText(2.4, { minFontSize: '16px', maxFontSize: '22px' });
-	$('.error-msg').fitText(2, { minFontSize: '36px', maxFontSize: '90px' });
-	
+	/* 2. Text fitting for headlines */
+	$('.extra-large-caption').fitText(1.5, {
+		minFontSize: '26px',
+		maxFontSize: '80px'
+	});
+	$('.large-caption').fitText(1.5, {
+		minFontSize: '26px',
+		maxFontSize: '60px'
+	});
+	$('.medium-caption').fitText(2, {
+		minFontSize: '20px',
+		maxFontSize: '30px'
+	});
+	$('.small-caption').fitText(2.4, {
+		minFontSize: '20px',
+		maxFontSize: '26px'
+	});
+	$('.extra-small-caption').fitText(2.4, {
+		minFontSize: '16px',
+		maxFontSize: '22px'
+	});
+	$('.error-msg').fitText(2, {
+		minFontSize: '36px',
+		maxFontSize: '90px'
+	});
+
 	/* 3. Parallax */
 	function parallaxInit() {
 		$('.img-overlay1', '#parallax-section').parallax("100%", 0.8);
@@ -56,25 +70,25 @@
 	/* 5. Navbar */
 	// headroom
 	$("#fixed-navbar").headroom({
-		tolerance : 5,
+		tolerance: 5,
 		offset: $('#main-section').offset().top,
 		classes: {
 			pinned: "headroom-pinned",
 			unpinned: "headroom-unpinned"
 		}
 	});
-	
+
 	// affix
 	$('#fixed-navbar').affix({
 		offset: {
 			top: $('#fixed-navbar').offset().top
 		}
 	});
-	
+
 	/* 6. Sidenav */
 	$('[data-sidenav]').sidenav();
-	$('.navbar-toggle').attr( 'id', $('#sidenav-toggle').attr('id') );
-	
+	$('.navbar-toggle').attr('id', $('#sidenav-toggle').attr('id'));
+
 	// headroom
 	$("#mobile-nav").headroom({
 		offset: $('#main-section').offset().top,
@@ -86,8 +100,8 @@
 	// Affix
 	$('#mobile-nav').affix({
 		offset: {
-        top: $('.top-menu').height()
-      }
+			top: $('.top-menu').height()
+		}
 	});
 
 	/* 7. Sidebar Newsfeed-1 */
@@ -220,7 +234,7 @@
 		itemsTablet: [600, 1], // 1 items between 600 and 0
 		itemsMobile: false // itemsMobile disabled - inherit from itemsTablet option
 	});
-	
+
 	/* 20. Clock 
 	function getDate() {
 		var date = new Date();
@@ -252,7 +266,7 @@
 	getDate();
 	*/
 	/* 21. Subscribe Form */
-	$('#subscribeForm').ketchup().submit(function() {
+	$('#subscribeForm').ketchup().submit(function () {
 		if ($(this).ketchup('isValid')) {
 			var action = $(this).attr('action');
 			$.ajax({
@@ -261,10 +275,10 @@
 				data: {
 					email: $('#address').val()
 				},
-				success: function(data) {
+				success: function (data) {
 					$('#result').html(data);
 				},
-				error: function() {
+				error: function () {
 					$('#result').html('Sorry, an error occurred.');
 				}
 			});
@@ -273,7 +287,7 @@
 	});
 
 	/* 22. Exchange Rates */
-	$.getJSON("https://api.fixer.io/latest?base=USD", function(data) {
+	$.getJSON("https://api.fixer.io/latest?base=USD", function (data) {
 		var cDate = data.date;
 		$('#cdate').append(' ' + cDate);
 		$('#euro').append(" " + data.rates.EUR);
@@ -287,20 +301,20 @@
 	});
 
 	/* 23. Currency Converter */
-	$.get('http://api.fixer.io/latest?base=ZAR', function(data) {
+	$.get('http://api.fixer.io/latest?base=ZAR', function (data) {
 		var countryObject = data.rates;
 		for (var key in countryObject) {
 			if (countryObject.hasOwnProperty(key)) {
 				$('select').append('<option val="' + key + '">' + key + '</option>');
 			}
 		}
-		$('.convertFrom').change(function() {
+		$('.convertFrom').change(function () {
 			var thisValue = $('.convertFrom .selectpicker').val();
-			$.get('http://api.fixer.io/latest?base=' + thisValue, function(newData) {
+			$.get('http://api.fixer.io/latest?base=' + thisValue, function (newData) {
 				countryObject = newData.rates;
 			});
 		});
-		$('form').on('submit', function(e) {
+		$('form').on('submit', function (e) {
 			e.preventDefault();
 			var convertingTo = $('.convertTo .selectpicker').val(),
 				toRate = countryObject[convertingTo],
@@ -316,7 +330,7 @@
 
 	/* 24. Sidebar Weather */
 	var currWeather = {};
-	$(document).ready(function() {
+	$(document).ready(function () {
 		currWeather = getLocationAndWeather('imperial');
 		$('.btn').click(switchScale);
 	});
@@ -346,7 +360,7 @@
 			lat: location.lat,
 			lon: location.long,
 			units: scale
-		}, function(results) {
+		}, function (results) {
 			var wthr = {
 				city: results.name,
 				wind_speed: (parseFloat(results.wind.speed) * 2.2369362920544).toFixed(1),
@@ -382,14 +396,14 @@
 		var $iconElem = $('.weather-icon', '#weather');
 		//Change the icon
 		$iconElem.removeClass('wi-day-sunny wi-rain wi-cloudy wi-fog wi-thunderstorm wi-snow')
-		        .addClass(icons[wType][0])
-		        .css({
-			           'color': icons[wType][1]
-		           });
+			.addClass(icons[wType][0])
+			.css({
+				'color': icons[wType][1]
+			});
 	}
 
 	/* 25. FitVids plugin for readjusting video sizes */
-	    $(".video-container").fitVids();
+	$(".video-container").fitVids();
 
 	/* 26. Sidebar Scroll */
 	$(".sidebar-scroll").mCustomScrollbar({
@@ -455,6 +469,5 @@
 		live: false,
 		liveSelector: null
 	});
-	console.log(getNoticias());
+	// console.log(getNoticias());
 })(jQuery);
-

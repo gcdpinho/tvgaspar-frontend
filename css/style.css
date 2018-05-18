@@ -2262,9 +2262,9 @@ header {
 .news li:last-child {
 	margin-right: 0;
 }
-.news .content p, .news .item-content p {
+/* .news .content p, .news .item-content p {
 	border-bottom: 1px solid rgba(0, 0, 0, 0.065);
-}
+} */
 .content h3 a, .item-content h3 a {
 	text-transform: none;
 	color: #262626;

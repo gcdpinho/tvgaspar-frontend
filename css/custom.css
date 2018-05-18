@@ -1,6 +1,8 @@
 .demais {
     display: block !important;
     width: 100% !important;
+    max-height: 200px;
+    overflow: hidden;
 }
 
 .row.no-gutter .middle {
@@ -51,4 +53,8 @@
 }
 .news-block span{
     background: none !important;
+}
+
+.pb30{
+    padding-bottom: 30px;
 }
