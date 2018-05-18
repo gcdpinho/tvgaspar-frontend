@@ -1,7 +1,7 @@
 .demais {
     display: block !important;
     width: 100% !important;
-    max-height: 200px;
+    height: 200px;
     overflow: hidden;
 }
 

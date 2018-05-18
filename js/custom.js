@@ -22,6 +22,7 @@ var enabledLoader = function () {
     $("#pageloader").fadeIn();
 }
 
+// Lines não funciona
 var showNoticias = function (data, column, lines, limit) {
     var controlC = 0;
     var controlL = 0;
@@ -38,10 +39,11 @@ var showNoticias = function (data, column, lines, limit) {
         aux = aux.replace('?', '#');
         aux = aux.replace('?', data[i].texto);
         $('#colItem' + controlC).append(aux);
-        if (controlC < 3)
-            controlC++;
-        else
+        controlC++;
+        
+        if (controlC == column)
             controlC = 0;
+        
         controlLimite++;
         if (controlLimite >= limit)
             break;
