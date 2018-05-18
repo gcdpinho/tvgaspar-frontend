@@ -41,7 +41,7 @@ $(function () {
             if (this.getContent() == "")
                 $('.form-group.form-float.tinymce .form-line').removeClass('focused');
         });
-    });    
+    });
 
     //Datetimepicker plugin
     $('.datetimepicker').bootstrapMaterialDatePicker({
@@ -110,6 +110,8 @@ $(function () {
         search($(this).val(), true);
     });
 
+
+
     //Form Salve
     $('#noticia').submit(function (e) {
         if ($("#noticia").valid()) {
@@ -173,72 +175,12 @@ $(function () {
                                         },
                                         success: function (response) {
                                             console.log(response);
-                                            if ($('input[name="video"]').val() != "") {
-                                                var data = [];
-                                                var entry;
-                                                if (registerMessage(response, $('#noticia'), "NOTÍCIA", false)) {
-                                                    var arrVideos = $('input[name="video"]').val().split(", ");
-                                                    arrVideos = arrVideos.filter(function (value, index, self) {
-                                                        return (self.indexOf(value) == index)
-                                                    });
-                                                    for (var element in arrVideos) {
-                                                        entry = {}
-                                                        entry['idNoticia'] = insertId;
-                                                        entry['idVideo'] = getDataId("video", arrVideos[element], "link");
-                                                        data.push(entry);
-                                                    }
-                                                    console.log(data);
-                                                    $.ajax({
-                                                        type: "POST",
-                                                        url: "https://tvgaspar-server.herokuapp.com/createNoticiaVideo",
-                                                        data: {
-                                                            data: data,
-                                                            token: localStorage.getItem('token')
-                                                        },
-                                                        success: function (response) {
-                                                            console.log(response);
-                                                            if ($('input[name="imagem"]').val() != "") {
-                                                                var data = [];
-                                                                var entry;
-                                                                if (registerMessage(response, $('#noticia'), "NOTÍCIA", false)) {
-                                                                    var arrImagens = $('input[name="imagem"]').val().split(", ");
-                                                                    arrImagens = arrImagens.filter(function (value, index, self) {
-                                                                        return (self.indexOf(value) == index)
-                                                                    });
-                                                                    for (var element in arrImagens) {
-                                                                        entry = {}
-                                                                        entry['idNoticia'] = insertId;
-                                                                        entry['idImagem'] = getDataId("imagem", arrImagens[element], "link");
-                                                                        data.push(entry);
-                                                                    }
-                                                                    console.log(data);
-                                                                    $.ajax({
-                                                                        type: "POST",
-                                                                        url: "https://tvgaspar-server.herokuapp.com/createNoticiaImagem",
-                                                                        data: {
-                                                                            data: data,
-                                                                            token: localStorage.getItem('token')
-                                                                        },
-                                                                        success: function (response) {
-                                                                            console.log(response);
-                                                                            registerMessage(response, $('#noticia'), "NOTÍCIA", true);
-                                                                        },
-                                                                        error: function (error) {
-                                                                            console.log(error.message);
-                                                                            logout('Sessão inválida. Faça o login novamente.');
-                                                                        }
-                                                                    });
-                                                                }
-                                                            } else
-                                                                registerMessage(response, $('#noticia'), "NOTÍCIA", true);
-                                                        },
-                                                        error: function (error) {
-                                                            console.log(error.message);
-                                                            logout('Sessão inválida. Faça o login novamente.');
-                                                        }
-                                                    });
-                                                }
-                                            } else
+                                            if ($('input[name="video"]').val() != "")
+                                                createNoticiaVideo(response, insertId);
+                                            else
+                                            if ($('input[name="imagem"]').val() != "")
+                                                createNoticiaImagem(response, insertId);
+                                            else
                                                 registerMessage(response, $('#noticia'), "NOTÍCIA", true);
                                         },
                                         error: function (error) {
@@ -265,3 +207,71 @@ $(function () {
     });
 
 });
+
+var createNoticiaVideo = function (response, insertId) {
+    var data = [];
+    var entry;
+    if (registerMessage(response, $('#noticia'), "NOTÍCIA", false)) {
+        var arrVideos = $('input[name="video"]').val().split(", ");
+        arrVideos = arrVideos.filter(function (value, index, self) {
+            return (self.indexOf(value) == index)
+        });
+        for (var element in arrVideos) {
+            entry = {}
+            entry['idNoticia'] = insertId;
+            entry['idVideo'] = getDataId("video", arrVideos[element], "link");
+            data.push(entry);
+        }
+        console.log(data);
+        $.ajax({
+            type: "POST",
+            url: "https://tvgaspar-server.herokuapp.com/createNoticiaVideo",
+            data: {
+                data: data,
+                token: localStorage.getItem('token')
+            },
+            success: function (response) {
+                console.log(response);
+                createNoticiaImagem(response, insertId);
+            },
+            error: function (error) {
+                console.log(error.message);
+                logout('Sessão inválida. Faça o login novamente.');
+            }
+        });
+    }
+}
+
+var createNoticiaImagem = function (response, insertId) {
+    var data = [];
+    var entry;
+    if (registerMessage(response, $('#noticia'), "NOTÍCIA", false)) {
+        var arrImagens = $('input[name="imagem"]').val().split(", ");
+        arrImagens = arrImagens.filter(function (value, index, self) {
+            return (self.indexOf(value) == index)
+        });
+        for (var element in arrImagens) {
+            entry = {}
+            entry['idNoticia'] = insertId;
+            entry['idImagem'] = getDataId("imagem", arrImagens[element], "link");
+            data.push(entry);
+        }
+        console.log(data);
+        $.ajax({
+            type: "POST",
+            url: "https://tvgaspar-server.herokuapp.com/createNoticiaImagem",
+            data: {
+                data: data,
+                token: localStorage.getItem('token')
+            },
+            success: function (response) {
+                console.log(response);
+                registerMessage(response, $('#noticia'), "NOTÍCIA", true);
+            },
+            error: function (error) {
+                console.log(error.message);
+                logout('Sessão inválida. Faça o login novamente.');
+            }
+        });
+    }
+}
