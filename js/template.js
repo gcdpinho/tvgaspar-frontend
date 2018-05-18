@@ -13,9 +13,7 @@ var item = '<div class="item ?">' +
     '<a href="?">?</a>' +
     '</h3>' +
     '</div>' +
-    '<p>' +
     '<a href="?" target="_blank">?</a>' +
-    '</p>' +
     '</div>' +
     '<div class="pb30">'+
     '</div>'

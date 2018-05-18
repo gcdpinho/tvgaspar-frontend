@@ -25,24 +25,28 @@ var enabledLoader = function () {
 var showNoticias = function (data, column, lines, limit) {
     var controlC = 0;
     var controlL = 0;
-    $.each(data, function (k, v) { 
+    var controlLimite = 0;
+    for (var i = 0; i < data.length; i++) {
         var aux = item;
-        aux = aux.replace('?', v.categoriaTitulo);
+        aux = aux.replace('?', data[i].categoriaTitulo);
         aux = aux.replace('?', '#');
-        aux = aux.replace('?', v.imagemLink);
+        aux = aux.replace('?', data[i].imagemLink);
         aux = aux.replace('?', '#');
-        aux = aux.replace('?', v.categoriaTitulo);
+        aux = aux.replace('?', data[i].categoriaTitulo);
         aux = aux.replace('?', '#');
-        aux = aux.replace('?', v.manchete);
+        aux = aux.replace('?', data[i].manchete);
         aux = aux.replace('?', '#');
-        aux = aux.replace('?', v.texto);
-        $('#colItem'+controlC).append(aux);
+        aux = aux.replace('?', data[i].texto);
+        $('#colItem' + controlC).append(aux);
         if (controlC < 3)
-            controlC ++
+            controlC++;
         else
             controlC = 0;
-    });
-    
+        controlLimite++;
+        if (controlLimite >= limit)
+            break;
+    }
+
     disabledLoader();
 }
 
