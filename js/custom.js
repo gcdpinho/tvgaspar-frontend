@@ -5,6 +5,7 @@ $(function ($) {
         success: function (response) {
             console.log(response);
             showNoticias(response, $('#ultimasNoticias'), 3, 2, 15);
+            showNoticias(response, $('#demaisNoticias'), 2, 2, 10);
         },
         error: function (error) {
             console.log(error.message);
