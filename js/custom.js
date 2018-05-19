@@ -33,18 +33,16 @@ var showNoticias = async function (data, row, columns, lines, limit) {
 
     createLines(row, lines, columns, limit);
 
-    var images = data.map(function(element){
+    var images = data.map(function (element) {
         return element.imagemLink;
     });
 
     var imagesAux = [];
-    for (var i=0; i<images.length; i++)
+    for (var i = 0; i < images.length; i++)
         if (images[i] != null)
             imagesAux[i] = images[i];
 
-    var teste = await getUrls(imagesAux);
-
-    console.log(teste);
+    var images = await getUrls(imagesAux);
 
     for (var i = 0; i < data.length; i++) {
         var aux = item;
@@ -56,12 +54,12 @@ var showNoticias = async function (data, row, columns, lines, limit) {
         aux = aux.replace('?', data[i].manchete);
         aux = aux.replace('?', '#');
         aux = aux.replace('?', data[i].texto);
-        aux = aux.replace('interrogacao', teste[i]);
-        
+        aux = aux.replace('interrogacao', images[i] == undefined ? "" : images[i]);
+
         $(row).find('.rowItem' + controlL + ' .colItem' + controlC).append(aux);
         controlC++;
-        
-        if (controlC == columns){
+
+        if (controlC == columns) {
             controlC = 0;
             controlL++;
         }
@@ -84,7 +82,7 @@ var createLines = function (row, lines, columns, limit) {
         $(row).append(aux);
         createColumns($(row).find('.rowItem' + i), columns);
         controleL++;
-        if (controleL == lines){
+        if (controleL == lines) {
             controleL = 0;
             $(row).append(propaganda);
         }
