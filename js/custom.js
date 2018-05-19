@@ -8,7 +8,8 @@ $(function ($) {
             showNoticias(response, $('#demaisNoticias'), 2, 2, 10);
         },
         error: function (error) {
-            console.log(error.message);
+            console.log(error);
+            disabledLoader();
         }
     });
 });
@@ -29,7 +30,7 @@ var showNoticias = function (data, row, columns, lines, limit) {
     var controlL = 0;
     var controlLimite = 0;
 
-    createColumns(row, columns);
+    createLines(row, lines, columns, limit);
 
     for (var i = 0; i < data.length; i++) {
         var aux = item;
@@ -42,11 +43,13 @@ var showNoticias = function (data, row, columns, lines, limit) {
         aux = aux.replace('?', data[i].manchete);
         aux = aux.replace('?', '#');
         aux = aux.replace('?', data[i].texto);
-        $(row).find('.colItem' + controlC).append(aux);
+        $(row).find('.rowItem' + controlL + ' .colItem' + controlC).append(aux);
         controlC++;
-
-        if (controlC == columns)
+        
+        if (controlC == columns){
             controlC = 0;
+            controlL++;
+        }
 
         controlLimite++;
         if (controlLimite >= limit)
@@ -56,16 +59,34 @@ var showNoticias = function (data, row, columns, lines, limit) {
     disabledLoader();
 }
 
+var createLines = function (row, lines, columns, limit) {
+    var l = Math.ceil(limit / columns);
+    var controleL = 0;
+    for (var i = 0; i < l; i++) {
+        aux = linha;
+        aux = aux.replace('?', i);
+
+        $(row).append(aux);
+        createColumns($(row).find('.rowItem' + i), columns);
+        controleL++;
+        if (controleL == lines){
+            controleL = 0;
+            $(row).append('Propaganda');
+        }
+    }
+}
+
 var createColumns = function (row, columns) {
     var col = 12 / columns;
 
-    for (var i = 0; i < col; i++)
-        $(row).append(
-            '<div class="col-sm-' + col + ' col-md-' + col + '">' +
-            '<div class="news colItem' + i + '">' +
-            '</div>' +
-            '</div>'
-        );
+    for (var i = 0; i < columns; i++) {
+        var aux = coluna;
+        aux = aux.replace('?', col);
+        aux = aux.replace('?', col);
+        aux = aux.replace('?', i);
+
+        $(row).append(aux);
+    }
 }
 
 var getNoticias = function () {

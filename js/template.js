@@ -15,7 +15,14 @@ var item = '<div class="item ?">' +
     '</div>' +
     '<a href="?" target="_blank" class="text-justify block">?</a>' +
     '</div>' +
-    '<div class="pb30">'+
+    '<div class="pb30">' +
     '</div>'
+'</div>';
+
+var coluna = '<div class="col-sm-? col-md-?">' +
+    '<div class="news colItem?">' +
+    '</div>' +
     '</div>';
-    
+
+var linha = '<div class="rowItem?">' +
+    '</div>'
