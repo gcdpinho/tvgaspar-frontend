@@ -220,6 +220,8 @@
 	/* 18. Owl Carousel - Big Gallery Slider-3 */
 	$("#big-gallery-slider-3").owlCarousel({
 		navigation: true,
+		autoPlay: 3000,
+		loop: true,
 		navigationText: ["<i class='fa-angle-left'></i>", "<i class='fa-angle-right'></i>"],
 		items: 5 // 5 visible items
 	});
@@ -328,7 +330,7 @@
 		});
 	});
 
-	/* 24. Sidebar Weather */
+	/* 24. Sidebar Weather 
 	var currWeather = {};
 	$(document).ready(function () {
 		currWeather = getLocationAndWeather('imperial');

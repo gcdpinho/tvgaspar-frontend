@@ -25,4 +25,10 @@ var coluna = '<div class="col-sm-? col-md-?">' +
     '</div>';
 
 var linha = '<div class="rowItem?">' +
-    '</div>'
+    '</div>';
+
+var propaganda = '<div class="add-place">' +
+    '<a href="#" target="_blank">' +
+    '<img src="img/ad_820x100.jpg" alt="">' +
+    '</a>' +
+    '</div>';

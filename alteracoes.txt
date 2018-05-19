@@ -13,15 +13,15 @@ MENU - DONE
 
 Coment�rio com o facebook - fora de escopo
 
-Propaganda a cada duas linhas de not�cia
+Propaganda a cada duas linhas de not�cia - DONE
 
 Not�cia em destaque especial pode ter ou n�o
 
-Disposi��o: tr�s colunas DONE
+Disposi��o: tr�s colunas - DONE
 
 Stream ao vivo (pode n�o ter) iframe no lugar da not�cia em destaque
 
-Galeria de imagens = slider de marcas
+Galeria de imagens = slider de marcas - DONE
 
 Not�cias
 	Detalhe Not�cia

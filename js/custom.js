@@ -71,7 +71,7 @@ var createLines = function (row, lines, columns, limit) {
         controleL++;
         if (controleL == lines){
             controleL = 0;
-            $(row).append('Propaganda');
+            $(row).append(propaganda);
         }
     }
 }
