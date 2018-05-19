@@ -1,7 +1,7 @@
 var item = '<div class="item ?">' +
     '<div class="item-image-1 demais">' +
     '<a class="img-link" href="?">' +
-    '<img class="img-responsive img-full" src="?" alt="">' +
+    '<img class="img-responsive img-full" src="interrogacao" alt="">' +
     '</a>' +
     '<span>' +
     '<a class="label-1" href="?">?</a>' +

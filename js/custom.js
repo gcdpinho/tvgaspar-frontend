@@ -1,10 +1,11 @@
 $(function ($) {
+    initFirebase();
     $.ajax({
         type: "GET",
         url: "https://tvgaspar-server.herokuapp.com/getAllNoticiasAprovadas",
         success: function (response) {
             console.log(response);
-            showNoticias(response, $('#ultimasNoticias'), 3, 2, 15);
+            showNoticias(response, $('#ultimasNoticias'), 3, 2, 12);
             showNoticias(response, $('#demaisNoticias'), 2, 2, 10);
         },
         error: function (error) {
@@ -25,24 +26,38 @@ var enabledLoader = function () {
 }
 
 // Lines não funciona
-var showNoticias = function (data, row, columns, lines, limit) {
+var showNoticias = async function (data, row, columns, lines, limit) {
     var controlC = 0;
     var controlL = 0;
     var controlLimite = 0;
 
     createLines(row, lines, columns, limit);
 
+    var images = data.map(function(element){
+        return element.imagemLink;
+    });
+
+    var imagesAux = [];
+    for (var i=0; i<images.length; i++)
+        if (images[i] != null)
+            imagesAux[i] = images[i];
+
+    var teste = await getUrls(imagesAux);
+
+    console.log(teste);
+
     for (var i = 0; i < data.length; i++) {
         var aux = item;
         aux = aux.replace('?', data[i].categoriaTitulo);
         aux = aux.replace('?', '#');
-        aux = aux.replace('?', data[i].imagemLink);
         aux = aux.replace('?', '#');
         aux = aux.replace('?', data[i].categoriaTitulo);
         aux = aux.replace('?', '#');
         aux = aux.replace('?', data[i].manchete);
         aux = aux.replace('?', '#');
         aux = aux.replace('?', data[i].texto);
+        aux = aux.replace('interrogacao', teste[i]);
+        
         $(row).find('.rowItem' + controlL + ' .colItem' + controlC).append(aux);
         controlC++;
         
@@ -101,4 +116,22 @@ var getNoticias = function () {
     };
 
     return noticia;
+}
+
+//Get URL da imagem Firebase
+var getUrls = async function (arrayDeImagens) {
+    return Promise.all(arrayDeImagens.map(async nome =>
+        await firebase.storage().ref().child('imagens/' + nome).getDownloadURL()
+    )).then();
+}
+
+var initFirebase = function () {
+    firebase.initializeApp({
+        apiKey: "AIzaSyAN8z_RHWKICWDl-QQ5cAQ8b1LvIWfrvOw",
+        authDomain: "tvgaspar-backend.firebaseapp.com",
+        databaseURL: "https://tvgaspar-backend.firebaseio.com",
+        projectId: "tvgaspar-backend",
+        storageBucket: "tvgaspar-backend.appspot.com",
+        messagingSenderId: "702505431041"
+    });
 }
