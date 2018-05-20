@@ -2,7 +2,7 @@ $(function ($) {
     initFirebase();
     $.ajax({
         type: "GET",
-        url: "https://tvgaspar-server.herokuapp.com/getAllNoticiasAprovadas",
+        url: serverUrl + "getAllNoticiasAprovadas",
         success: function (response) {
             console.log(response);
             showNoticias(response, $('#ultimasNoticias'), 3, 2, 12);

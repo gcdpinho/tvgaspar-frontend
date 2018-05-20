@@ -39,7 +39,7 @@ $(function () {
             $('.page-loader-wrapper').fadeIn();
             $.ajax({
                 type: "POST",
-                url: "https://tvgaspar-server.herokuapp.com/createVideo",
+                url: serverUrl + "createVideo",
                 data: {
                     titulo: $('input[name="titulo"]').val(),
                     texto: $('input[name="texto"]').val(),
@@ -60,7 +60,7 @@ $(function () {
                         console.log(data);
                         $.ajax({
                             type: "POST",
-                            url: "https://tvgaspar-server.herokuapp.com/createVideoTag",
+                            url: serverUrl + "createVideoTag",
                             data: {
                                 data: data,
                                 token: localStorage.getItem('token')

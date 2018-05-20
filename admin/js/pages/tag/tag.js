@@ -24,7 +24,7 @@ $(function () {
             $('.page-loader-wrapper').fadeIn();
             $.ajax({
                 type: "POST",
-                url: "https://tvgaspar-server.herokuapp.com/createTag",
+                url: serverUrl + "createTag",
                 data: {
                     titulo: $('input[name="titulo"]').val(),
                     token: localStorage.getItem('token')

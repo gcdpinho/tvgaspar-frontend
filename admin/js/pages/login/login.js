@@ -26,7 +26,7 @@ $(function () {
             localStorage.setItem('lembrarSenha', $('input#rememberme').is(":checked"));
             $.ajax({
                 type: "POST",
-                url: "https://tvgaspar-server.herokuapp.com/login",
+                url: serverUrl + "login",
                 data: {
                     login: $('input[name="username"]').val(),
                     senha: $('input[name="password"]').val()

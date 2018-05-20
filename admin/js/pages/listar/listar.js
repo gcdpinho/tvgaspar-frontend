@@ -41,7 +41,7 @@ $(function () {
     $('.dataTableDelete').click(function () {
         //URL do delete
         $(".page-loader-wrapper").fadeIn();
-        var url = "https://tvgaspar-server.herokuapp.com/";
+        var url = serverUrl;
         switch (page) {
             case "noticia":
                 url += "deleteNoticiaById";

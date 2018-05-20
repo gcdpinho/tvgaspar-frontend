@@ -29,7 +29,7 @@ $(function () {
             $('.page-loader-wrapper').fadeIn();
             $.ajax({
                 type: "POST",
-                url: "https://tvgaspar-server.herokuapp.com/updateTag",
+                url: serverUrl + "updateTag",
                 data: {
                     titulo: $('input[name="titulo"]').val(),
                     id: dataTag.id,
