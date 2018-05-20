@@ -40,7 +40,7 @@ $(function () {
             $('.page-loader-wrapper').fadeIn();
             $.ajax({
                 type: "POST",
-                url: "https://tvgaspar-server.herokuapp.com/updateVideo",
+                url: serverUrl + "updateVideo",
                 data: {
                     titulo: $('input[name="titulo"]').val(),
                     texto: $('input[name="texto"]').val(),

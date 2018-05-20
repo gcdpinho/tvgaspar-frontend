@@ -1,7 +1,7 @@
 $(function () {
     //Colorpick plugin
     var colorpicker = $('.colorpicker').colorpicker();
-    colorpicker.on('changeColor', function(){
+    colorpicker.on('changeColor', function () {
         $('.colorpicker input').focus();
     });
 
@@ -30,7 +30,7 @@ $(function () {
             $('.page-loader-wrapper').fadeIn();
             $.ajax({
                 type: "POST",
-                url: "https://tvgaspar-server.herokuapp.com/createCategoria",
+                url: serverUrl + "createCategoria",
                 data: {
                     titulo: $('input[name="titulo"]').val(),
                     texto: $('input[name="texto"]').val(),

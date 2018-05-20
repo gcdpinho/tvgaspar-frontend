@@ -30,7 +30,7 @@ $(function () {
     //Load info de tabelas relacionadas
     getAllImagens(false);
 
-     //Botão de pesquisar
+    //Botão de pesquisar
     $('.div-search-button button').click(function () {
         search("imagem", true);
     });
@@ -41,7 +41,7 @@ $(function () {
             $('.page-loader-wrapper').fadeIn();
             $.ajax({
                 type: "POST",
-                url: "https://tvgaspar-server.herokuapp.com/createPublicidade",
+                url: serverUrl + "createPublicidade",
                 data: {
                     titulo: $('input[name="titulo"]').val(),
                     tipo: $('input[name="tipo"]').val(),

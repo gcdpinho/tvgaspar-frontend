@@ -115,7 +115,7 @@ $(function () {
             $('.page-loader-wrapper').fadeIn();
             $.ajax({
                 type: "POST",
-                url: "https://tvgaspar-server.herokuapp.com/updateNoticia",
+                url: serverUrl + "updateNoticia",
                 data: {
                     manchete: $('input[name="manchete"]').val(),
                     subManchete: $('input[name="subManchete"]').val(),

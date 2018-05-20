@@ -13,7 +13,7 @@ $(function () {
         $(this).parents(".form-line").removeClass("focused");
 
     });
-    
+
     $(".dropify-wrapper").on('change', function () {
         $('.dropify').focus();
         $(this).parents(".form-line").removeClass("error");
@@ -71,7 +71,7 @@ $(function () {
             var file = $('input[name="link"]').prop('files')[0];
             $.ajax({
                 type: "POST",
-                url: "https://tvgaspar-server.herokuapp.com/createImagem",
+                url: serverUrl + "createImagem",
                 data: {
                     titulo: $('input[name="titulo"]').val(),
                     link: file.name,
@@ -91,18 +91,18 @@ $(function () {
                         console.log(data);
                         $.ajax({
                             type: "POST",
-                            url: "https://tvgaspar-server.herokuapp.com/createImagemTag",
+                            url: serverUrl + "createImagemTag",
                             data: {
                                 data: data,
                                 token: localStorage.getItem('token')
                             },
                             success: function (response) {
-                                console.log(response);       
+                                console.log(response);
                                 var storageRef = firebase.storage().ref();
-                            
+
                                 storageRef.child('imagens/' + file.name).put(file).then(function (snapshot) {
                                     registerMessage(response, $('#imagem'), "IMAGEM", true);
-                                }, function(error){
+                                }, function (error) {
                                     console.log(error);
                                     showNotification("Erro ao cadastrar IMAGEM, tente novamente.", "error");
                                 });

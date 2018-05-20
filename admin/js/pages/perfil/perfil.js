@@ -55,7 +55,7 @@ $(function () {
             $('.page-loader-wrapper').fadeIn();
             $.ajax({
                 type: "POST",
-                url: "https://tvgaspar-server.herokuapp.com/updateData",
+                url: serverUrl + "updateData",
                 data: {
                     nome: nome == "" ? usuario.nome : nome,
                     email: email == "" ? usuario.email : email,
@@ -84,7 +84,7 @@ $(function () {
             $('.page-loader-wrapper').fadeIn();
             $.ajax({
                 type: "POST",
-                url: "https://tvgaspar-server.herokuapp.com/alterPassword",
+                url: serverUrl + "alterPassword",
                 data: {
                     id: usuario.id,
                     senha: $('input[name="senhaAtual"]').val(),
@@ -96,8 +96,7 @@ $(function () {
                     if (registerMessage(response, '#senha', "", false)) {
                         localStorage.setItem('not', 'Senha alterada com sucesso!');
                         location.href = "../../index.html";
-                    }
-                    else
+                    } else
                         $('.page-loader-wrapper').fadeOut();
                 },
                 error: function (error) {

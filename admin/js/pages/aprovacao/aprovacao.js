@@ -30,7 +30,7 @@ $(function () {
         $('.page-loader-wrapper').fadeIn();
         $.ajax({
             type: "POST",
-            url: "https://tvgaspar-server.herokuapp.com/updateAprovacao",
+            url: serverUrl + "updateAprovacao",
             data: {
                 id: getDataId("aprovacao", $('input[name="manchete"]').val(), "manchete"),
                 aprovacao: 1,

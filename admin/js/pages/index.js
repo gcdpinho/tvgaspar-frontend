@@ -6,12 +6,12 @@
         adm();
         //Set aprovacoes (noticias)
         getAllNoticias(true, true);
-        
+
     } else
         //Autentication by token
         $.ajax({
             type: "POST",
-            url: "https://tvgaspar-server.herokuapp.com/findByToken",
+            url: serverUrl + "findByToken",
             data: {
                 token: localStorage.getItem('token')
             },
@@ -28,7 +28,7 @@
                 logout('Sessão inválida. Faça o login novamente.');
             }
         });
-    
+
     //Notification em caso de page reload
     var not = localStorage.getItem('not');
     if (not != null && not != "") {

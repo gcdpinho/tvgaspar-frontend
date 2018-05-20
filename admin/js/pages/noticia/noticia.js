@@ -118,7 +118,7 @@ $(function () {
             $('.page-loader-wrapper').fadeIn();
             $.ajax({
                 type: "POST",
-                url: "https://tvgaspar-server.herokuapp.com/createNoticia",
+                url: serverUrl + "createNoticia",
                 data: {
                     manchete: $('input[name="manchete"]').val(),
                     subManchete: $('input[name="subManchete"]').val(),
@@ -145,7 +145,7 @@ $(function () {
                         console.log(data);
                         $.ajax({
                             type: "POST",
-                            url: "https://tvgaspar-server.herokuapp.com/createNoticiaTag",
+                            url: serverUrl + "createNoticiaTag",
                             data: {
                                 data: data,
                                 token: localStorage.getItem('token')
@@ -168,7 +168,7 @@ $(function () {
                                     console.log(data);
                                     $.ajax({
                                         type: "POST",
-                                        url: "https://tvgaspar-server.herokuapp.com/createNoticiaCategoria",
+                                        url: serverUrl + "createNoticiaCategoria",
                                         data: {
                                             data: data,
                                             token: localStorage.getItem('token')
@@ -225,7 +225,7 @@ var createNoticiaVideo = function (response, insertId) {
         console.log(data);
         $.ajax({
             type: "POST",
-            url: "https://tvgaspar-server.herokuapp.com/createNoticiaVideo",
+            url: serverUrl + "createNoticiaVideo",
             data: {
                 data: data,
                 token: localStorage.getItem('token')
@@ -259,7 +259,7 @@ var createNoticiaImagem = function (response, insertId) {
         console.log(data);
         $.ajax({
             type: "POST",
-            url: "https://tvgaspar-server.herokuapp.com/createNoticiaImagem",
+            url: serverUrl + "createNoticiaImagem",
             data: {
                 data: data,
                 token: localStorage.getItem('token')

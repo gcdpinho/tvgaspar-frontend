@@ -602,7 +602,7 @@ var registerMessage = function (response, form, text, notification) {
         try {
             tinyMCE.activeEditor.setContent("");
         } catch (e) {
-            
+
         }
         $('.page-loader-wrapper').fadeOut();
 
@@ -638,7 +638,7 @@ var getAllTags = function (close, listar) {
 
     $.ajax({
         type: "POST",
-        url: "https://tvgaspar-server.herokuapp.com/getAllTags",
+        url: serverUrl + "getAllTags",
         //async: false,
         data: {
             token: localStorage.getItem('token')
@@ -694,7 +694,7 @@ var getAllImagens = function (listar) {
 
     $.ajax({
         type: "POST",
-        url: "https://tvgaspar-server.herokuapp.com/getAllImagens",
+        url: serverUrl + "getAllImagens",
         //async: false,
         data: {
             token: localStorage.getItem('token')
@@ -736,7 +736,7 @@ var getAllVideos = function (close, listar) {
 
     $.ajax({
         type: "POST",
-        url: "https://tvgaspar-server.herokuapp.com/getAllVideos",
+        url: serverUrl + "getAllVideos",
         //async: false,
         data: {
             token: localStorage.getItem('token')
@@ -778,7 +778,7 @@ var getAllCategorias = function (close, listar) {
 
     $.ajax({
         type: "POST",
-        url: "https://tvgaspar-server.herokuapp.com/getAllCategorias",
+        url: serverUrl + "getAllCategorias",
         //async: false,
         data: {
             token: localStorage.getItem('token')
@@ -1170,7 +1170,7 @@ var getUsuario = function () {
 var getAllNoticias = function (aprovacao, close) {
     $.ajax({
         type: "POST",
-        url: "https://tvgaspar-server.herokuapp.com/getAllNoticias",
+        url: serverUrl + "getAllNoticias",
         data: {
             token: localStorage.getItem('token')
         },
@@ -1221,7 +1221,7 @@ var setAprovacoes = function (flgNoticia) {
 var getAllPublicidades = function () {
     $.ajax({
         type: "POST",
-        url: "https://tvgaspar-server.herokuapp.com/getAllPublicidades",
+        url: serverUrl + "getAllPublicidades",
         data: {
             token: localStorage.getItem('token')
         },
