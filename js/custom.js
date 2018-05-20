@@ -1,18 +1,33 @@
 $(function ($) {
     initFirebase();
     $.ajax({
-        type: "GET",
-        url: serverUrl + "getAllNoticiasAprovadas",
+        type: "POST",
+        url: serverUrl + "getNoticiasAprovadasByTag",
+        data: {
+            tituloTag: "Destaque"
+        },
         success: function (response) {
             console.log(response);
-            showNoticias(response, $('#ultimasNoticias'), 3, 2, 12);
-            showNoticias(response, $('#demaisNoticias'), 2, 2, 10);
+            $.ajax({
+                type: "GET",
+                url: serverUrl + "getAllNoticiasAprovadas",
+                success: function (response) {
+                    console.log(response);
+                    showNoticias(response, $('#ultimasNoticias'), 3, 2, 12);
+                    showNoticias(response, $('#demaisNoticias'), 2, 2, 10);
+                },
+                error: function (error) {
+                    console.log(error);
+                    disabledLoader();
+                }
+            });
         },
         error: function (error) {
             console.log(error);
             disabledLoader();
         }
     });
+
 });
 
 var disabledLoader = function () {
