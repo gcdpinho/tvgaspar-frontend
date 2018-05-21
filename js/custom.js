@@ -8,6 +8,7 @@ $(function ($) {
         },
         success: function (response) {
             console.log(response);
+            showSlider(response, $('#news-slider'), 3);
             $.ajax({
                 type: "GET",
                 url: serverUrl + "getAllNoticiasAprovadas",
@@ -40,7 +41,63 @@ var enabledLoader = function () {
     $("#pageloader").fadeIn();
 }
 
-// Lines não funciona
+var showSlider = async function (data, row, limit) {
+    var lines = Math.ceil(data.length / limit);
+    var controlData = data.length;
+    var controlItem = 0;
+    var auxLength;
+
+    var images = data.map(function (element) {
+        return element.imagemLink;
+    });
+
+    var imagesAux = [];
+    for (var i = 0; i < images.length; i++)
+        if (images[i] != null)
+            imagesAux[i] = images[i];
+
+    var images = await getUrls(imagesAux);
+
+
+    for (var i = 0; i < lines; i++) {
+        var aux = linha;
+        aux = aux.replace('?', i);
+        $(row).append(aux);
+        if (controlData < limit) {
+            auxLength = controlData;
+            createColumns($(row).find('.rowItem' + i), controlData);
+        } else {
+            auxLength = limit;
+            createColumns($(row).find('.rowItem' + i), limit);
+        }
+
+        for (var j = controlItem; j < controlItem + auxLength; j++) {
+            var aux = itemDestaque;
+            aux = aux.replace('?', '#');
+            aux = aux.replace('?', data[i].categoriaTitulo);
+            aux = aux.replace('?', data[i].categoriaTitulo);
+            aux = aux.replace('?', data[i].manchete);
+            aux = aux.replace('interrogacao', images[i] == undefined ? "" : images[i]);
+            $(row).find('.rowItem' + i + ' .colItem' + j).append(aux);
+        }
+        controlData -= limit;
+
+    }
+
+    $(row).owlCarousel({
+        autoPlay: false,
+        stopOnHover: true,
+        navigation: true,
+        navigationText: ["<i class='fa-angle-left'></i>", "<i class='fa-angle-right'></i>"],
+        paginationSpeed: 1000,
+        goToFirstSpeed: 2000,
+        singleItem: true,
+        autoHeight: true,
+        transitionStyle: "fade"
+    });
+
+}
+
 var showNoticias = async function (data, row, columns, lines, limit) {
     var controlC = 0;
     var controlL = 0;

@@ -32,3 +32,12 @@ var propaganda = '<div class="add-place">' +
     '<img src="img/ad_820x100.jpg" alt="">' +
     '</a>' +
     '</div>';
+
+var itemDestaque = '<div class="news-slider-layer">' +
+    '<a href="?" target="_blank">' +
+    '<div class="content ?">' +
+    '<span class="category-tag bg-1">?</span>' +
+    '<p style="background: rgba(0, 0, 0, 0.8); padding: 5px">?</p>' +
+    '</div>' +
+    '<img src="interrogacao" alt=""> </a>' +
+    '</div>';
