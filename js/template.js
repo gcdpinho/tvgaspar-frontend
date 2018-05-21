@@ -24,7 +24,7 @@ var coluna = '<div class="col-sm-? col-md-?">' +
     '</div>' +
     '</div>';
 
-var linha = '<div class="rowItem?">' +
+var linha = '<div class="row rowItem?">' +
     '</div>';
 
 var propaganda = '<div class="add-place">' +
