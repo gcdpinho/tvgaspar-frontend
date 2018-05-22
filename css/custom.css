@@ -62,3 +62,7 @@
 .block{
     display: block;
 }
+
+.colorWhite p{
+    color: white;
+}

@@ -73,11 +73,21 @@ var showSlider = async function (data, row, limit) {
 
         for (var j = controlItem; j < controlItem + auxLength; j++) {
             var aux = itemDestaque;
+            // aux = aux.replace('?', '#');
+            // aux = aux.replace('?', data[j].categoriaTitulo);
+            // aux = aux.replace('?', data[j].categoriaTitulo);
+            // aux = aux.replace('?', data[j].manchete);
+            // aux = aux.replace('interrogacao', images[j] == undefined ? "" : images[j]);
+            // $(row).find('.rowItem' + i + ' .colItem' + j).append(aux);
+            aux = aux.replace('?', data[j].categoriaTitulo);
+           // aux = aux.replace('?', '#');
             aux = aux.replace('?', '#');
-            aux = aux.replace('?', data[i].categoriaTitulo);
-            aux = aux.replace('?', data[i].categoriaTitulo);
-            aux = aux.replace('?', data[i].manchete);
-            aux = aux.replace('interrogacao', images[i] == undefined ? "" : images[i]);
+            aux = aux.replace('?', data[j].categoriaTitulo);
+            aux = aux.replace('?', '#');
+            aux = aux.replace('?', data[j].manchete);
+            aux = aux.replace('?', '#');
+            aux = aux.replace('?', data[j].texto);
+            aux = aux.replace('interrogacao', images[j] == undefined ? "" : images[j]);
             $(row).find('.rowItem' + i + ' .colItem' + j).append(aux);
         }
         controlData -= limit;
