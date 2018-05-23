@@ -62,6 +62,18 @@ var itemDestaque = '<div class="item ?" style="background: url(\'interrogacao\')
     '<a href="?" target="_blank" class="text-justify block colorWhite">?</a>' +
     '</div>' +
     '<div class="pb30">' +
-    '</div>'
-'</div>' +
-'</div>';
+    '</div>' +
+    '</div>' +
+    '</div>';
+
+var itemSlider = '<div class="news-slider-layer ?">' + //tipo
+    '<a href="?" target="_blank" class="text-center">' + //link
+    '<div class="content text-left ?">' + //categoria
+    '<span class="category-tag bg-?">?</span>' + // numbertype + categoria
+    '<p>?</p>' + // manchete
+    '</div>' +
+    '<img src="interrogacao" alt=""> </a>' + //img
+    '</div>';
+
+var rowSlider = '<div class="news-slide rowSlider?">' +
+    '</div>';

@@ -5073,7 +5073,7 @@ textarea {
 	width: 46%;
 	margin-right: 1%;
 }
-.news-slider-layer.first p {
+.news-slider-layer.first p, .news-slider-layer.zero p  {
 	font-size: .7em;
 	color: #FFF;
 	background: rgba(12, 12, 13, .6);

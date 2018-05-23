@@ -8,7 +8,7 @@ $(function ($) {
         },
         success: function (response) {
             console.log(response);
-            showSlider(response, $('#news-slider'), 3);
+            showSlider(response, $('#news-slider'), 4);
             $.ajax({
                 type: "GET",
                 url: serverUrl + "getAllNoticiasAprovadas",
@@ -41,6 +41,73 @@ var enabledLoader = function () {
     $("#pageloader").fadeIn();
 }
 
+// var showSlider = async function (data, row, limit) {
+//     var lines = Math.ceil(data.length / limit);
+//     var controlData = data.length;
+//     var controlItem = 0;
+//     var auxLength;
+
+//     var images = data.map(function (element) {
+//         return element.imagemLink;
+//     });
+
+//     var imagesAux = [];
+//     for (var i = 0; i < images.length; i++)
+//         if (images[i] != null)
+//             imagesAux[i] = images[i];
+
+//     var images = await getUrls(imagesAux);
+
+
+//     for (var i = 0; i < lines; i++) {
+//         var aux = linha;
+//         aux = aux.replace('?', i);
+//         $(row).append(aux);
+//         if (controlData < limit) {
+//             auxLength = controlData;
+//             createColumns($(row).find('.rowItem' + i), controlData);
+//         } else {
+//             auxLength = limit;
+//             createColumns($(row).find('.rowItem' + i), limit);
+//         }
+
+//         for (var j = controlItem; j < controlItem + auxLength; j++) {
+//             var aux = itemDestaque;
+//             // aux = aux.replace('?', '#');
+//             // aux = aux.replace('?', data[j].categoriaTitulo);
+//             // aux = aux.replace('?', data[j].categoriaTitulo);
+//             // aux = aux.replace('?', data[j].manchete);
+//             // aux = aux.replace('interrogacao', images[j] == undefined ? "" : images[j]);
+//             // $(row).find('.rowItem' + i + ' .colItem' + j).append(aux);
+//             aux = aux.replace('?', data[j].categoriaTitulo);
+//            // aux = aux.replace('?', '#');
+//             aux = aux.replace('?', '#');
+//             aux = aux.replace('?', data[j].categoriaTitulo);
+//             aux = aux.replace('?', '#');
+//             aux = aux.replace('?', data[j].manchete);
+//             aux = aux.replace('?', '#');
+//             aux = aux.replace('?', data[j].texto);
+//             aux = aux.replace('interrogacao', images[j] == undefined ? "" : images[j]);
+//             $(row).find('.rowItem' + i + ' .colItem' + j).append(aux);
+//         }
+//         controlData -= limit;
+
+//     }
+
+//     $(row).owlCarousel({
+//         autoPlay: false,
+//         stopOnHover: true,
+//         navigation: true,
+//         navigationText: ["<i class='fa-angle-left'></i>", "<i class='fa-angle-right'></i>"],
+//         paginationSpeed: 1000,
+//         goToFirstSpeed: 2000,
+//         singleItem: true,
+//         autoHeight: true,
+//         transitionStyle: "fade"
+//     });
+
+// }
+
 var showSlider = async function (data, row, limit) {
     var lines = Math.ceil(data.length / limit);
     var controlData = data.length;
@@ -58,38 +125,30 @@ var showSlider = async function (data, row, limit) {
 
     var images = await getUrls(imagesAux);
 
-
     for (var i = 0; i < lines; i++) {
-        var aux = linha;
+        var aux = rowSlider;
         aux = aux.replace('?', i);
         $(row).append(aux);
-        if (controlData < limit) {
+        if (controlData < limit)
             auxLength = controlData;
-            createColumns($(row).find('.rowItem' + i), controlData);
-        } else {
+        else
             auxLength = limit;
-            createColumns($(row).find('.rowItem' + i), limit);
-        }
-
+        var index = 0;
         for (var j = controlItem; j < controlItem + auxLength; j++) {
-            var aux = itemDestaque;
-            // aux = aux.replace('?', '#');
-            // aux = aux.replace('?', data[j].categoriaTitulo);
-            // aux = aux.replace('?', data[j].categoriaTitulo);
-            // aux = aux.replace('?', data[j].manchete);
-            // aux = aux.replace('interrogacao', images[j] == undefined ? "" : images[j]);
-            // $(row).find('.rowItem' + i + ' .colItem' + j).append(aux);
-            aux = aux.replace('?', data[j].categoriaTitulo);
-           // aux = aux.replace('?', '#');
+            var aux = itemSlider;
+            var obj = getInfoColumn(index, auxLength);
+            aux = aux.replace('?', obj.tipo);
             aux = aux.replace('?', '#');
             aux = aux.replace('?', data[j].categoriaTitulo);
-            aux = aux.replace('?', '#');
+            aux = aux.replace('?', obj.number);
+            aux = aux.replace('?', data[j].categoriaTitulo);
             aux = aux.replace('?', data[j].manchete);
-            aux = aux.replace('?', '#');
-            aux = aux.replace('?', data[j].texto);
             aux = aux.replace('interrogacao', images[j] == undefined ? "" : images[j]);
-            $(row).find('.rowItem' + i + ' .colItem' + j).append(aux);
+            $(row).find('.rowSlider' + i).append(aux);
+            index++;
+            
         }
+        controlItem += auxLength;
         controlData -= limit;
 
     }
@@ -105,7 +164,6 @@ var showSlider = async function (data, row, limit) {
         autoHeight: true,
         transitionStyle: "fade"
     });
-
 }
 
 var showNoticias = async function (data, row, columns, lines, limit) {
@@ -214,4 +272,32 @@ var initFirebase = function () {
         storageBucket: "tvgaspar-backend.appspot.com",
         messagingSenderId: "702505431041"
     });
+}
+
+var getInfoColumn = function (index, length) {
+    var tipo = "";
+    var number = 0;
+    switch (index) {
+        case 0:
+            tipo = length == 1 ? "zero" : "first";
+            number = 1;
+            break;
+        case 1:
+            tipo = length == 2 ? "first" : "second";
+            number = 6;
+            break;
+        case 2:
+            tipo = length == 3 ? "second" : "third";
+            number = 4;
+            break;
+        case 3:
+            tipo = "fourth";
+            number = 2;
+            break;
+    }
+
+    return {
+        tipo: tipo,
+        number: number
+    }
 }
