@@ -42,7 +42,7 @@
 .comunidade span,
 .comunidade span a,
 .comunidade span p a,
-.comunidade .title-left.underline04::before  {
+.comunidade .title-left.underline04::before {
     background: #4faefc;
 }
 
@@ -51,14 +51,43 @@
 .news-block.comunidade span {
     color: #4faefc;
 }
-.news-block span{
+
+.news-block span {
     background: none !important;
 }
 
-.pb30{
+.pb30 {
     padding-bottom: 30px;
 }
 
-.block{
+.block {
     display: block;
+}
+
+.colorWhite p {
+    color: white;
+}
+
+.first img, .zero img {
+    max-width: 574px;
+    height: 443px;
+}
+
+.second img {
+    max-width: 274px;
+    height: 442px;
+}
+
+.third img {
+    max-width: 374px;
+    height: 215px;
+}
+
+.fourth img {
+    max-width: 374px;
+    height: 215px;
+}
+
+.news-slider-layer.zero{
+    width: 100%;
 }

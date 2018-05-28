@@ -191,7 +191,7 @@
 	});
 
 	/* 15. Owl Carousel - News Slider & Schedule Slider */
-	$("#news-slider,#sidebar-schedule-slider").owlCarousel({
+	$("#sidebar-schedule-slider").owlCarousel({
 		autoPlay: 5000,
 		stopOnHover: true,
 		navigation: true,
