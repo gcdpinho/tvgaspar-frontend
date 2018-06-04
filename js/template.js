@@ -77,3 +77,16 @@ var itemSlider = '<div class="news-slider-layer ?">' + //tipo
 
 var rowSlider = '<div class="news-slide rowSlider?">' +
     '</div>';
+
+var noticia = '<div class="row content-head">' +
+    '<div class="column medium-centered medium-19 large-18">' +
+    '<h1 class="content-head__title" itemprop="headline"></h1> ' +
+    '</div>' +
+    '<div class="column medium-centered medium-17 large-14 xlarge-16">' +
+    '<h2 class="content-head__subtitle" itemprop="alternativeHeadline"></h2>' +
+    '</div>' +
+    '</div>' +
+    '<div class="medium-centered mc-column content-text active-extra-styles " data-block-type="unstyled" data-block-weight="37" data-block-id="3">' +
+    '<p class="content-text__container " data-track-category="Link no Texto" data-track-links=""> </p>' +
+    '<p class="content-text__container " data-track-category="Link no Texto" data-track-links="">  </p>' +
+    '</div>';

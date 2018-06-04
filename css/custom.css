@@ -139,7 +139,7 @@
     padding-right: 1rem;
 }
 
-.content-text, .content-text__container  {
+.mc-column p {
     margin-bottom: 30px;
     letter-spacing: -.6px;
 }
