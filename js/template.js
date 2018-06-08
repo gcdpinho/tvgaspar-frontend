@@ -83,7 +83,7 @@ var noticia = '<div class="row content-head">' +
     '<h1 class="content-head__title" itemprop="headline"></h1> ' +
     '</div>' +
     '<div class="column medium-centered medium-17 large-14 xlarge-16">' +
-    '<h2 class="content-head__subtitle" itemprop="alternativeHeadline"></h2>' +
+    '<h2 class="content-head__subtitle"></h2>' +
     '</div>' +
     '</div>' +
     imgNoticia +
@@ -94,4 +94,14 @@ var noticia = '<div class="row content-head">' +
 
 var imgNoticia = '<div class="foto">' +
     '<img/>' +
+    '</div>';
+
+var noticiaCategoria = '<div class="row feed">' +
+    '<div class="col-md-4">' +
+    '<img src="">' +
+    '</div>' +
+    '<div class="texto-categoria">' +
+    '<h3> </h3>' +
+    '<p> </p>' +
+    '</div>' +
     '</div>';
