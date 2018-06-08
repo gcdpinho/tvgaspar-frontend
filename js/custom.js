@@ -16,6 +16,8 @@ $(function ($) {
                     console.log(response);
                     showNoticias(response, $('#ultimasNoticias'), 3, 2, 12);
                     showNoticias(response, $('#demaisNoticias'), 2, 2, 10);
+                    var categorias = getDiffCategorias(response);
+                    generateCors(categorias);
                 },
                 error: function (error) {
                     console.log(error);
@@ -146,7 +148,7 @@ var showSlider = async function (data, row, limit) {
             aux = aux.replace('interrogacao', images[j] == undefined ? "" : images[j]);
             $(row).find('.rowSlider' + i).append(aux);
             index++;
-            
+
         }
         controlItem += auxLength;
         controlData -= limit;
@@ -191,7 +193,6 @@ var showNoticias = async function (data, row, columns, lines, limit) {
         aux = aux.replace('?', '#');
         aux = aux.replace('?', data[i].cor);
         aux = aux.replace('?', data[i].categoriaTitulo);
-        aux = aux.replace('?', data[i].cor);
         aux = aux.replace('?', '#');
         aux = aux.replace('?', data[i].manchete);
         aux = aux.replace('?', '#');
@@ -212,6 +213,29 @@ var showNoticias = async function (data, row, columns, lines, limit) {
     }
 
     disabledLoader();
+}
+
+var generateCors = function (categorias) {
+    var cor = "";
+    for (categoria of categorias)
+        cor += `.${categoria.titulo} .bar-title::before{background-color:${categoria.cor} !important;} 
+        .${categoria.titulo} a.noticia-title:hover{color: ${categoria.cor} !important}`
+
+    $('body').append(`<style>${cor}</style>`);
+}
+
+var getDiffCategorias = function (data) {
+    var categorias = [];
+    var aux = [];
+    for (noticia of data)
+        if (!aux.includes(noticia.categoriaTitulo)) {
+            aux.push(noticia.categoriaTitulo);
+            categorias.push({
+                titulo: noticia.categoriaTitulo,
+                cor: noticia.cor
+            });
+        }
+    return categorias;
 }
 
 var createLines = function (row, lines, columns, limit) {

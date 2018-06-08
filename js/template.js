@@ -8,9 +8,9 @@ var item = '<div class="item ?">' +
     '</span>' +
     '</div>' +
     '<div class="item-content demais">' +
-    '<div class="title-left title-style04 underline04">' +
+    '<div class="title-left title-style04 underline04 bar-title">' +
     '<h3>' +
-    '<a href="?">?</a>' +
+    '<a class="noticia-title" href="?">?</a>' +
     '</h3>' +
     '</div>' +
     '<a href="?" target="_blank" class="text-justify block">?</a>' +
