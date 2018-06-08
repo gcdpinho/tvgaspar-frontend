@@ -4,7 +4,7 @@ var item = '<div class="item ?">' +
     '<img class="img-responsive img-full" src="interrogacao" alt="">' +
     '</a>' +
     '<span>' +
-    '<a class="label-1" href="?">?</a>' +
+    '<a class="label-1" href="?" style="background-color: ?">?</a>' +
     '</span>' +
     '</div>' +
     '<div class="item-content demais">' +
