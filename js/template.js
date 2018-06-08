@@ -86,7 +86,12 @@ var noticia = '<div class="row content-head">' +
     '<h2 class="content-head__subtitle" itemprop="alternativeHeadline"></h2>' +
     '</div>' +
     '</div>' +
+    imgNoticia +
     '<div class="medium-centered mc-column content-text active-extra-styles " data-block-type="unstyled" data-block-weight="37" data-block-id="3">' +
     '<p class="content-text__container " data-track-category="Link no Texto" data-track-links=""> </p>' +
     '<p class="content-text__container " data-track-category="Link no Texto" data-track-links="">  </p>' +
+    '</div>';
+
+var imgNoticia = '<div class="foto">' +
+    '<img/>' +
     '</div>';
