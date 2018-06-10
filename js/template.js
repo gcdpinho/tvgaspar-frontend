@@ -109,7 +109,7 @@ var noticiaCategoriaNoImage = '<div class="row feed">' +
     '<div class="text-justify">?</div>' +
     '</div>' +
     '</div>';
-var noticiaDestaque = '<div class="image1 img-overlay1" data-id="?" onclick="goToNoticia(this)" style="background: url(\'interrogacao\') center fixed no-repeat;">' +
+var noticiaDestaque = '<div class="image1 img-overlay1" data-id="?" onclick="goToNoticia(this)" style="background: url(\'interrogacao\') center fixed no-repeat; cursor:pointer;">' +
     '<div class="container">' +
     '<div class="caption text-center">' +
     '<div class="color-white text-center weight-800 large-caption" style="font-size: 60px;">?</div>' +
@@ -118,3 +118,7 @@ var noticiaDestaque = '<div class="image1 img-overlay1" data-id="?" onclick="goT
     '</div>' +
     '</div>' +
     '</div>';
+
+var streamAoVivo = '<h2><strong>?</strong></h2>' +
+    '<p>?</p>' +
+    '<iframe src="?" style="width: 70%; height: 100%;">';

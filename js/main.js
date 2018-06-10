@@ -8,7 +8,27 @@ $(function ($) {
         },
         success: function (response) {
             console.log(response);
-            showSuperDestaque(response, '#parallax-section');
+            if (response.length > 0)
+                showSuperDestaque(response, '#parallax-section');
+            else
+                $.ajax({
+                    type: "POST",
+                    url: serverUrl + "getVideoByTag",
+                    data: {
+                        tituloTag: "Stream"
+                    },
+                    success: function (response) {
+                        console.log(response);
+                        if (response.length > 0)
+                        showStreamAoVivo(response, '#parallax-section');
+                        else
+                            $('#parallax-section').remove();
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        disabledLoader();
+                    }
+                });
             $.ajax({
                 type: "POST",
                 url: serverUrl + "getNoticiasAprovadasByTag",

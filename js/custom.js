@@ -422,3 +422,15 @@ var showSuperDestaque = async function (data, row) {
     }
 
 }
+
+var showStreamAoVivo = function(data, row){
+    for (var i = 0; i < 1; i++) {
+        var aux = streamAoVivo;
+        aux = aux.replace('?', data[i].titulo);
+        aux = aux.replace('?', data[i].texto == undefined ? "" : data[i].texto);
+        aux = aux.replace('?', data[i].link);
+
+        $(row).append(aux);
+        $('#parallax-section').height('550px');
+    }
+}
