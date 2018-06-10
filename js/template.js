@@ -1,4 +1,4 @@
-var item = '<div class="item ?">' +
+var item = '<div class="item ?" data-id="?" onclick="goToNoticia(this)">' +
     '<div class="item-image-1 demais">' +
     '<a class="img-link" href="?">' +
     '<img class="img-responsive img-full" src="interrogacao" alt="">' +
@@ -67,9 +67,9 @@ var itemDestaque = '<div class="item ?" style="background: url(\'interrogacao\')
     '</div>';
 
 var itemSlider = '<div class="news-slider-layer ?">' + //tipo
-    '<a href="?" target="_blank" class="text-center">' + //link
+    '<a href="?" target="_blank" class="text-center" data-id="?" onclick="goToNoticia(this)">' + //link
     '<div class="content text-left ?">' + //categoria
-    '<span class="category-tag bg-?">?</span>' + // numbertype + categoria
+    '<span class="category-tag bg-?" style="background-color:?">?</span>' + // numbertype + categoria
     '<p>?</p>' + // manchete
     '</div>' +
     '<img src="interrogacao" alt=""> </a>' + //img
@@ -80,28 +80,32 @@ var rowSlider = '<div class="news-slide rowSlider?">' +
 
 var noticia = '<div class="row content-head">' +
     '<div class="column medium-centered medium-19 large-18">' +
-    '<h1 class="content-head__title" itemprop="headline"></h1> ' +
+    '<h1 class="content-head__title" itemprop="headline">?</h1> ' +
     '</div>' +
     '<div class="column medium-centered medium-17 large-14 xlarge-16">' +
-    '<h2 class="content-head__subtitle"></h2>' +
+    '<h2 class="content-head__subtitle">?</h2>' +
     '</div>' +
     '</div>' +
-    imgNoticia +
-    '<div class="medium-centered mc-column content-text active-extra-styles " data-block-type="unstyled" data-block-weight="37" data-block-id="3">' +
-    '<p class="content-text__container " data-track-category="Link no Texto" data-track-links=""> </p>' +
-    '<p class="content-text__container " data-track-category="Link no Texto" data-track-links="">  </p>' +
+    '<div class="medium-centered mc-column content-text active-extra-styles">?' +
     '</div>';
 
 var imgNoticia = '<div class="foto">' +
-    '<img/>' +
+    '<img src="tagImg-?"/>' +
     '</div>';
 
 var noticiaCategoria = '<div class="row feed">' +
-    '<div class="col-md-4">' +
-    '<img src="">' +
+    '<div class="col-md-4 text-center">' +
+    '<img src="interrogacao">' +
     '</div>' +
-    '<div class="texto-categoria">' +
-    '<h3> </h3>' +
-    '<p> </p>' +
+    '<div class="col-md-8 texto-categoria">' +
+    '<h3 style="color:?">?</h3>' +
+    '<div class="text-justify">?</div>' +
+    '</div>' +
+    '</div>';
+
+var noticiaCategoriaNoImage = '<div class="row feed">' +
+    '<div class="col-md-12 texto-categoria">' +
+    '<h3 style="color:?">?</h3>' +
+    '<div class="text-justify">?</div>' +
     '</div>' +
     '</div>';

@@ -289,46 +289,46 @@
 	});
 
 	/* 22. Exchange Rates */
-	$.getJSON("https://api.fixer.io/latest?base=USD", function (data) {
-		var cDate = data.date;
-		$('#cdate').append(' ' + cDate);
-		$('#euro').append(" " + data.rates.EUR);
-		$('#pound').append(" " + data.rates.GBP);
-		$('#yen').append(" " + data.rates.JPY);
-		$('#franc').append(" " + data.rates.CHF);
-		$('#cdollar').append(" " + data.rates.CAD);
-		$('#adollar').append(" " + data.rates.AUD);
-		$('#ron').append(" " + data.rates.RON);
-		$('#rub').append(" " + data.rates.RUB);
-	});
+	// $.getJSON("https://api.fixer.io/latest?base=USD", function (data) {
+	// 	var cDate = data.date;
+	// 	$('#cdate').append(' ' + cDate);
+	// 	$('#euro').append(" " + data.rates.EUR);
+	// 	$('#pound').append(" " + data.rates.GBP);
+	// 	$('#yen').append(" " + data.rates.JPY);
+	// 	$('#franc').append(" " + data.rates.CHF);
+	// 	$('#cdollar').append(" " + data.rates.CAD);
+	// 	$('#adollar').append(" " + data.rates.AUD);
+	// 	$('#ron').append(" " + data.rates.RON);
+	// 	$('#rub').append(" " + data.rates.RUB);
+	// });
 
 	/* 23. Currency Converter */
-	$.get('http://api.fixer.io/latest?base=ZAR', function (data) {
-		var countryObject = data.rates;
-		for (var key in countryObject) {
-			if (countryObject.hasOwnProperty(key)) {
-				$('select').append('<option val="' + key + '">' + key + '</option>');
-			}
-		}
-		$('.convertFrom').change(function () {
-			var thisValue = $('.convertFrom .selectpicker').val();
-			$.get('http://api.fixer.io/latest?base=' + thisValue, function (newData) {
-				countryObject = newData.rates;
-			});
-		});
-		$('form').on('submit', function (e) {
-			e.preventDefault();
-			var convertingTo = $('.convertTo .selectpicker').val(),
-				toRate = countryObject[convertingTo],
-				amount = $('.currencyValue').val();
-			var calculation = amount * toRate;
-			if (calculation === 0) {
-				$('.output').html('Please enter a valid amount.');
-			} else {
-				$('.output').html(parseFloat(calculation).toFixed(3));
-			}
-		});
-	});
+	// $.get('http://api.fixer.io/latest?base=ZAR', function (data) {
+	// 	var countryObject = data.rates;
+	// 	for (var key in countryObject) {
+	// 		if (countryObject.hasOwnProperty(key)) {
+	// 			$('select').append('<option val="' + key + '">' + key + '</option>');
+	// 		}
+	// 	}
+	// 	$('.convertFrom').change(function () {
+	// 		var thisValue = $('.convertFrom .selectpicker').val();
+	// 		$.get('http://api.fixer.io/latest?base=' + thisValue, function (newData) {
+	// 			countryObject = newData.rates;
+	// 		});
+	// 	});
+	// 	$('form').on('submit', function (e) {
+	// 		e.preventDefault();
+	// 		var convertingTo = $('.convertTo .selectpicker').val(),
+	// 			toRate = countryObject[convertingTo],
+	// 			amount = $('.currencyValue').val();
+	// 		var calculation = amount * toRate;
+	// 		if (calculation === 0) {
+	// 			$('.output').html('Please enter a valid amount.');
+	// 		} else {
+	// 			$('.output').html(parseFloat(calculation).toFixed(3));
+	// 		}
+	// 	});
+	// });
 
 	/* 24. Sidebar Weather 
 	var currWeather = {};

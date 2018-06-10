@@ -352,7 +352,7 @@
                     <div class="container">
                         <!-- Begin .nav navbar-nav -->
                         <ul class="nav navbar-nav">
-                            <li class="active">
+                            <li>
                                 <a href="index.html">Home</a>
                             </li>
                             <!--========== BEGIN DROPDOWN MEGA-DROPDOWN ==========-->
@@ -526,14 +526,14 @@
                                 </ul>
                             </li>
                             <!--========== END DROPDOWN MEGA-DROPDOWN ==========-->
-                            <li class="dropdown">
+                            <li class="dropdown active">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Notícias</a>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a href="coming-soon.html">Esportes</a>
+                                        <a href="javascript:void(0);" onclick="goToNoticiaByCategoria(this)">Esportes</a>
                                     </li>
                                     <li>
-                                        <a href="autos.html">Comunidade</a>
+                                        <a href="javascript:void(0);" onclick="goToNoticiaByCategoria(this)">Comunidade</a>
                                     </li>
                                 </ul>
                             </li>
@@ -581,7 +581,7 @@
         </header>
 
         <section id="noticia-detail">
-            <div class="row content-head">
+            <!-- <div class="row content-head">
                 <div class="column medium-centered medium-19 large-18">
                     <meta itemprop="name" content="Em nova tentativa de pôr fim à greve de caminhoneiros, Temer anuncia redução de R$ 0,46 no litro do diesel por 60 dias">
                     <h1 class="content-head__title" itemprop="headline">Em nova tentativa de pôr fim à greve de caminhoneiros, Temer anuncia redução de R$ 0,46 no litro do diesel
@@ -604,7 +604,7 @@
                     (Cide), em 2018, sobre o óleo diesel; e a manutenção, por 30 dias, de uma redução de 10% no valor do
                     diesel nas refinarias, que havia sido anunciada pela Petrobras, redução pela qual a empresa seria ressarcida
                     pela União. </p>
-            </div>
+            </div> -->
         </section>
 
         <!--========== BEGIN #FOOTER==========-->
@@ -771,9 +771,10 @@
     <!-- Firebase Plugin Js -->
     <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase.js"></script>
     <!-- JavaScripts -->
+    <script src="js/config.js"></script>
     <script src="js/template.js"></script>
-    <script src="js/esportes.js"></script>
-    <script src="js/functions.js"></script>
+    <script src="js/custom.js"></script>
+    <script src="js/noticia.js"></script>
 </body>
 
 </html>

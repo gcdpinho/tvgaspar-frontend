@@ -352,7 +352,7 @@
                     <div class="container">
                         <!-- Begin .nav navbar-nav -->
                         <ul class="nav navbar-nav">
-                            <li class="active">
+                            <li>
                                 <a href="index.html">Home</a>
                             </li>
                             <!--========== BEGIN DROPDOWN MEGA-DROPDOWN ==========-->
@@ -526,14 +526,14 @@
                                 </ul>
                             </li>
                             <!--========== END DROPDOWN MEGA-DROPDOWN ==========-->
-                            <li class="dropdown">
+                            <li class="dropdown active">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Notícias</a>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a href="coming-soon.html">Esportes</a>
+                                        <a href="javascript:void(0);" onclick="goToNoticiaByCategoria(this)" class="categoriaEsportes">Esportes</a>
                                     </li>
                                     <li>
-                                        <a href="autos.html">Comunidade</a>
+                                        <a href="javascript:void(0);" onclick="goToNoticiaByCategoria(this)" class="categoriaComunidade">Comunidade</a>
                                     </li>
                                 </ul>
                             </li>
@@ -587,8 +587,8 @@
 
         <section id="noticia-categoria">
             <div class="row">
-                <div class="col-md-9 ">
-                    <div class="row feed">
+                <div class="col-md-9" id="col-noticiaCategoria">
+                    <!-- <div class="row feed">
                         <div class="col-md-4">
                             <img src="https://ogimg.infoglobo.com.br/in/22755091-371-fba/FT1086A/420/x77180136_BSBBrasiliaBrasil06-06-2018PASupremo-Tribunal-FederalPlenario-do-STF.jpg.pagespeed.ic.NrJAsdSgnb.jpg">
                         </div>
@@ -647,25 +647,19 @@
                                 de pedágio para eixos suspensos de caminhões vazios (
                                 <em>leia mais abaixo neste texto</em>). </p>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="col-md-3">
-                    <a href="#" target="_blank">
-                        <img src="img/ad_820x100.jpg" alt="">
-                    </a>
-
-                    <a href="#" target="_blank">
-                        <img src="img/ad_820x100.jpg" alt="">
-                    </a>
-                    <a href="#" target="_blank">
-                        <img src="img/ad_820x100.jpg" alt="">
-                    </a>
-                    <a href="#" target="_blank">
-                        <img src="img/ad_820x100.jpg" alt="">
-                    </a>
-                    <a href="#" target="_blank">
-                        <img src="img/ad_820x100.jpg" alt="">
-                    </a>
+                    <div class="row ad-noticiaCategoria">
+                        <a href="#" target="_blank">
+                            <img src="img/ad_300x600.jpg" alt="">
+                        </a>
+                    </div>
+                    <div class="row ad-noticiaCategoria">
+                        <a href="#" target="_blank">
+                            <img src="img/ad_300x600.jpg" alt="">
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -837,7 +831,7 @@
         <script src="js/config.js"></script>
         <script src="js/template.js"></script>
         <script src="js/custom.js"></script>
-        <script src="js/functions.js"></script>
+        <script src="js/noticiaCategoria.js"></script>
 </body>
 
 </html>

@@ -1,38 +1,3 @@
-$(function ($) {
-    initFirebase();
-    $.ajax({
-        type: "POST",
-        url: serverUrl + "getNoticiasAprovadasByTag",
-        data: {
-            tituloTag: "Destaque"
-        },
-        success: function (response) {
-            console.log(response);
-            showSlider(response, $('#news-slider'), 4);
-            $.ajax({
-                type: "GET",
-                url: serverUrl + "getAllNoticiasAprovadas",
-                success: function (response) {
-                    console.log(response);
-                    showNoticias(response, $('#ultimasNoticias'), 3, 2, 12);
-                    showNoticias(response, $('#demaisNoticias'), 2, 2, 10);
-                    var categorias = getDiffCategorias(response);
-                    generateCors(categorias);
-                },
-                error: function (error) {
-                    console.log(error);
-                    disabledLoader();
-                }
-            });
-        },
-        error: function (error) {
-            console.log(error);
-            disabledLoader();
-        }
-    });
-
-});
-
 var disabledLoader = function () {
     $(".loader-item").fadeOut();
     $("#pageloader").fadeOut("slow");
@@ -140,9 +105,11 @@ var showSlider = async function (data, row, limit) {
             var aux = itemSlider;
             var obj = getInfoColumn(index, auxLength);
             aux = aux.replace('?', obj.tipo);
-            aux = aux.replace('?', '#');
+            aux = aux.replace('?', 'javascript:void(0);');
+            aux = aux.replace('?', data[j].id);
             aux = aux.replace('?', data[j].categoriaTitulo);
             aux = aux.replace('?', obj.number);
+            aux = aux.replace('?', data[j].cor);
             aux = aux.replace('?', data[j].categoriaTitulo);
             aux = aux.replace('?', data[j].manchete);
             aux = aux.replace('interrogacao', images[j] == undefined ? "" : images[j]);
@@ -189,13 +156,14 @@ var showNoticias = async function (data, row, columns, lines, limit) {
     for (var i = 0; i < data.length; i++) {
         var aux = item;
         aux = aux.replace('?', data[i].categoriaTitulo);
-        aux = aux.replace('?', '#');
-        aux = aux.replace('?', '#');
+        aux = aux.replace('?', data[i].id);
+        aux = aux.replace('?', 'javascript:void(0);');
+        aux = aux.replace('?', 'javascript:void(0);');
         aux = aux.replace('?', data[i].cor);
         aux = aux.replace('?', data[i].categoriaTitulo);
-        aux = aux.replace('?', '#');
+        aux = aux.replace('?', 'javascript:void(0);');
         aux = aux.replace('?', data[i].manchete);
-        aux = aux.replace('?', '#');
+        aux = aux.replace('?', 'javascript:void(0);');
         aux = aux.replace('?', data[i].texto);
         aux = aux.replace('interrogacao', images[i] == undefined ? "" : images[i]);
 
@@ -326,4 +294,112 @@ var getInfoColumn = function (index, length) {
         tipo: tipo,
         number: number
     }
+}
+
+var goToNoticiaByCategoria = function (categoria) {
+    location.href = `noticiaCategoria.html?tituloCategoria=${$(categoria).text()}`;
+}
+
+var goToNoticia = function (id) {
+    location.href = `noticia.html?idNoticia=${$(id).data('id')}`;
+}
+
+var getQueryParams = function (qs, name) {
+    qs = qs.split("?").pop();
+
+    var params = [],
+        tokens,
+        re = /[?&]?([^=]+)=([^&]*)/g;
+
+    while (tokens = re.exec(qs)) {
+        params.push({
+            k: decodeURIComponent(tokens[1]),
+            v: decodeURIComponent(tokens[2])
+        });
+    }
+
+    var data = {};
+    params.every((v, k) => {
+        if (v.k == name) {
+            data[v.k] = v.v;
+            return false;
+        }
+    });
+
+    return data;
+}
+
+var showNoticiasCategoria = async function (data, row, limit) {
+    var controlLimite = 0;
+    var images = data.map(function (element) {
+        return element.imagemLink;
+    });
+
+    var imagesAux = [];
+    for (var i = 0; i < images.length; i++)
+        if (images[i] != null)
+            imagesAux[i] = images[i];
+
+    var images = await getUrls(imagesAux);
+    for (var i = 0; i < data.length; i++) {
+        if (images[i] == undefined)
+            var aux = noticiaCategoriaNoImage;
+        else
+            var aux = noticiaCategoria;
+        aux = aux.replace('?', data[i].cor);
+        aux = aux.replace('?', data[i].manchete);
+        aux = aux.replace('?', data[i].texto);
+        aux = aux.replace('interrogacao', images[i] == undefined ? "" : images[i]);
+
+        $(row).append(aux);
+        controlLimite++;
+        if (controlLimite >= limit)
+            break;
+    }
+
+    disabledLoader();
+}
+
+var showNoticiaById = async function (data, row) {
+    var images = data.map(function (element) {
+        return element.imagemLink;
+    });
+
+    var imagesAux = [];
+    for (var i = 0; i < images.length; i++)
+        if (images[i] != null)
+            imagesAux[i] = images[i];
+
+    var images = await getUrls(imagesAux);
+    for (var i = 0; i < data.length; i++) {
+        var aux = noticia;
+        aux = aux.replace('?', data[i].manchete);
+        aux = aux.replace('?', data[i].subManchete == undefined ? "" : data[i].subManchete);
+        aux = aux.replace('?', await treatmentImage(data[i].texto));
+        // aux = aux.replace('interrogacao', images[i] == undefined ? "" : images[i]);
+
+        $(row).append(aux);
+    }
+
+    disabledLoader();
+}
+
+var treatmentImage = async function (texto) {
+    var countE = 0;
+    var imgs = [];
+    texto.split('&lt;img&gt;').forEach(element =>  {
+        var e = element.split('&lt;/img&gt;');
+        if (e.length > 1) {
+            texto = texto.replace(`&lt;img&gt;${e[0]}&lt;/img&gt;`, imgNoticia.replace('tagImg-?', `tagImg-?${countE}`));
+            imgs.push(e[0]);
+            countE++;
+        }
+    });
+
+    var images = await getUrls(imgs);
+
+    for (var i = 0; i < images.length; i++)
+        texto = texto.replace(`tagImg-?${i}`, images[i]);
+
+    return texto;
 }
