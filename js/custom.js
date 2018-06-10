@@ -164,7 +164,7 @@ var showNoticias = async function (data, row, columns, lines, limit) {
         aux = aux.replace('?', 'javascript:void(0);');
         aux = aux.replace('?', data[i].manchete);
         aux = aux.replace('?', 'javascript:void(0);');
-        aux = aux.replace('?', data[i].texto);
+        aux = aux.replace('?', data[i].resumo);
         aux = aux.replace('interrogacao', images[i] == undefined ? "" : images[i]);
 
         $(row).find('.rowItem' + controlL + ' .colItem' + controlC).append(aux);
@@ -346,9 +346,10 @@ var showNoticiasCategoria = async function (data, row, limit) {
             var aux = noticiaCategoriaNoImage;
         else
             var aux = noticiaCategoria;
+        aux = aux.replace('?', data[i].id);
         aux = aux.replace('?', data[i].cor);
         aux = aux.replace('?', data[i].manchete);
-        aux = aux.replace('?', data[i].texto);
+        aux = aux.replace('?', data[i].resumo);
         aux = aux.replace('interrogacao', images[i] == undefined ? "" : images[i]);
 
         $(row).append(aux);
@@ -387,7 +388,7 @@ var showNoticiaById = async function (data, row) {
 var treatmentImage = async function (texto) {
     var countE = 0;
     var imgs = [];
-    texto.split('&lt;img&gt;').forEach(element =>  {
+    texto.split('&lt;img&gt;').forEach(element => {
         var e = element.split('&lt;/img&gt;');
         if (e.length > 1) {
             texto = texto.replace(`&lt;img&gt;${e[0]}&lt;/img&gt;`, imgNoticia.replace('tagImg-?', `tagImg-?${countE}`));

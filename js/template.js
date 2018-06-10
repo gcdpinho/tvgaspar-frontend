@@ -93,7 +93,7 @@ var imgNoticia = '<div class="foto">' +
     '<img src="tagImg-?"/>' +
     '</div>';
 
-var noticiaCategoria = '<div class="row feed">' +
+var noticiaCategoria = '<div class="row feed" data-id="?" onclick="goToNoticia(this)">' +
     '<div class="col-md-4 text-center">' +
     '<img src="interrogacao">' +
     '</div>' +

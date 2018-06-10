@@ -119,6 +119,7 @@ $(function () {
                 data: {
                     manchete: $('input[name="manchete"]').val(),
                     subManchete: $('input[name="subManchete"]').val(),
+                    resumo: $('input[name="resumo"]').val(),
                     texto: tinymce.activeEditor.getContent(),
                     autor: $('input[name="autor"]').val(),
                     dtCadastro: $('input[name="dtCadastro"]').val(),
