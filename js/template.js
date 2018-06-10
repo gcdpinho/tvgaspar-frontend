@@ -1,10 +1,10 @@
-var item = '<div class="item ?" data-id="?" onclick="goToNoticia(this)">' +
+var item = '<div class="item ?" data-id="?" onclick="goToNoticia(this, event)">' +
     '<div class="item-image-1 demais">' +
     '<a class="img-link" href="?">' +
     '<img class="img-responsive img-full" src="interrogacao" alt="">' +
     '</a>' +
     '<span>' +
-    '<a class="label-1" href="?" style="background-color: ?">?</a>' +
+    '<a class="label-1 goToTag" href="?" style="background-color: ?">?</a>' +
     '</span>' +
     '</div>' +
     '<div class="item-content demais">' +
@@ -67,9 +67,9 @@ var itemDestaque = '<div class="item ?" style="background: url(\'interrogacao\')
     '</div>';
 
 var itemSlider = '<div class="news-slider-layer ?">' + //tipo
-    '<a href="?" target="_blank" class="text-center" data-id="?" onclick="goToNoticia(this)">' + //link
+    '<a href="?" target="_blank" class="text-center" data-id="?" onclick="goToNoticia(this, event)">' + //link
     '<div class="content text-left ?">' + //categoria
-    '<span class="category-tag bg-?" style="background-color:?">?</span>' + // numbertype + categoria
+    '<span class="goToTag category-tag bg-?" style="background-color:?">?</span>' + // numbertype + categoria
     '<p>?</p>' + // manchete
     '</div>' +
     '<img src="interrogacao" alt=""> </a>' + //img
@@ -93,7 +93,7 @@ var imgNoticia = '<div class="foto">' +
     '<img src="tagImg-?"/>' +
     '</div>';
 
-var noticiaCategoria = '<div class="row feed" data-id="?" onclick="goToNoticia(this)">' +
+var noticiaCategoria = '<div class="row feed" data-id="?" onclick="goToNoticia(this, event)">' +
     '<div class="col-md-4 text-center">' +
     '<img src="interrogacao">' +
     '</div>' +
@@ -103,13 +103,13 @@ var noticiaCategoria = '<div class="row feed" data-id="?" onclick="goToNoticia(t
     '</div>' +
     '</div>';
 
-var noticiaCategoriaNoImage = '<div class="row feed">' +
+var noticiaCategoriaNoImage = '<div class="row feed" data-id="?" onclick="goToNoticia(this, event)">' +
     '<div class="col-md-12 texto-categoria">' +
     '<h3 style="color:?">?</h3>' +
     '<div class="text-justify">?</div>' +
     '</div>' +
     '</div>';
-var noticiaDestaque = '<div class="image1 img-overlay1" data-id="?" onclick="goToNoticia(this)" style="background: url(\'interrogacao\') center fixed no-repeat; cursor:pointer;">' +
+var noticiaDestaque = '<div class="image1 img-overlay1" data-id="?" onclick="goToNoticia(this, event)" style="background: url(\'interrogacao\') center fixed no-repeat; cursor:pointer;">' +
     '<div class="container">' +
     '<div class="caption text-center">' +
     '<div class="color-white text-center weight-800 large-caption" style="font-size: 60px;">?</div>' +
