@@ -109,3 +109,12 @@ var noticiaCategoriaNoImage = '<div class="row feed">' +
     '<div class="text-justify">?</div>' +
     '</div>' +
     '</div>';
+var noticiaDestaque = '<div class="image1 img-overlay1" data-id="?" onclick="goToNoticia(this)" style="background: url(\'interrogacao\') center fixed no-repeat;">' +
+    '<div class="container">' +
+    '<div class="caption text-center">' +
+    '<div class="color-white text-center weight-800 large-caption" style="font-size: 60px;">?</div>' +
+    '<div class="color-white text-center weight-400 medium-caption" style="font-size: 30px;">?</div>' +
+    '<h5>?</h5>' +
+    '</div>' +
+    '</div>' +
+    '</div>';

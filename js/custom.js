@@ -404,3 +404,21 @@ var treatmentImage = async function (texto) {
 
     return texto;
 }
+
+var showSuperDestaque = async function (data, row) {
+    var imgs = [];
+    imgs.push(data[0].imagemLink);
+
+    var images = await getUrls(imgs);
+    for (var i = 0; i < 1; i++) {
+        var aux = noticiaDestaque;
+        aux = aux.replace('?', data[i].id);
+        aux = aux.replace('?', data[i].manchete);
+        aux = aux.replace('?', data[i].subManchete == undefined ? "" : data[i].subManchete);
+        aux = aux.replace('?', data[i].resumo);
+        aux = aux.replace('interrogacao', images[i] == undefined ? "" : images[i]);
+
+        $(row).append(aux);
+    }
+
+}
