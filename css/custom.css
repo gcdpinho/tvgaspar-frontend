@@ -246,6 +246,7 @@
 .row-history h2{
     margin: 0;
 }
+
 .row-values{
     margin-top: 50px;
     padding-bottom: 50px;
@@ -256,6 +257,7 @@
 }
 
 .title-values{
+    padding: 10px 20px;
     background-color: #d4000e !important;
 }
 
