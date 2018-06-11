@@ -1545,7 +1545,7 @@ header {
 .header-logo {
 	display: inline-block;
 	font-weight: 700;
-	margin-top: 34px;
+	text-align: right;
 	padding: 0;
 	border: none;
 	width: 300px;
@@ -1567,9 +1567,7 @@ header {
 	margin: 0;
 }
 .header-logo img {
-	margin: 8px 10px 8px 0;
-	float: left;
-	display: inline;
+	width: 150px;
 	max-width: 100%;
 }
 .sidenav-header-logo {
