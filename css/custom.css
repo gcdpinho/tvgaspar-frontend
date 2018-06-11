@@ -231,24 +231,23 @@
 }
 
 .text-history{
-    margin-top: 15px;
-    margin-bottom: 30px;
+    margin: 30px 0;
+    text-align: left;
 }
 
 .img-history{
-    max-width: 100%;
+    max-width: 600px;
 }
 
 .row-history{
     text-align: justify;
-    padding-bottom: 50px;
+    padding-bottom: 100px;
 }
 .row-history h2{
     margin: 0;
 }
 
 .row-values{
-    margin-top: 50px;
     padding-bottom: 50px;
 }
 
