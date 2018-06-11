@@ -187,7 +187,8 @@ var generateCors = function (categorias) {
     var cor = "";
     for (categoria of categorias)
         cor += `.${categoria.titulo} .bar-title::before{background-color:${categoria.cor} !important;} 
-        .${categoria.titulo} a.noticia-title:hover{color: ${categoria.cor} !important}`
+        .${categoria.titulo} a.noticia-title:hover{color: ${categoria.cor} !important} 
+        .${categoria.titulo} a.resumo:hover{color: ${categoria.cor} !important}`
 
     $('body').append(`<style>${cor}</style>`);
 }

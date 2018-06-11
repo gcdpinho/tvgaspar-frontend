@@ -25,3 +25,10 @@ Galeria de imagens = slider de marcas - DONE
 
 Not�cias
 	Detalhe Not�cia
+
+Próximos etapa:
+	institucional;
+ 	Sincronização dos colunistas e das NOVAS NOTICIAS;
+	Contato;
+	Mega Menu;
+	Footer; 

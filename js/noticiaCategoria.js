@@ -21,6 +21,7 @@ $(function ($) {
                         $(`a.categoria${data.tituloCategoria}`).parents('li').addClass('active');
                         $('.dropdown-menu>.active>a, .dropdown-menu>.active>a:focus, .dropdown-menu>.active>a:hover').css('background-color', response[0].cor);
                         $('.dropdown-menu>.active>a, .dropdown-menu>.active>a:focus, .dropdown-menu>.active>a:hover').css('background-image', 'none');
+                        $('body').append(`<style>.resumo:hover{color:${response[0].cor}}</style>`);
                         showNoticiasCategoria(response, '#col-noticiaCategoria', 8);
                     },
                     error: function (error) {

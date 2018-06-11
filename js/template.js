@@ -13,7 +13,7 @@ var item = '<div class="item ?" data-id="?" onclick="goToNoticia(this, event)">'
     '<a class="noticia-title" href="?">?</a>' +
     '</h3>' +
     '</div>' +
-    '<a href="?" target="_blank" class="text-justify block">?</a>' +
+    '<a href="?" target="_blank" class="text-justify block resumo">?</a>' +
     '</div>' +
     '<div class="pb30">' +
     '</div>'
@@ -99,14 +99,14 @@ var noticiaCategoria = '<div class="row feed" data-id="?" onclick="goToNoticia(t
     '</div>' +
     '<div class="col-md-8 texto-categoria">' +
     '<h3 style="color:?">?</h3>' +
-    '<div class="text-justify">?</div>' +
+    '<div class="text-justify resumo">?</div>' +
     '</div>' +
     '</div>';
 
 var noticiaCategoriaNoImage = '<div class="row feed" data-id="?" onclick="goToNoticia(this, event)">' +
     '<div class="col-md-12 texto-categoria">' +
     '<h3 style="color:?">?</h3>' +
-    '<div class="text-justify">?</div>' +
+    '<div class="text-justify resumo">?</div>' +
     '</div>' +
     '</div>';
 var noticiaDestaque = '<div class="image1 img-overlay1" data-id="?" onclick="goToNoticia(this, event)" style="background: url(\'interrogacao\') center fixed no-repeat; cursor:pointer;">' +
