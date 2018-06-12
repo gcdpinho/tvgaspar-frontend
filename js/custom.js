@@ -143,7 +143,7 @@ var showNoticias = async function (data, row, columns, lines, limit) {
     createLines(row, lines, columns, limit);
 
     var images = data.map(function (element) {
-        return element.imagemLink;
+        return element.imagem.link;
     });
 
     var imagesAux = [];
@@ -154,30 +154,32 @@ var showNoticias = async function (data, row, columns, lines, limit) {
     var images = await getUrls(imagesAux);
 
     for (var i = 0; i < data.length; i++) {
-        var aux = item;
-        aux = aux.replace('?', data[i].categoriaTitulo);
-        aux = aux.replace('?', data[i].id);
-        aux = aux.replace('?', 'javascript:void(0);');
-        aux = aux.replace('?', 'javascript:void(0);');
-        aux = aux.replace('?', data[i].cor);
-        aux = aux.replace('?', data[i].categoriaTitulo);
-        aux = aux.replace('?', 'javascript:void(0);');
-        aux = aux.replace('?', data[i].manchete);
-        aux = aux.replace('?', 'javascript:void(0);');
-        aux = aux.replace('?', data[i].resumo);
-        aux = aux.replace('interrogacao', images[i] == undefined ? "" : images[i]);
+        if (!data[i].tag.some(t => (t.titulo == "Especial"))) {
+            var aux = item;
+            aux = aux.replace('?', data[i].categoria[0].titulo);
+            aux = aux.replace('?', data[i].noticia.id);
+            aux = aux.replace('?', 'javascript:void(0);');
+            aux = aux.replace('?', 'javascript:void(0);');
+            aux = aux.replace('?', data[i].categoria[0].cor);
+            aux = aux.replace('?', data[i].categoria[0].titulo);
+            aux = aux.replace('?', 'javascript:void(0);');
+            aux = aux.replace('?', data[i].noticia.manchete);
+            aux = aux.replace('?', 'javascript:void(0);');
+            aux = aux.replace('?', data[i].noticia.resumo);
+            aux = aux.replace('interrogacao', images[i] == undefined ? "" : images[i]);
 
-        $(row).find('.rowItem' + controlL + ' .colItem' + controlC).append(aux);
-        controlC++;
+            $(row).find('.rowItem' + controlL + ' .colItem' + controlC).append(aux);
+            controlC++;
 
-        if (controlC == columns) {
-            controlC = 0;
-            controlL++;
+            if (controlC == columns) {
+                controlC = 0;
+                controlL++;
+            }
+
+            controlLimite++;
+            if (controlLimite >= limit)
+                break;
         }
-
-        controlLimite++;
-        if (controlLimite >= limit)
-            break;
     }
 
     disabledLoader();
@@ -437,4 +439,61 @@ var showStreamAoVivo = function (data, row) {
         $(row).append(aux);
         $('#parallax-section').height('550px');
     }
+}
+
+var agroupNoticia = function (data) {
+    var categoria = [];
+    var tag = [];
+    var result = [];
+    var idNoticia = data.map((e) => {
+        return e.id;
+    });
+    idNoticia = idNoticia.filter((x, i, a) => a.indexOf(x) == i);
+    for (var i = 0; i < idNoticia.length; i++) {
+        tag[idNoticia[i]] = [];
+        categoria[idNoticia[i]] = [];
+    }
+    for (noticia of data)
+        for (id of idNoticia)
+            if (noticia.id == id) {
+                if (!categoria[id].some(cat => (cat.titulo == noticia.categoriaTitulo)))
+                    categoria[id].push({
+                        titulo: noticia.categoriaTitulo,
+                        cor: noticia.cor
+                    });
+                if (!tag[id].some(t => (t.titulo == noticia.tag)))
+                    tag[id].push({
+                        titulo: noticia.tag
+                    });
+                break;
+            }
+    for (id of idNoticia) {
+        var aux = getNoticiaById(data, id);
+        aux['categoria'] = categoria[id];
+        aux['tag'] = tag[id];
+        result.push(aux);
+    }
+
+    return result;
+}
+
+var getNoticiaById = function (data, id) {
+    for (noticia of data)
+        if (noticia.id == id)
+            return {
+                noticia: {
+                    id: noticia.id,
+                    manchete: noticia.manchete,
+                    submanchete: noticia.submanchete,
+                    resumo: noticia.resumo,
+                    autor: noticia.autor,
+                    dtCadastro: noticia.dtCadastro,
+                    texto: noticia.texto,
+                },
+                imagem: {
+                    titulo: noticia.imagemTitulo,
+                    link: noticia.imagemLink
+                }
+
+            };
 }

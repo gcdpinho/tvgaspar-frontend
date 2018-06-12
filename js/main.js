@@ -43,8 +43,9 @@ $(function ($) {
                         url: serverUrl + "getAllNoticiasAprovadas",
                         success: function (response) {
                             console.log(response);
-                            showNoticias(response, $('#ultimasNoticias'), 3, 2, 12);
-                            showNoticias(response, $('#demaisNoticias'), 2, 2, 10);
+                            var data = agroupNoticia(response);
+                            showNoticias(data, $('#ultimasNoticias'), 3, 2, 12);
+                            showNoticias(data, $('#demaisNoticias'), 2, 2, 10);
                             var categorias = getDiffCategorias(response);
                             generateCors(categorias);
                         },
