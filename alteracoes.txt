@@ -27,7 +27,7 @@ Not�cias
 	Detalhe Not�cia
 
 Próximos etapa:
-	institucional;
+	institucional - DONE;
  	Sincronização dos colunistas e das NOVAS NOTICIAS;
 	Contato;
 	Mega Menu;
