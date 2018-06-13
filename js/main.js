@@ -20,7 +20,7 @@ $(function ($) {
                     success: function (response) {
                         console.log(response);
                         if (response.length > 0)
-                        showStreamAoVivo(response, '#parallax-section');
+                            showStreamAoVivo(response, '#parallax-section');
                         else
                             $('#parallax-section').remove();
                     },
@@ -39,15 +39,34 @@ $(function ($) {
                     console.log(response);
                     showSlider(response, $('#news-slider'), 4);
                     $.ajax({
-                        type: "GET",
-                        url: serverUrl + "getAllNoticiasAprovadas",
+                        type: "POST",
+                        url: serverUrl + "getNoticiasAprovadasByCategoria",
+                        data: {
+                            tituloCategoria: "Colunista"
+                        },
                         success: function (response) {
                             console.log(response);
-                            var data = agroupNoticia(response);
-                            showNoticias(data, $('#ultimasNoticias'), 3, 2, 12);
-                            showNoticias(data, $('#demaisNoticias'), 2, 2, 10);
-                            var categorias = getDiffCategorias(response);
-                            generateCors(categorias);
+                            showColunistas(response, $('#colunista ul'), 10);
+                            $.ajax({
+                                type: "GET",
+                                url: serverUrl + "getAllNoticiasAprovadas",
+                                success: function (response) {
+                                    console.log(response);
+                                    const aux = async () => {
+                                        var data = agroupNoticia(response);
+                                        showNoticias(data, $('#ultimasNoticias'), 3, 2, 12);
+                                        await showNoticias(data, $('#demaisNoticias'), 2, 2, 10);
+                                        var categorias = getDiffCategorias(response);
+                                        generateCors(categorias);
+                                        disabledLoader();
+                                    };
+                                    aux();
+                                },
+                                error: function (error) {
+                                    console.log(error);
+                                    disabledLoader();
+                                }
+                            });
                         },
                         error: function (error) {
                             console.log(error);

@@ -122,3 +122,19 @@ var noticiaDestaque = '<div class="image1 img-overlay1" data-id="?" onclick="goT
 var streamAoVivo = '<h2><strong>?</strong></h2>' +
     '<p>?</p>' +
     '<iframe src="?" style="width: 70%; height: 100%;">';
+
+var itemColunista = `<li>
+<div class="item" data-id="?" onclick="goToNoticia(this, event)">
+  <div class="item-image">
+    <a class="img-link" href="?">
+      <img class="img-responsive img-full" src="interrogacao" alt="">
+    </a>
+  </div>
+  <div class="item-content">
+    <h3>?</h3>
+    <p class="ellipsis">
+      <a href="?">?</a>
+    </p>
+  </div>
+</div>
+</li>`;

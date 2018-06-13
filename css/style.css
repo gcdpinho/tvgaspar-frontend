@@ -3351,11 +3351,15 @@ button.up:hover, button.down:hover {
 	font-weight: 400;
 }
 .sidebar-post .item-content h3, .sidebar-newsfeed .item-content h3 {
-	color: #838384;
+	color: white;
 	font-weight: 400;
 	margin-top: .175em;
 	margin-bottom: 0;
 }
+.sidebar-post .item-content h3:hover{
+	color: #838384;
+}
+
 .sidebar-newsfeed .item .item-content, .sidebar-post .item .item-content {
 	padding: 0 0 0 20px;
 }

@@ -181,8 +181,7 @@ var showNoticias = async function (data, row, columns, lines, limit) {
                 break;
         }
     }
-
-    disabledLoader();
+    // disabledLoader();
 }
 
 var generateCors = function (categorias) {
@@ -193,6 +192,7 @@ var generateCors = function (categorias) {
         .${categoria.titulo} a.resumo:hover{color: ${categoria.cor} !important}`
 
     $('body').append(`<style>${cor}</style>`);
+
 }
 
 var getDiffCategorias = function (data) {
@@ -496,4 +496,32 @@ var getNoticiaById = function (data, id) {
                 }
 
             };
+}
+
+var showColunistas = async function (data, row, limit) {
+    var controlLimite = 0;
+    var images = data.map(function (element) {
+        return element.imagemLink;
+    });
+
+    var imagesAux = [];
+    for (var i = 0; i < images.length; i++)
+        if (images[i] != null)
+            imagesAux[i] = images[i];
+
+    var images = await getUrls(imagesAux);
+    for (var i = 0; i < data.length; i++) {
+        var aux = itemColunista;
+        aux = aux.replace('?', data[i].id);
+        aux = aux.replace('?', 'javascript:void(0);');
+        aux = aux.replace('?', data[i].manchete);
+        aux = aux.replace('?', 'javascript:void(0);');
+        aux = aux.replace('?', data[i].resumo);
+        aux = aux.replace('interrogacao', images[i] == undefined ? "" : images[i]);
+
+        $(row).append(aux);
+        controlLimite++;
+        if (controlLimite >= limit)
+            break;
+    }
 }
