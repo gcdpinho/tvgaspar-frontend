@@ -525,3 +525,21 @@ var showColunistas = async function (data, row, limit) {
             break;
     }
 }
+
+var showNews = function (data, row, limit) {
+    var controlLimite = 0;
+    for (var i = 0; i < data.length; i++) {
+        if (!data[i].tag.some(t => (t.titulo == "Especial"))) {
+            var aux = itemNovasNoticias;
+            aux = aux.replace('?', data[i].categoria[0].titulo);
+            aux = aux.replace('?', 'javascript:void(0);');
+            aux = aux.replace('?', data[i].noticia.id);
+            aux = aux.replace('?', data[i].noticia.manchete);
+
+            $(row).append(aux);
+            controlLimite++;
+            if (controlLimite >= limit)
+                break;
+        }
+    }
+}

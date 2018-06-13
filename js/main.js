@@ -54,6 +54,7 @@ $(function ($) {
                                     console.log(response);
                                     const aux = async () => {
                                         var data = agroupNoticia(response);
+                                        showNews(data, $('#news ul'), 5);
                                         showNoticias(data, $('#ultimasNoticias'), 3, 2, 12);
                                         await showNoticias(data, $('#demaisNoticias'), 2, 2, 10);
                                         var categorias = getDiffCategorias(response);

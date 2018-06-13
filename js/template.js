@@ -138,3 +138,10 @@ var itemColunista = `<li>
   </div>
 </div>
 </li>`;
+
+var itemNovasNoticias = `<li style="margin: 0px;">
+<h4>
+  <span class="category">?:</span>
+  <a href="?" data-id="?" onclick="goToNoticia(this, event)">?</a>
+</h4>
+</li>`;
