@@ -543,3 +543,22 @@ var showNews = function (data, row, limit) {
         }
     }
 }
+
+$.ajax({
+    type: "GET",
+    url: serverUrl + "getAllCategorias",
+    success: function (response) {
+        categoriasFooter(response);
+        disabledLoader();
+    },
+    error: function (error) {
+        console.log(error);
+        disabledLoader();
+    }
+});
+
+var categoriasFooter = function (categorias) {
+    for (categoria of categorias) {
+        $('.tagcloud').append(`<a onclick="goToNoticiaByCategoria(this)" href="#">${categoria.titulo}</a>`);
+    }
+}

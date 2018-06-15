@@ -1,4 +1,4 @@
-MENU - DONE
+﻿MENU - DONE
 	ordem menu: home, mega menu, not�cias, ao vivo, comunidade, esportes, institucional, contato
 	novas abas: TV INDOOR
 		    INSTITUCIONAL
@@ -31,4 +31,7 @@ Próximos etapa:
  	Sincronização dos colunistas e das NOVAS NOTICIAS;
 	Contato;
 	Mega Menu;
-	Footer; 
+	Footer 
+		-Sobre nós: ; 
+		-Noticias: ;
+		-TAGS: Antônio ;
