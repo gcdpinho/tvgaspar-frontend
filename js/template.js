@@ -152,3 +152,5 @@ var tumbGaleriaVideo = ` <div class="module-media">
     <div class="tumbImg" onclick="changeVideoGallery(this)"></div>
   <iframe src="interrogacao" width="100%" alt="">
 </div>`;
+
+var itemCategoriaFooter = `<a onclick="goToNoticiaByCategoria(this)" href="?">?</a>`;

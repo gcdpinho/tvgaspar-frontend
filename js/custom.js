@@ -9,7 +9,7 @@ var enabledLoader = function () {
     $("#pageloader").fadeIn();
 }
 
-enabledLoaderFosco = function(){
+enabledLoaderFosco = function () {
     $('#pageloader').css('background-color', 'rgba(255, 255, 255, 0.8)');
     enabledLoader();
 }
@@ -574,4 +574,15 @@ var changeVideoGallery = function (video) {
     $('#galeriaVideo iframe').attr('src', $(video).parents('.module-media').find('iframe').attr('src'));
     $(video).parents('.module-media').find('iframe').attr('src', oldSrc);
     setTimeout(disabledLoader, 2000);
+}
+
+
+var showCategoriasFooter = function (categorias) {
+    for (categoria of categorias) {
+        var aux = itemCategoriaFooter;
+        aux = aux.replace('?', 'javascript:void(0);');
+        aux = aux.replace('?', categoria.titulo);
+        
+        $('.tagcloud').append(aux);
+    }
 }

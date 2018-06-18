@@ -55,28 +55,41 @@ $(function ($) {
                                 },
                                 success: function (response) {
                                     console.log(response);
-                                    showGaleriaVideo(response)
+                                    showGaleriaVideo(response);
                                     $.ajax({
                                         type: "GET",
-                                        url: serverUrl + "getAllNoticiasAprovadas",
+                                        url: serverUrl + "getAllCategorias",
                                         success: function (response) {
                                             console.log(response);
-                                            const aux = async () => {
-                                                var data = agroupNoticia(response);
-                                                showNews(data, $('#news ul'), 5);
-                                                showNoticias(data, $('#ultimasNoticias'), 3, 2, 12);
-                                                await showNoticias(data, $('#demaisNoticias'), 2, 2, 10);
-                                                var categorias = getDiffCategorias(response);
-                                                generateCors(categorias);
-                                                disabledLoader();
-                                            };
-                                            aux();
+                                            showCategoriasFooter(response);
+                                            $.ajax({
+                                                type: "GET",
+                                                url: serverUrl + "getAllNoticiasAprovadas",
+                                                success: function (response) {
+                                                    console.log(response);
+                                                    const aux = async () => {
+                                                        var data = agroupNoticia(response);
+                                                        showNews(data, $('#news ul'), 5);
+                                                        showNoticias(data, $('#ultimasNoticias'), 3, 2, 12);
+                                                        await showNoticias(data, $('#demaisNoticias'), 2, 2, 10);
+                                                        var categorias = getDiffCategorias(response);
+                                                        generateCors(categorias);
+                                                        disabledLoader();
+                                                    };
+                                                    aux();
+                                                },
+                                                error: function (error) {
+                                                    console.log(error);
+                                                    disabledLoader();
+                                                }
+                                            });
                                         },
                                         error: function (error) {
                                             console.log(error);
                                             disabledLoader();
                                         }
                                     });
+
                                 },
                                 error: function (error) {
                                     console.log(error);
@@ -102,5 +115,4 @@ $(function ($) {
             disabledLoader();
         }
     });
-
 });
