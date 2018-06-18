@@ -145,3 +145,10 @@ var itemNovasNoticias = `<li style="margin: 0px;">
   <a href="?" data-id="?" onclick="goToNoticia(this, event)">?</a>
 </h4>
 </li>`;
+
+var itemGaleriaVideo = `<iframe width="100%" height="535px" src="interrogacao"></iframe>`;
+
+var tumbGaleriaVideo = ` <div class="module-media">
+    <div class="tumbImg" onclick="changeVideoGallery(this)"></div>
+  <iframe src="interrogacao" width="100%" alt="">
+</div>`;

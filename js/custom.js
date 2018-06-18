@@ -1,11 +1,17 @@
 var disabledLoader = function () {
     $(".loader-item").fadeOut();
     $("#pageloader").fadeOut("slow");
+    $('#pageloader').css('background-color', '#fff');
 }
 
 var enabledLoader = function () {
     $(".loader-item").fadeIn();
     $("#pageloader").fadeIn();
+}
+
+enabledLoaderFosco = function(){
+    $('#pageloader').css('background-color', 'rgba(255, 255, 255, 0.8)');
+    enabledLoader();
 }
 
 // var showSlider = async function (data, row, limit) {
@@ -542,4 +548,30 @@ var showNews = function (data, row, limit) {
                 break;
         }
     }
+}
+
+var showGaleriaVideo = function (data) {
+    var row;
+    for (var i = 0; i < data.length; i++) {
+        var aux;
+        if (i == 0) {
+            aux = itemGaleriaVideo;
+            row = $("#galeriaVideo");
+        } else {
+            aux = tumbGaleriaVideo;
+            row = $("#tumbVideo");
+        }
+
+        aux = aux.replace('interrogacao', data[i].link);
+
+        $(row).append(aux);
+    }
+}
+
+var changeVideoGallery = function (video) {
+    enabledLoaderFosco();
+    var oldSrc = $('#galeriaVideo iframe').attr('src');
+    $('#galeriaVideo iframe').attr('src', $(video).parents('.module-media').find('iframe').attr('src'));
+    $(video).parents('.module-media').find('iframe').attr('src', oldSrc);
+    setTimeout(disabledLoader, 2000);
 }
