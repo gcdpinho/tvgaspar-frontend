@@ -288,7 +288,22 @@
     cursor: pointer;
 }
 
-.tumbVideo{
+.tumbVideo {
     max-height: 535px;
     overflow-y: auto;
+}
+
+.title-left.underline03::before {
+    background-color: #d4000e;
+}
+
+.contact li {
+    color: #ffffff;
+    padding: 20px 0px;
+}
+.contact li a{
+    color: #989898;
+}
+.contact i {
+    color: #d4000e;
 }
