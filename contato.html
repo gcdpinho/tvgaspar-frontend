@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Site Title  -->
-    <title>Notícia | TV Gaspar</title>
+    <title>Contato | TV Gaspar</title>
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon" />
@@ -98,7 +98,7 @@
                         </div>
                         <ul class="sidenav-menu">
                             <li>
-                                <a href="index.html" class="active">Home</a>
+                                <a href="index.html">Home</a>
                                 <div class="icon-sub-menu" data-sidenav-dropdown-toggle>
                                     <span class="sidenav-dropdown-icon show" data-sidenav-dropdown-icon></span>
                                     <span class="sidenav-dropdown-icon up-icon" data-sidenav-dropdown-icon></span>
@@ -522,14 +522,14 @@
                                 </ul>
                             </li>
                             <!--========== END DROPDOWN MEGA-DROPDOWN ==========-->
-                            <li class="dropdown active">
+                            <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Notícias</a>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a href="javascript:void(0);" onclick="goToNoticiaByCategoria(this)" class="categoriaEsportes">Esportes</a>
+                                        <a href="javascript:void(0);" onclick="goToNoticiaByCategoria(this)">Esportes</a>
                                     </li>
                                     <li>
-                                        <a href="javascript:void(0);" onclick="goToNoticiaByCategoria(this)" class="categoriaComunidade">Comunidade</a>
+                                        <a href="javascript:void(0);" onclick="goToNoticiaByCategoria(this)">Comunidade</a>
                                     </li>
                                 </ul>
                             </li>
@@ -562,7 +562,7 @@
                             <li>
                                 <a href="institucional.html">Institucional</a>
                             </li>
-                            <li>
+                            <li class="active">
                                 <a href="contato.html">Contato</a>
                             </li>
                             <!--========== END .DROPDOWN ==========-->
@@ -575,49 +575,99 @@
                 <!--========== END MAIN-MENU .NAVBAR-COLLAPSE COLLAPSE #FIXED-NAVBAR-TOOGLE ==========-->
             </div>
         </header>
+        <div id="main-section">
+            <section class="module-top">
+                <div class="container">
+                    <div class="row">
+                        <!-- Begin .contact-us -->
+                        <div class="contact-us">
+                            <!-- Begin .contact-form -->
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="title-left title-style04 underline04">
+                                    <h3>Entre em contato</h3>
+                                </div>
+                                <form id="contact-form" method="post" action="include/contact.php">
+                                    <div class="messages"></div>
+                                    <div class="controls">
+                                        <div class="row no-gutter">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="form_name">Nome *</label>
+                                                    <input id="form_name" type="text" name="name" class="form-control" placeholder="Nome *" required data-error="Firstname is required.">
+                                                    <div class="help-block with-errors"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="form_lastname">Sobrenome *</label>
+                                                    <input id="form_lastname" type="text" name="surname" class="form-control" placeholder="Sobrenome *" required data-error="Lastname is required.">
+                                                    <div class="help-block with-errors"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row no-gutter">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="form_email">E-mail *</label>
+                                                    <input id="form_email" type="email" name="email" class="form-control" placeholder="E-mail *" required data-error="Valid email is required.">
+                                                    <div class="help-block with-errors"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="form_phone">Telefone</label>
+                                                    <input id="form_phone" type="tel" name="phone" class="form-control" placeholder="Telefone">
+                                                    <div class="help-block with-errors"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row no-gutter">
+                                            <div class="form-group">
+                                                <label for="form_message">Mensagem *</label>
+                                                <textarea id="form_message" name="message" class="form-control" placeholder="Envie sua mensagem *" rows="4" required data-error="Please,leave us a message."></textarea>
+                                                <div class="help-block with-errors"></div>
+                                            </div>
 
-        <section id="noticia-detail">
-            <!-- <div class="row content-head">
-                <div class="column medium-centered medium-19 large-18">
-                    <meta itemprop="name" content="Em nova tentativa de pôr fim à greve de caminhoneiros, Temer anuncia redução de R$ 0,46 no litro do diesel por 60 dias">
-                    <h1 class="content-head__title" itemprop="headline">Em nova tentativa de pôr fim à greve de caminhoneiros, Temer anuncia redução de R$ 0,46 no litro do diesel
-                        por 60 dias</h1>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <input type="submit" class="btn btn-success btn-send" value="Enviar">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row no-gutter">
+                                            <div class="col-md-12">
+                                                <p class="text-muted">
+                                                    <strong>*</strong> Campos obrigatórios.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- Begin Google Map  -->
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="google-map-area">
+                                    <div class="title-left title-style04 underline04">
+                                        <h3>Nos localize</h3>
+                                    </div>
+                                    <div class="container-fluid">
+                                        <div id="map-canvas"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Google Map -->
+                        </div>
+                    </div>
                 </div>
-                <div class="column medium-centered medium-17 large-14 xlarge-16">
-                    <h2 class="content-head__subtitle" itemprop="alternativeHeadline">Medida foi anunciada após nova reunião em Brasília com representantes do movimento. Temer anunciou ainda
-                        MP para isentar de pedágio eixos suspensos em entradas federais e estaduais.</h2>
-                </div>
-            </div>
-            <div class="foto">
-                <img height="420" width="700" itemprop="image" src="https://ogimg.infoglobo.com.br/in/22755091-371-fba/FT1086A/420/x77180136_BSBBrasiliaBrasil06-06-2018PASupremo-Tribunal-FederalPlenario-do-STF.jpg.pagespeed.ic.NrJAsdSgnb.jpg">
-            </div>
-            <div class="medium-centered mc-column content-text active-extra-style">
-                <p class="content-text__container"> Entre as medidas anunciadas está a
-                    <strong>redução de R$ 0,46 no preço do litro do diesel por 60 dias</strong>, e a isenção de pegamento de pedágio
-                    para eixos suspensos de caminhões vazios (
-                    <em>leia mais abaixo neste texto</em>). </p>
-                <p class="content-text__container"> Entre as propostas estava a redução a zero da alíquota da Contribuição de Intervenção no Domínio Econômico
-                    (Cide), em 2018, sobre o óleo diesel; e a manutenção, por 30 dias, de uma redução de 10% no valor do
-                    diesel nas refinarias, que havia sido anunciada pela Petrobras, redução pela qual a empresa seria ressarcida
-                    pela União. </p>
-            </div> -->
-        </section>
+            </section>
+        </div>
 
-        <!--========== BEGIN #FOOTER==========-->
         <footer id="footer">
             <!-- Begin .parallax -->
             <div id="parallax-section2">
                 <div class="bg parallax2 overlay img-overlay2">
                     <div class="container">
                         <div class="row no-gutter">
-                            <div class="col-sm-6 col-md-4">
-                                <h3 class="title-left title-style03 underline03">Sobre nós</h3>
-                                <p class="about-us">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                                    ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                                    ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
-                                    in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                                    cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                </p>
+                            <div class="col-sm-9 col-md-3">
                                 <div class="site-logo">
                                     <a href="index.html">
                                         <img src="img/logo.png" alt="Side Logo" />
@@ -628,73 +678,31 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="col-sm-6 col-md-4 noticias-footer">
-                                <h3 class="title-left title-style03 underline03">Notícias</h3>
-                                <div class="footer-post">
-                                    <ul>
-                                        <li>
-                                            <div class="item">
-                                                <div class="item-image">
-                                                    <a class="img-link" href="deals.html">
-                                                        <img class="img-responsive img-full" src="img/image_370x185.jpg" alt="">
-                                                    </a>
-                                                </div>
-                                                <div class="item-content">
-                                                    <p class="ellipsis">
-                                                        <a href="#">Lorem ipsum dolor sit amet, consectetur adipiscing elit. </a>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="item">
-                                                <div class="item-image">
-                                                    <a class="img-link" href="deals.html">
-                                                        <img class="img-responsive img-full" src="img/image_370x185.jpg" alt="">
-                                                    </a>
-                                                </div>
-                                                <div class="item-content">
-                                                    <p class="ellipsis">
-                                                        <a href="#">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</a>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="item">
-                                                <div class="item-image">
-                                                    <a class="img-link" href="deals.html">
-                                                        <img class="img-responsive img-full" src="img/image_370x185.jpg" alt="">
-                                                    </a>
-                                                </div>
-                                                <div class="item-content">
-                                                    <p class="ellipsis">
-                                                        <a href="#">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</a>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="item">
-                                                <div class="item-image">
-                                                    <a class="img-link" href="deals.html">
-                                                        <img class="img-responsive img-full" src="img/image_370x185.jpg" alt="">
-                                                    </a>
-                                                </div>
-                                                <div class="item-content">
-                                                    <p class="ellipsis">
-                                                        <a href="#">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</a>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
+                            <div class="col-sm-9 col-md-6 contact">
+                                <h3 class="title-left title-style03 underline03">Informações para Contato</h3>
+                                <ul>
+                                    <li>
+                                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                        <span>Address:</span> 121 King Street, Melbourne, Australia</li>
+                                    <li>
+                                        <i class="fa fa-phone" aria-hidden="true"></i>
+                                        <span>Phone:</span> +00 (123) 456 7890</li>
+                                    <li>
+                                        <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                                        <span>E-mail:</span>
+                                        <a href="mailto:mail@sitename.com">info@domain.com</a>
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-globe" aria-hidden="true"></i>
+                                        <span>Website:</span>
+                                        <a href="index.html">http://domain.com</a>
+                                    </li>
+                                </ul>
                             </div>
-                            <div class="col-sm-6 col-md-4">
+                            <div class="col-sm-9 col-md-3">
                                 <h3 class="title-left title-style03 underline03">Tags</h3>
                                 <div class="tagcloud">
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -758,7 +766,8 @@
     <script src="js/config.js"></script>
     <script src="js/template.js"></script>
     <script src="js/custom.js"></script>
-    <script src="js/noticia.js"></script>
+    <script src="js/functions.js"></script>
+    <script src="js/main.js"></script>
 </body>
 
 </html>

@@ -307,3 +307,7 @@
 .contact i {
     color: #d4000e;
 }
+.contact {
+    margin: 20px 0 0;
+    text-align: center;
+}
