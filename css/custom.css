@@ -301,13 +301,21 @@
     color: #ffffff;
     padding: 20px 0px;
 }
-.contact li a{
+
+.contact li a {
     color: #989898;
 }
+
 .contact i {
     color: #d4000e;
 }
+
 .contact {
     margin: 20px 0 0;
     text-align: center;
+}
+
+#google-map {
+    height: 290px;
+    margin-bottom: 20px;
 }
