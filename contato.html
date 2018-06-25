@@ -581,8 +581,15 @@
                     <div class="row">
                         <!-- Begin .contact-us -->
                         <div class="contact-us">
-                            <!-- Begin .contact-form -->
+                            <!-- Begin Google Map  -->
                             <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="google-map-area">
+                                    <div id="google-map" data-latitude="-26.9298841" data-longitude="-48.9608429"></div>
+                                </div>
+                            </div>
+                            <!-- End Google Map -->
+                            <!-- Begin .contact-form -->
+                            <div class="col-xs-12 col-sm-12 col-md-12" id="col-contato">
                                 <div class="title-left title-style04 underline04">
                                     <h3>Entre em contato</h3>
                                 </div>
@@ -593,14 +600,14 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="form_name">Nome *</label>
-                                                    <input id="form_name" type="text" name="name" class="form-control" placeholder="Nome *" required data-error="Firstname is required.">
+                                                    <input id="form_name" type="text" name="name" class="form-control" placeholder="Nome" required data-error="Por favor, digite seu nome.">
                                                     <div class="help-block with-errors"></div>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="form_lastname">Sobrenome *</label>
-                                                    <input id="form_lastname" type="text" name="surname" class="form-control" placeholder="Sobrenome *" required data-error="Lastname is required.">
+                                                    <input id="form_lastname" type="text" name="surname" class="form-control" placeholder="Sobrenome" required data-error="Por favor, digite seu sobrenome.">
                                                     <div class="help-block with-errors"></div>
                                                 </div>
                                             </div>
@@ -609,7 +616,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="form_email">E-mail *</label>
-                                                    <input id="form_email" type="email" name="email" class="form-control" placeholder="E-mail *" required data-error="Valid email is required.">
+                                                    <input id="form_email" type="email" name="email" class="form-control" placeholder="E-mail" required data-error="Por favor, digite um e-mail válido.">
                                                     <div class="help-block with-errors"></div>
                                                 </div>
                                             </div>
@@ -624,7 +631,7 @@
                                         <div class="row no-gutter">
                                             <div class="form-group">
                                                 <label for="form_message">Mensagem *</label>
-                                                <textarea id="form_message" name="message" class="form-control" placeholder="Envie sua mensagem *" rows="4" required data-error="Please,leave us a message."></textarea>
+                                                <textarea id="form_message" name="message" class="form-control" placeholder="Envie sua mensagem" rows="4" required data-error="Por favor, digite sua mensagem."></textarea>
                                                 <div class="help-block with-errors"></div>
                                             </div>
 
@@ -643,16 +650,6 @@
                                     </div>
                                 </form>
                             </div>
-                            <!-- Begin Google Map  -->
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                <div class="google-map-area">
-                                    <div class="title-left title-style04 underline04">
-                                        <h3>Nos localize</h3>
-                                    </div>
-                                    <div id="google-map" data-latitude="-26.9298841" data-longitude="-48.9608429"></div>
-                                </div>
-                            </div>
-                            <!-- End Google Map -->
                         </div>
                     </div>
                 </div>
@@ -766,7 +763,7 @@
     <script src="js/template.js"></script>
     <script src="js/custom.js"></script>
     <script src="js/functions.js"></script>
-    <script src="js/main.js"></script>
+    <script src="js/contato.js"></script>
 </body>
 
 </html>
