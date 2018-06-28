@@ -171,7 +171,11 @@ var publicidadeTopo = `<div class="desktop-add">
 // TODO
 
 //com texto
-var publicidadeSlider;
+var publicidadeTexto = `<div style="width: 100%; height: 200px; background: url(\'interrogacao\') no-repeat; background-size: 100% 100%">
+<a href="interrogacao" target="_blank" style="display: flex; align-items: center; width: 100%; height: 100%; padding: 20px">
+<p style="color: white; margin: auto; font-size: 4rem; line-height: 1">?</p>
+</a>    
+</div>`;
 
 //com texto
 var publicidadeGaleria;

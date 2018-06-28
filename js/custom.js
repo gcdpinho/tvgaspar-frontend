@@ -639,3 +639,30 @@ var showPublicidadeTopo = function (row) {
         }
     });
 }
+
+var showPublicidadeTexto = function (row, tipo) {
+    $.ajax({
+        type: "POST",
+        url: serverUrl + "getPublicidadesByTipo",
+        data: {
+            tipo: tipo
+        },
+        success: function (response) {
+            console.log(response);
+            var f = async () => {
+                var images = await getUrls([response[0].imagemLink]);
+                var aux = publicidadeTexto;
+                aux = aux.replace('?', response[0].texto);
+                aux = aux.replace('interrogacao', images[0]);
+                aux = aux.replace('interrogacao', response[0].link);
+            
+                $(row).append(aux);
+            }
+            f();
+        },
+        error: function (error) {
+            console.log(error);
+            disabledLoader();
+        }
+    });
+}

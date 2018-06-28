@@ -1,6 +1,8 @@
 $(function ($) {
     initFirebase();
     showPublicidadeTopo('.header-add-place');
+    showPublicidadeTexto('#pubSlider', 'Slider');
+    showPublicidadeTexto('#parallax-section1', 'Galeria');
     $.ajax({
         type: "POST",
         url: serverUrl + "getPublicidadesByTipo",
