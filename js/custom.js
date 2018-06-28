@@ -215,22 +215,43 @@ var getDiffCategorias = function (data) {
     return categorias;
 }
 
-var createLines = function (row, lines, columns, limit) {
+var createLines = async function (row, lines, columns, limit) {
     var l = Math.ceil(limit / columns);
     var controleL = 0;
+    var controlPub = 0;
+    var pubs = JSON.parse(localStorage.getItem('publicidadesHorizontal'));
+    var imgs = [];
+    for (var i = 0; i < pubs.length; i++)
+        imgs.push(pubs[i].imagemLink);
+
+    var images = await getUrls(imgs);
     for (var i = 0; i < l; i++) {
         aux = linha;
         aux = aux.replace('?', i);
 
         $(row).append(aux);
-        createColumns($(row).find('.rowItem' + i), columns);
+        await createColumns($(row).find('.rowItem' + i), columns);
         controleL++;
         if (controleL == lines) {
             controleL = 0;
-            $(row).append(propaganda);
+
+            if (controlPub < pubs.length) {
+
+
+                var prop = publicidadeHorizontal;
+                prop = prop.replace('interrogacao', pubs[controlPub].link);
+                prop = prop.replace('interrogacao', images[controlPub]);
+
+                $(row).append(prop);
+
+                controlPub++;
+            }
+
         }
     }
 }
+
+
 
 var createColumns = function (row, columns) {
     var col = 12 / columns;
@@ -243,20 +264,6 @@ var createColumns = function (row, columns) {
 
         $(row).append(aux);
     }
-}
-
-var getNoticias = function () {
-    var date = new Date();
-    var noticia = {
-        manchete: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        subManchete: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-        texto: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        autor: "Lorem ipsum",
-        img: "image_620x465.jpg",
-        dtCadastro: date.toLocaleDateString() + " " + date.toLocaleTimeString()
-    };
-
-    return noticia;
 }
 
 //Get URL da imagem Firebase
@@ -585,4 +592,50 @@ var showCategoriasFooter = function (categorias) {
 
         $('.tagcloud').append(aux);
     }
+}
+
+var showPublicidadeVertical = async function (data, row, limit) {
+    var controlLimite = 0;
+    var imgs = [];
+    for (var element of data)
+        imgs.push(element.imagemLink);
+
+    var images = await getUrls(imgs);
+    for (var i = 0; i < data.length; i++) {
+
+        var aux = publicidadeVertical;
+        aux = aux.replace('interrogacao', data[i].link);
+        aux = aux.replace('interrogacao', images[i]);
+
+        $(row).append(aux);
+        controlLimite++;
+        if (controlLimite >= limit)
+            break;
+    }
+}
+
+var showPublicidadeTopo = function (row) {
+    $.ajax({
+        type: "POST",
+        url: serverUrl + "getPublicidadesByTipo",
+        data: {
+            tipo: "Topo"
+        },
+        success: function (response) {
+            console.log(response);
+            var f = async () => {
+                var images = await getUrls([response[0].imagemLink]);
+                var aux = publicidadeTopo;
+                aux = aux.replace('interrogacao', response[0].link);
+                aux = aux.replace('interrogacao', images[0]);
+
+                $(row).append(aux);
+            }
+            f();
+        },
+        error: function (error) {
+            console.log(error);
+            disabledLoader();
+        }
+    });
 }

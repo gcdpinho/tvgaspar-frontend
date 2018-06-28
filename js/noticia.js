@@ -1,5 +1,6 @@
 $(function ($) {
     initFirebase();
+    showPublicidadeTopo('.header-add-place');
     $.ajax({
         type: "GET",
         url: serverUrl + "getAllCategorias",

@@ -154,3 +154,30 @@ var tumbGaleriaVideo = ` <div class="module-media">
 </div>`;
 
 var itemCategoriaFooter = `<a onclick="goToNoticiaByCategoria(this)" href="?">?</a>`;
+
+var publicidadeHorizontal = `<div class="desktop-add" style="max-width:80%; margin: auto; text-align: center; margin-bottom: 1.625em">
+<a href="interrogacao" target="_blank">
+  <img src="interrogacao" alt="" style="max-width: 100%; max-height: 100px">
+</a>
+</div>`;
+
+var publicidadeTopo = `<div class="desktop-add">
+<a href="interrogacao" target="_blank">
+  <img src="interrogacao" alt="" style="max-width: 100%; max-height: 100px">
+</a>
+</div>`;
+
+
+// TODO
+
+//com texto
+var publicidadeSlider;
+
+//com texto
+var publicidadeGaleria;
+
+var publicidadeVertical = `<div class="desktop-add" style="margin: auto; text-align: center; margin-bottom: 1.625em">
+<a href="interrogacao" target="_blank">
+  <img src="interrogacao" alt="" style="max-width: 200px; max-height: 100%">
+</a>
+</div>`;
