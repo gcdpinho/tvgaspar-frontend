@@ -320,6 +320,14 @@
     margin-bottom: 20px;
 }
 
-#col-contato{
+#col-contato {
     margin: 25px 0;
+}
+
+#logo-footer {
+    max-height: 200px;
+    padding: 30px !important;
+}
+.div-logo-footer {
+    margin-top: 45px;
 }
